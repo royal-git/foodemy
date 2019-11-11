@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         // data to populate the RecyclerView with
         ArrayList<String> recipeHeaders = new ArrayList<>();
 
+        //TODO: Make this pull dynamically from API (@Royal Thomas)
         //Add each of the recipe headers to the ArrayList
         recipeHeaders.add("Pikachu Fried");
         recipeHeaders.add("Chicken");
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         recyclerView.setAdapter(rvaAdapter);
     }
 
+    //TODO: Grab data on link in API Response header (@Royal Thomas is this your part?)
     @Override
     public void onItemClick(View view, int position) {
         //Sending toast message, but it can also call a method to execute any intent/function call available in-app

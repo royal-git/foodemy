@@ -6,11 +6,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+/**
+ * This class populates the RecyclerView with data, as well as converts pure Java objects into list item
+ * Views to be inserted and displayed to the user in the Android UI.
+ *
+ * The variable mData (List<String>) will contain the data elements that are in the list.
+ * //TODO Possibly change this as required
+ *
+ * The layout inflater mInflater instantiates the XML Layout object to a Java object so it can be used.
+ */
+
+class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     private List<String> mData;
     private LayoutInflater mInflater;
@@ -22,9 +33,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.mData = data;
     }
 
-    // inflates the row layout from xml when needed
+    //Inflate each row from the recyclerview_row.xml file
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.recyclerview_row, parent, false);
         return new ViewHolder(view);
     }
@@ -36,14 +48,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.myTextView.setText(animal);
     }
 
-    // total number of rows
+    //get size of list (number of items)
     @Override
     public int getItemCount() {
         return mData.size();
     }
 
 
-    // stores and recycles views as they are scrolled off screen
+    // dynamically loads only a subset of the mData container to keep resource usage low.
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
 
@@ -59,7 +71,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
-    // convenience method for getting data at click position
+    //TODO: Remove this
+     // convenience method for getting data at click position
     String getItem(int id) {
         return mData.get(id);
     }
