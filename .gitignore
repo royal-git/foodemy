@@ -23,3 +23,12 @@
 hs_err_pid*
 
 app/build
+*.lock
+
+*.bin
+
+*.ser
+
+.idea/
+
+local.properties
