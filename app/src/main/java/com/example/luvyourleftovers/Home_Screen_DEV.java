@@ -1,0 +1,28 @@
+package com.example.luvyourleftovers;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+
+public class Home_Screen_DEV extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home__screen__dev);
+    }
+
+
+    public void onMakeRecipe(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void onSavedRecipes(View view){
+        Intent intent = new Intent(this, SavedRecipesDev.class);
+        startActivity(intent);
+    }
+}
