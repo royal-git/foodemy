@@ -3,4 +3,5 @@
     <string name="intro_text">Welcome to Luv Your Leftovers, the app that suggests recipes based on your available leftovers!</string>
     <string name="ingredient_input">Input Ingredient</string>
     <string name="saved_recipes">View Saved Recipes</string>
+    <string name="show_single_recipe">Show Single Recipe</string>
 </resources>

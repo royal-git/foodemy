@@ -12,6 +12,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".DisplayRecipe"></activity>
+        <activity android:name=".ViewRecipe"></activity>
         <activity android:name=".Home_Screen_DEV">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
