@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.luvyourleftovers.basic_classes.APICaller;
+
 import org.apmem.tools.layouts.FlowLayout;
 
 import java.util.ArrayList;
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     public void performSearch(ArrayList<String> input) {
         String formattedInput = android.text.TextUtils.join(",", input);
         Toast.makeText(this, formattedInput, Toast.LENGTH_SHORT).show();
+        APICaller spoonacularRequest = new APICaller(formattedInput);
     }
 
 
