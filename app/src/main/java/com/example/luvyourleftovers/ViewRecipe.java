@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -45,33 +46,37 @@ public class ViewRecipe extends AppCompatActivity {
         }
 
 
-        JsonObject json = new JsonObject();
-        json.addProperty("foo", "bar");
         Ion.getDefault(this).getConscryptMiddleware().enable(false);
-        
         Ion.with(this)
-                .load("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/324694/analyzedInstructions?stepBreakdown=false")
+                .load("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/1003464/information")
                 .setHeader("x-rapidapi-key", "d***REMOVED***")
                 .setHeader("x-rapidapi-host", "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com")
-                .asJsonArray()
-                .setCallback(new FutureCallback<JsonArray>() {
-
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
                     @Override
-                    public void onCompleted(Exception e, JsonArray result) {
+                    public void onCompleted(Exception e, JsonObject result) {
                         try {
-                            for (JsonElement element : result) {
-                                for (JsonElement recipe : element.getAsJsonObject().get("steps").getAsJsonArray()) {
-                                    instructions.append(recipe.getAsJsonObject().get("step").getAsString() + "\n\n");
-                                }
-                            }
-
                             TextView instructionsTextView = findViewById(R.id.instructions);
-                            instructionsTextView.setText(instructions);
-                        }catch(Exception ex){
-                            System.out.println(ex);
+                            TextView timeToCook = findViewById(R.id.timeToCook);
+                            TextView servings = findViewById(R.id.servings);
+                            TextView vegetarian = findViewById(R.id.vegetarian);
+                            TextView costMeasure = findViewById(R.id.costRating);
+                            String veg = result.get("vegan").getAsBoolean() ? "Vegan" : "Non-Vegan";
+
+                            instructionsTextView.setText(Html.fromHtml(result.get("instructions").getAsString()));
+                            timeToCook.setText("Ready in " + result.get("readyInMinutes").toString() + " minutes!");
+                            servings.setText("Servings: " + result.get("servings").toString());
+                            vegetarian.setText(veg);
+                            costMeasure.setText("Cost: $$/$$$$$");
+
+
+                        } catch (Exception ex) {
                             Toast.makeText(ViewRecipe.this, "Error Loading from API, please try again.", Toast.LENGTH_SHORT).show();
                         }
+
+
                     }
+
                 });
 
 
