@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -56,7 +57,7 @@ public class FindShops extends AppCompatActivity {
 
 
         public String toString(){
-            return "Name="+this.name+", Address="+this.vicinity;
+            return "Name: "+this.name+"\nAddress: "+this.vicinity;
         }
     }
 
@@ -144,7 +145,7 @@ public class FindShops extends AppCompatActivity {
 
         String full_query_url = "";
         String location_parameter = "location="+latitude+","+longitude;
-        String query ="&rankby=distance&type=food";
+        String query ="&rankby=distance&type=store&type=food";
 
         Log.d("Current Location", longitude+","+latitude);
         return url+location_parameter+query;
@@ -181,8 +182,9 @@ public class FindShops extends AppCompatActivity {
                                 String name = g.getAsJsonObject().get("name").toString();
                                 //String photos =g.getAsJsonObject().get("photo_reference").toString();
                                 String vicinity = g.getAsJsonObject().get("vicinity").toString();
-//
+
                                 String photo_reference = "cannot";//"https://maps.googleapis.com/maps/api/place/photo?photoreference="+photos+"&sensor=false&maxheight=100&maxwidth=100"+apiKey;
+
                                 shopList.add(new Shop(photo_reference, place_id, name, vicinity));
                                 shopListString.add(name);
 
@@ -195,18 +197,28 @@ public class FindShops extends AppCompatActivity {
                             final ListView list = findViewById(R.id.shopList);
 //                                ArrayList<String> arrayList = readFromFile(this);
 
-                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(context,
-                                    android.R.layout.simple_list_item_1, shopListString);
+                            ArrayAdapter<Shop> arrayAdapter = new ArrayAdapter<Shop>(context,
+                                    android.R.layout.simple_list_item_1, shopList);
                             list.setAdapter(arrayAdapter);
                             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                                     //send user     to DisplayRecipe.
-                                    String clickedItem=(String) list.getItemAtPosition(position);
-                                    Toast.makeText(FindShops.this,clickedItem,Toast.LENGTH_LONG).show();
 
-                                    Intent intent = new Intent(context, DisplayRecipe.class);
+
+
+
+                                    Shop clickedShop = (Shop) list.getItemAtPosition(position);
+
+                                    Toast.makeText(FindShops.this,clickedShop.getName(),Toast.LENGTH_LONG).show();
+                                    Log.d("Place_ID:",clickedShop.getPlace_id());
+//                                    String url = "https://www.google.com/maps/place/?q=place_id:"+clickedShop.getPlace_id();
+                                    String url = "https://www.google.com/maps/search/?api=1&query="+clickedShop.getVicinity().replace("\"", "")+"&query_place_id="+clickedShop.getPlace_id().replace("\"", "");
+//                                    Intent intent = new Intent(context, DisplayRecipe.class);
+//                                    startActivity(intent);
+                                    String uri = url;//"http://maps.google.com/maps?saddr=" + sourceLatitude + "," + sourceLongitude + "&daddr=" + destinationLatitude + "," + destinationLongitude;
+                                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                                     startActivity(intent);
                                 }
                             });
