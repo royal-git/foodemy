@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         final EditText ingredientInputArea = findViewById(R.id.inputBox);
         Button searchButton = findViewById(R.id.searchButton);
 
-        // User inserts an ingredient. 
+        // User inserts an ingredient.
         findViewById(R.id.insertButton).setOnClickListener((view) -> {
             String input = ingredientInputArea.getText().toString();
             if (!input.isEmpty()) {
