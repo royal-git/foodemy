@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
         // What happens when search button is clicked.
         searchButton.setOnClickListener((view) -> {
+            // TODO add the ingredient to list of previously searched ingredients.
             performSearch(ingredients);
         });
 

@@ -10,4 +10,12 @@ public interface Recipe {
     public ArrayList<Ingredient> getIngrediantList();
 
     public ArrayList<String> getInstructions();
+
+    public void addImageLink(String image);
+    
+    public void addRecipeID(int id);
+
+    public void addMissingIngredients(int missingCount);
+
+    public void incrMissingIngredients(); //increments by 1
 }

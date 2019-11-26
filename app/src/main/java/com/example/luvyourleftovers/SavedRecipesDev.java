@@ -3,6 +3,7 @@ import com.example.luvyourleftovers.basic_classes.*;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,10 +31,13 @@ public class SavedRecipesDev extends AppCompatActivity {
         private String name;
         private Types type;
 
+        private boolean isInStock;
+
 
         public savedIngredients(String name, int type){
             this.name = name;
             this.type = Types.values()[5];
+            isInStock = true;
         }
 
         @Override
@@ -50,6 +54,11 @@ public class SavedRecipesDev extends AppCompatActivity {
         public void setType(Types type) {
             this.type = Types.values()[5];
         }
+
+        @Override
+        public void haveIngredient(boolean isInStock) {
+            this.isInStock = isInStock;
+        }
     }
 
 
@@ -57,6 +66,10 @@ public class SavedRecipesDev extends AppCompatActivity {
 
         private ArrayList<Ingredient> ingredients = new ArrayList<>();
         private ArrayList<String> instructions = new ArrayList<>();
+
+        private String image;
+        private int recipeId;
+        private int missingIngredients=0;
 
         @Override
         public void addIngredient(Ingredient ingredient) {
@@ -77,6 +90,31 @@ public class SavedRecipesDev extends AppCompatActivity {
         public ArrayList<String> getInstructions() {
             return instructions;
         }
+
+        @Override
+        public void addImageLink(String image) {
+            this.image = image;
+        }
+
+        @Override
+        public void addRecipeID(int id) {
+            this.recipeId = id;
+        }
+
+        @Override
+        public void addMissingIngredients(int missingCount) {
+            missingIngredients = missingCount;
+        }
+
+        @Override
+        public void incrMissingIngredients() {
+            missingIngredients++;
+        }
+
+
+        public String getImageLink(){return this.image;}
+        public int getRecipeId(){return this.recipeId;}
+        public int getCountOfMissingIngredients(){return this.missingIngredients;}
 
         public String toString(){
             String ingredient_delimited = "";
@@ -125,6 +163,7 @@ public class SavedRecipesDev extends AppCompatActivity {
             for (int i = 0; i < 5; i++) {
                 int j = 0;
                 savedRecipe newRecipe = new savedRecipe();
+                // add 3 random ingredients to the recipe list.
                 while (j < 3) {
                     double randomDouble = Math.random();
                     randomDouble = randomDouble * 7;
@@ -163,7 +202,7 @@ public class SavedRecipesDev extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_recipes_dev);
         makeRecipes(this);
-
+        Context context = this;
 
         final ListView list = findViewById(R.id.list);
         ArrayList<String> arrayList = readFromFile(this);
@@ -175,9 +214,12 @@ public class SavedRecipesDev extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                //send user to DisplayRecipe.
+                //send user     to DisplayRecipe.
                 String clickedItem=(String) list.getItemAtPosition(position);
                 Toast.makeText(SavedRecipesDev.this,clickedItem,Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(context, DisplayRecipe.class);
+                startActivity(intent);
             }
         });
     }
