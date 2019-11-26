@@ -30,7 +30,7 @@
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeMinTextSize="13sp"
                 android:autoSizeTextType="uniform"
-                android:text="Silver "
+                android:text="... "
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -65,7 +65,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="20dp"
-                        android:text="2-3 minutes" />
+                        android:text="..." />
                 </LinearLayout>
 
                 <LinearLayout
@@ -83,7 +83,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="20dp"
-                        android:text="Servings: " />
+                        android:text="..." />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_marginBottom="10dp"
@@ -100,7 +100,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="20dp"
-                        android:text="Non-vegetarian" />
+                        android:text="..." />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -116,7 +116,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="20dp"
-                        android:text="Cost Rating: $$$" />
+                        android:text="..." />
                 </LinearLayout>
             </LinearLayout>
 
