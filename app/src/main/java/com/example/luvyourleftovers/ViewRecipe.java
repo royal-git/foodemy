@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.Future;
 import com.koushikdutta.async.future.FutureCallback;
@@ -47,31 +48,31 @@ public class ViewRecipe extends AppCompatActivity {
         JsonObject json = new JsonObject();
         json.addProperty("foo", "bar");
         Ion.getDefault(this).getConscryptMiddleware().enable(false);
-
-
-        // Load the Instructions.
+        
         Ion.with(this)
-                .load("https://api.spoonacular.com/recipes/324694/analyzedInstructions?stepBreakdown=false&apiKey=9f55e2d2d78c44c3b6ad2799f349904d").asString().setCallback(new FutureCallback<String>() {
+                .load("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/324694/analyzedInstructions?stepBreakdown=false")
+                .setHeader("x-rapidapi-key", "d***REMOVED***")
+                .setHeader("x-rapidapi-host", "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com")
+                .asJsonArray()
+                .setCallback(new FutureCallback<JsonArray>() {
 
-            @Override
-            public void onCompleted(Exception e, String result) {
-                try {
-                    JSONArray recipes = new JSONArray(result);
-                    for (int i = 0; i < recipes.length(); i++) {
-                        JSONArray steps = recipes.getJSONObject(i).getJSONArray("steps");
-                        for (int j = 0; j < steps.length(); j++) {
-                            instructions.append(steps.getJSONObject(j).get("step") + "\n\n");
+                    @Override
+                    public void onCompleted(Exception e, JsonArray result) {
+                        try {
+                            for (JsonElement element : result) {
+                                for (JsonElement recipe : element.getAsJsonObject().get("steps").getAsJsonArray()) {
+                                    instructions.append(recipe.getAsJsonObject().get("step").getAsString() + "\n\n");
+                                }
+                            }
+
+                            TextView instructionsTextView = findViewById(R.id.instructions);
+                            instructionsTextView.setText(instructions);
+                        }catch(Exception ex){
+                            System.out.println(ex);
+                            Toast.makeText(ViewRecipe.this, "Error Loading from API, please try again.", Toast.LENGTH_SHORT).show();
                         }
                     }
-                    TextView instructionsTextView = findViewById(R.id.instructions);
-                    instructionsTextView.setText(instructions);
-                    System.out.println(instructions);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-
-            }
-        });
+                });
 
 
         // Set the text box to this value;
