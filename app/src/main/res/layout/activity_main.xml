@@ -24,6 +24,13 @@
             android:layout_height="wrap_content"
             android:text="Insert" />
 
+        <Button
+            android:id="@+id/insertPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Photo" />
+
+
 
     </LinearLayout>
 
