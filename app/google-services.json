@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "178834289975",
+    "firebase_url": "https://loveyourleftovers.firebaseio.com",
+    "project_id": "loveyourleftovers",
+    "storage_bucket": "loveyourleftovers.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:178834289975:android:185036b96a8b46b02f56b2",
+        "android_client_info": {
+          "package_name": "com.example.luvyourleftovers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "178834289975-ue8e7e2ljuh87u3dm25kdv49v78j4hdu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.luvyourleftovers",
+            "certificate_hash": "17af7a20603c9f2e2e7e896f65f73e00569713ef"
+          }
+        },
+        {
+          "client_id": "178834289975-3c371bj0mj9iiap7he7nqvu75hjkvkj4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "***REMOVED***"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "178834289975-3c371bj0mj9iiap7he7nqvu75hjkvkj4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

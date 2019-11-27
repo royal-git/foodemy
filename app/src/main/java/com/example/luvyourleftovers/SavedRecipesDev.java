@@ -1,5 +1,4 @@
 package com.example.luvyourleftovers;
-import com.example.luvyourleftovers.basic_classes.*;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -12,14 +11,18 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.luvyourleftovers.basic_classes.Ingredient;
+import com.example.luvyourleftovers.basic_classes.Recipe;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+import static com.example.luvyourleftovers.basic_classes.Ingredient.*;
 
 /**
  * Activity will show saved recipes and display them in List View (at this current version).
@@ -27,7 +30,8 @@ import java.util.ArrayList;
  **/
 public class SavedRecipesDev extends AppCompatActivity {
 
-    public static class savedIngredients implements Ingredient{
+    public static class savedIngredients implements Ingredient
+    {
         private String name;
         private Types type;
 
@@ -62,7 +66,8 @@ public class SavedRecipesDev extends AppCompatActivity {
     }
 
 
-    public static class savedRecipe implements Recipe{
+    public static class savedRecipe implements Recipe
+    {
 
         private ArrayList<Ingredient> ingredients = new ArrayList<>();
         private ArrayList<String> instructions = new ArrayList<>();

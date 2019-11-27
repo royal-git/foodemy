@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.luvyourleftovers">
 
-
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
@@ -16,8 +16,11 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".FindShops"></activity>
+        <activity android:name=".HomeActivity"
+            android:theme = "@style/AppTheme.NoActionBar">
 
+        </activity>
+        <activity android:name=".FindShops"></activity>
         <activity android:name=".DisplayRecipe"></activity>
         <activity android:name=".ViewRecipe"></activity>
         <activity android:name=".Home_Screen_DEV">
@@ -27,14 +30,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SavedRecipesDev" />
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".SavedRecipesDev" ></activity>
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

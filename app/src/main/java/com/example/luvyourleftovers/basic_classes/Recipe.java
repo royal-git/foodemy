@@ -2,14 +2,17 @@ package com.example.luvyourleftovers.basic_classes;
 
 import java.util.ArrayList;
 
-public interface Recipe {
-
-    public void addIngredient(Ingredient ingredient);
-    public void addInstruction(String instruction);
+public interface Recipe
+{
+    //private ArrayList<Ingredient> ingredients = new ArrayList<>();
+    //private ArrayList<String> instructions = new ArrayList<>();
 
     public ArrayList<Ingredient> getIngrediantList();
 
     public ArrayList<String> getInstructions();
+    public void addIngredient(Ingredient ingredient);
+
+    public void addInstruction(String instruction);
 
     public void addImageLink(String image);
     
