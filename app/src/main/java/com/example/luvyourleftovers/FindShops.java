@@ -196,7 +196,7 @@ public class FindShops extends AppCompatActivity {
                                 // String photo_reference = "cannot";//"https://maps.googleapis.com/maps/api/place/photo?photoreference="+photos+"&sensor=false&maxheight=100&maxwidth=100"+apiKey;
 
                                 shopList.add(new Shop(place_id, name, vicinity));
-                                shopListString.add(name);
+//                                shopListString.add(name);
 
                             }
                             Log.d("Shop List Size:", Integer.toString(shopList.size()));
