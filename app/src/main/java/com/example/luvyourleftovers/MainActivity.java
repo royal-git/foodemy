@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         db = new CartDBHelper(this);
-        db.insertItem(new CartItem((db.getAllContacts().size() + 1) + " - " + "An Item"));
-        db.insertItem(new CartItem((db.getAllContacts().size() + 1) + " - " + "An Item"));
+        db.insertItem(new CartItem((db.getAllItems().size() + 1) + " - " + "An Item"));
+        db.insertItem(new CartItem((db.getAllItems().size() + 1) + " - " + "An Item"));
 
         // data to populate the RecyclerView with
         ArrayList<String> recipeHeaders = new ArrayList<>();
