@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.luvyourleftovers.shopping_cart.ShoppingCart;
+
 public class Home_Screen_DEV extends AppCompatActivity {
 
     @Override
@@ -34,5 +36,12 @@ public class Home_Screen_DEV extends AppCompatActivity {
         intent.putExtra("id", 324694);
         intent.putExtra("title", "Silver Dollar Buttermilk-Pecan Pancakes with Bourbon Molasses Butter and Maple Syrup");
         startActivity(intent);
+    }
+
+    public void onOpenShoppingCart(View view){
+
+        Intent intent = new Intent(this, ShoppingCart.class);
+        startActivity(intent);
+
     }
 }

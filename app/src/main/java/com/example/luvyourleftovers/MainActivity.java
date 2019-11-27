@@ -21,24 +21,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.luvyourleftovers.basic_classes.DatabaseHelper;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.example.luvyourleftovers.shopping_cart.CartItem;
+import com.example.luvyourleftovers.shopping_cart.CartDBHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabeler;
 import com.koushikdutta.async.future.Future;
-import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
 import org.apmem.tools.layouts.FlowLayout;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.ItemClickListener {
@@ -49,13 +46,15 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     RecyclerViewAdapter rvaAdapter;
     ArrayList<String> ingredients;
     Button searchButton;
-    DatabaseHelper db;
+    CartDBHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        db = new DatabaseHelper(this);
+        db = new CartDBHelper(this);
+        db.insertItem(new CartItem((db.getAllContacts().size() + 1) + " - " + "An Item"));
+        db.insertItem(new CartItem((db.getAllContacts().size() + 1) + " - " + "An Item"));
 
         // data to populate the RecyclerView with
         ArrayList<String> recipeHeaders = new ArrayList<>();
