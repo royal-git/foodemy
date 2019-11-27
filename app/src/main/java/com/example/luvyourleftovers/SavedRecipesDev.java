@@ -12,7 +12,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.luvyourleftovers.basic_classes.Ingredient;
+import com.example.luvyourleftovers.basic_classes.IngredientObject;
 import com.example.luvyourleftovers.basic_classes.Recipe;
+import com.example.luvyourleftovers.basic_classes.RecipeObject;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -30,121 +32,6 @@ import static com.example.luvyourleftovers.basic_classes.Ingredient.*;
  **/
 public class SavedRecipesDev extends AppCompatActivity {
 
-    public static class savedIngredients implements Ingredient
-    {
-        private String name;
-        private Types type;
-
-        private boolean isInStock;
-
-
-        public savedIngredients(String name, int type){
-            this.name = name;
-            this.type = Types.values()[5];
-            isInStock = true;
-        }
-
-        @Override
-        public String getName() {
-            return this.name;
-        }
-
-        @Override
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        @Override
-        public void setType(Types type) {
-            this.type = Types.values()[5];
-        }
-
-        @Override
-        public void haveIngredient(boolean isInStock) {
-            this.isInStock = isInStock;
-        }
-    }
-
-
-    public static class savedRecipe implements Recipe
-    {
-
-        private ArrayList<Ingredient> ingredients = new ArrayList<>();
-        private ArrayList<String> instructions = new ArrayList<>();
-
-        private String image;
-        private int recipeId;
-        private int missingIngredients=0;
-
-        @Override
-        public void addIngredient(Ingredient ingredient) {
-            ingredients.add(ingredient);
-        }
-
-        @Override
-        public void addInstruction(String instruction) {
-            instructions.add(instruction);
-        }
-
-        @Override
-        public ArrayList<Ingredient> getIngrediantList() {
-            return ingredients;
-        }
-
-        @Override
-        public ArrayList<String> getInstructions() {
-            return instructions;
-        }
-
-        @Override
-        public void addImageLink(String image) {
-            this.image = image;
-        }
-
-        @Override
-        public void addRecipeID(int id) {
-            this.recipeId = id;
-        }
-
-        @Override
-        public void addMissingIngredients(int missingCount) {
-            missingIngredients = missingCount;
-        }
-
-        @Override
-        public void incrMissingIngredients() {
-            missingIngredients++;
-        }
-
-
-        public String getImageLink(){return this.image;}
-        public int getRecipeId(){return this.recipeId;}
-        public int getCountOfMissingIngredients(){return this.missingIngredients;}
-
-        public String toString(){
-            String ingredient_delimited = "";
-            int i =0;
-            for(Ingredient ingredient: ingredients){
-                if(i-1 == ingredients.size())
-                    ingredient_delimited+=ingredient.getName();
-                else
-                    ingredient_delimited+=ingredient.getName()+",";
-                i++;
-            }
-
-            String instruction_delimited = "";
-            i =0;
-            for(String instruction: instructions){
-                if(i-1 == ingredients.size())
-                    instruction_delimited+=instruction;
-                else
-                    instruction_delimited+=instruction+",";
-                i++;
-            }
-            return ingredient_delimited+"@@"+instruction_delimited+"\n";
-        }
-    }
-
     public void makeRecipes(Context context){
 
 
@@ -159,15 +46,15 @@ public class SavedRecipesDev extends AppCompatActivity {
             ArrayList<Ingredient> ingredients = new ArrayList<>();
 
             for (String ingredient : ingredient_names) {
-                savedIngredients ingr = new savedIngredients(ingredient, 0);
+                IngredientObject ingr = new IngredientObject(ingredient, 0);
                 ingredients.add(ingr);
 
             }
 
-            ArrayList<savedRecipe> saved_recipes = new ArrayList<>();
+            ArrayList<RecipeObject> saved_recipes = new ArrayList<>();
             for (int i = 0; i < 5; i++) {
                 int j = 0;
-                savedRecipe newRecipe = new savedRecipe();
+                RecipeObject newRecipe = new RecipeObject();
                 // add 3 random ingredients to the recipe list.
                 while (j < 3) {
                     double randomDouble = Math.random();
@@ -186,9 +73,9 @@ public class SavedRecipesDev extends AppCompatActivity {
         }
     }
 
-    public void writeRecipes(ArrayList<savedRecipe> recipes, Context context){
+    public void writeRecipes(ArrayList<RecipeObject> recipes, Context context){
         String data = "";
-        for(savedRecipe recipe: recipes)
+        for(RecipeObject recipe: recipes)
             data += recipe.toString();
 
         try{
