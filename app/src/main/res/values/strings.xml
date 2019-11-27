@@ -17,5 +17,6 @@
     <string name="title_activity_find_shops_maps">Map</string>
     <string name="google_maps_apiKey">***REMOVED***</string>
     <string name="show_single_recipe">Show Single Recipe</string>
+    <string name="open_shopping_cart">Open Shopping Cart</string>
 
 </resources>
