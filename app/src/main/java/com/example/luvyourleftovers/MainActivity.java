@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.luvyourleftovers.basic_classes.DatabaseHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -48,12 +49,13 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     RecyclerViewAdapter rvaAdapter;
     ArrayList<String> ingredients;
     Button searchButton;
+    DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        db = new DatabaseHelper(this);
 
         // data to populate the RecyclerView with
         ArrayList<String> recipeHeaders = new ArrayList<>();
@@ -162,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
         newIngredientButton.setOnClickListener((v) -> {
             ingredients.remove(newIngredientButton.getText());
-            
+
             flowLayout.removeView(v);
             if (ingredients.size() == 0)
                 searchButton.setVisibility(View.GONE);
@@ -237,15 +239,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         Boolean validIngredient = false;
         Future<String> result = Ion.with(this).load("http://royalthomas.me/checkIngredient.php?ingredient=" + uriEncode(ingredient)).asString();
         try {
-            ;
-            if (result.get().contains("True")) {
+            if (result.get().contains("True"))
                 validIngredient = true;
-                System.out.println("YES??!???AS?DAS" + ingredient);
-            }
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
 
+        } catch (Exception ex) {
+            Log.d("MainActivity", "Ran into issue with checking if ingredient valid");
+        }
         return validIngredient;
     }
 
