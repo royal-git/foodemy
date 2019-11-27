@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.luvyourleftovers.basic_classes.APICaller;
+
 import org.apmem.tools.layouts.FlowLayout;
 
 import java.util.ArrayList;
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         final EditText ingredientInputArea = findViewById(R.id.inputBox);
         Button searchButton = findViewById(R.id.searchButton);
 
-        // User inserts an ingredient. 
+        // User inserts an ingredient.
         findViewById(R.id.insertButton).setOnClickListener((view) -> {
             String input = ingredientInputArea.getText().toString();
             if (!input.isEmpty()) {
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
         // What happens when search button is clicked.
         searchButton.setOnClickListener((view) -> {
+            // TODO add the ingredient to list of previously searched ingredients.
             performSearch(ingredients);
         });
 
@@ -77,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     public void performSearch(ArrayList<String> input) {
         String formattedInput = android.text.TextUtils.join(",", input);
         Toast.makeText(this, formattedInput, Toast.LENGTH_SHORT).show();
+        APICaller spoonacularRequest = new APICaller(formattedInput);
     }
 
 

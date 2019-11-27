@@ -12,4 +12,10 @@
     <string name="drawer_header_text">Sample Text.exe</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
+
+    <string name="find_shops">View Nearby Shops</string>
+    <string name="title_activity_find_shops_maps">Map</string>
+    <string name="google_maps_apiKey">***REMOVED***</string>
+    <string name="show_single_recipe">Show Single Recipe</string>
+
 </resources>

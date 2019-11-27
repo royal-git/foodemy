@@ -1,8 +1,8 @@
 package com.example.luvyourleftovers.basic_classes;
 
-public class Ingredient
+public interface Ingredient
 {
-    public enum Type
+    public enum Types
     {
         VEG,
         DAIRY,
@@ -12,29 +12,18 @@ public class Ingredient
         OTHER
     }
 
+    /*
     private String name;
-    private Type type;
+    private Types type;
     private String icon;
+    */
 
-    public Ingredient(String name, Type type, String icon)
-    {
-        this.name = name;
-        this.type = type;
-        this.icon = icon;
-    }
+    public String getName();
 
-    public String getName()
-    {
-        return name;
-    }
+    public void setName(String name);
 
-    public void setName(String name)
-    {
-        this.name = name;
-    }
+    public void setType(Types type);
 
-    public void setType(Type type)
-    {
-        this.type = type;
-    }
+
+    public void haveIngredient(boolean isInStock); //tells us whether an ingredient is in the current stock of the user.
 }

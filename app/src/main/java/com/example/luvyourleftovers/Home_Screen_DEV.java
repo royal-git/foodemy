@@ -16,13 +16,23 @@ public class Home_Screen_DEV extends AppCompatActivity {
     }
 
 
-    public void onMakeRecipe(View view){
+    public void onMakeRecipe(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
-    public void onSavedRecipes(View view){
+    public void onSavedRecipes(View view) {
         Intent intent = new Intent(this, SavedRecipesDev.class);
+        startActivity(intent);
+    }
+    public void onMapsActivity(View view){
+        Intent intent = new Intent(this, FindShops.class);
+        startActivity(intent);
+    }
+    public void onDisplayRecipe(View view) {
+        Intent intent = new Intent(this, ViewRecipe.class);
+        intent.putExtra("id", 324694);
+        intent.putExtra("title", "Silver Dollar Buttermilk-Pecan Pancakes with Bourbon Molasses Butter and Maple Syrup");
         startActivity(intent);
     }
 }
