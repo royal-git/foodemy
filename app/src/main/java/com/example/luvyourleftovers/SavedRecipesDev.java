@@ -64,8 +64,7 @@ public class SavedRecipesDev extends AppCompatActivity {
                     newRecipe.addIngredient(ingredients.get(randomInt));
                     j++;
                 }
-                newRecipe.addInstruction("Stop being dumb");
-                newRecipe.addInstruction("Fool!");
+                newRecipe.setInstructions("Stop being dumb, fool!");
                 saved_recipes.add(newRecipe);
             }
 
