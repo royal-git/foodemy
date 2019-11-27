@@ -11,21 +11,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".DisplayRecipe"></activity>
-        <activity android:name=".Home_Screen_DEV">
+        <activity android:name=".HomeActivity"
+            android:theme = "@style/AppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".DisplayRecipe" />
+        <activity android:name=".Home_Screen_DEV">
+
+        </activity>
         <activity android:name=".SavedRecipesDev" />
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
