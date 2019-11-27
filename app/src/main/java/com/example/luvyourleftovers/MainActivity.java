@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
     RecyclerViewAdapter rvaAdapter;
     ArrayList<String> ingredients;
+    Button searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
         // set it up to get user inputs
         final EditText ingredientInputArea = findViewById(R.id.inputBox);
-        Button searchButton = findViewById(R.id.searchButton);
+        searchButton = findViewById(R.id.searchButton);
         Button photoButton = findViewById(R.id.insertPhoto);
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
     public void addToContainer(String text) {
         ingredients.add(text);
+        searchButton.setVisibility(View.VISIBLE);
         Button newIngredientButton = new Button(this);
         newIngredientButton.setText(text);
         final FlowLayout flowLayout = findViewById(R.id.flowLayout);
@@ -160,7 +162,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
         newIngredientButton.setOnClickListener((v) -> {
             ingredients.remove(newIngredientButton.getText());
+            
             flowLayout.removeView(v);
+            if (ingredients.size() == 0)
+                searchButton.setVisibility(View.GONE);
         });
 
         Toast.makeText(this, ingredients.toString(), Toast.LENGTH_SHORT).show();
