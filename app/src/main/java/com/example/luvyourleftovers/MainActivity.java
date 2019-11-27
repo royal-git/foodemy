@@ -197,7 +197,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                                                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                                         @Override
                                                         public void onClick(DialogInterface dialogInterface, int i) {
-                                                            Toast.makeText(context, selections.toString(), Toast.LENGTH_SHORT).show();
+                                                            selections.forEach((value) -> {
+                                                                addToContainer(value);
+                                                            });
                                                         }
                                                     })
                                                     .setCancelable(false)
