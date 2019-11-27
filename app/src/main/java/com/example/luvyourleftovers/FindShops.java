@@ -193,7 +193,12 @@ public class FindShops extends AppCompatActivity {
                                 String place_id = g.getAsJsonObject().get("place_id").toString();
                                 String name = g.getAsJsonObject().get("name").toString();
                                 String vicinity = g.getAsJsonObject().get("vicinity").toString();
-                                // String photo_reference = "cannot";//"https://maps.googleapis.com/maps/api/place/photo?photoreference="+photos+"&sensor=false&maxheight=100&maxwidth=100"+apiKey;
+//                                 String photo_reference = "cannot";//"https://maps.googleapis.com/maps/api/place/photo?photoreference="+photos+"&sensor=false&maxheight=100&maxwidth=100"+apiKey;
+
+//                                Log.d("KeySet2: ",g.getAsJsonObject().getAsJsonArray("reference").toString());
+//                                for(JsonElement mElement: g.getAsJsonArray()){
+//                                    Log.d("Vals", mElement.getAsJsonObject().keySet().toString());
+//                                }
 
                                 shopList.add(new Shop(place_id, name, vicinity));
 //                                shopListString.add(name);
