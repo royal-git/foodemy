@@ -61,7 +61,7 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.tvRecipeTitle);
+            myTextView = itemView.findViewById(R.id.recipe_name);
             itemView.setOnClickListener(this);
         }
 
