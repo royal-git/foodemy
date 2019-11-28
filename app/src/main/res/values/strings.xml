@@ -20,4 +20,11 @@
     <string name="open_shopping_cart">Open Shopping Cart</string>
 
     <string name="description">Description: </string>
+    <string name="camera_permission_ok">Camera Permission Granted</string>
+    <string name="camera_permission_denied">Sorry, you need to allow access to Camera to use this feature.</string>
+    <string name="recipe_results">Recipe results</string>
+    <string name="search">Search</string>
+    <string name="photo">Photo</string>
+    <string name="insert">Insert</string>
+    <string name="add_ingredient">Add Ingredient</string>
 </resources>

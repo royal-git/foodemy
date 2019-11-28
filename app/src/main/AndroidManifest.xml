@@ -15,7 +15,7 @@
       android:name=".shopping_cart.ShoppingCart"
       android:parentActivityName=".Home_Screen_DEV" />
     <activity
-      android:name=".HomeActivity"
+      android:name=".MainActivity"
       android:theme="@style/AppTheme.NoActionBar" />
     <activity
       android:name=".FindShops"
@@ -35,7 +35,7 @@
       android:name=".SavedRecipesDev"
       android:parentActivityName=".Home_Screen_DEV" />
     <activity
-      android:name=".MainActivity"
+      android:name=".IngredientsRecipesActivity"
       android:parentActivityName=".Home_Screen_DEV" />
   </application>
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
