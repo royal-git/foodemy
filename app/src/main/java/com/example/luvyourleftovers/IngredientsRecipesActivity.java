@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -70,7 +71,7 @@ public class IngredientsRecipesActivity extends AppCompatActivity implements
     // set it up to get user inputs
     final EditText ingredientInputArea = findViewById(R.id.inputBox);
     searchButton = findViewById(R.id.searchButton);
-    Button photoButton = findViewById(R.id.insertPhoto);
+    ImageButton photoButton = findViewById(R.id.insertPhoto);
     photoButton.setOnClickListener(v -> {
       if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
         requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
