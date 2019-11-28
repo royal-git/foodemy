@@ -51,16 +51,6 @@ public class MainActivity extends AppCompatActivity implements
     setContentView(R.layout.activity_main);
     db = new CartDBHelper(this);
 
-    APICaller mApiCaller = new APICaller(this);
-    mApiCaller.fetchRecipes(
-        "banana, bread, chocolate", 20, 1,
-        new APICaller.OnReturnRecipeList() {
-          @Override
-          public void onSuccess(ArrayList<RecipeObject> recipeList) {
-            // recipeList contains the recipe objects, do something with it.
-          }
-        });
-
     // data to populate the RecyclerView with
     ArrayList<String> recipeHeaders = new ArrayList<>();
     ingredients = new ArrayList<>();
