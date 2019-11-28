@@ -33,8 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.apmem.tools.layouts.FlowLayout;
-
-import xdroid.toaster.Toaster;
+//import xdroid.toaster.Toaster;
 
 public class IngredientsRecipesActivity extends AppCompatActivity implements
     RecyclerViewAdapter.ItemClickListener {
@@ -94,12 +93,17 @@ public class IngredientsRecipesActivity extends AppCompatActivity implements
         @Override
         public void onSuccess(ArrayList<RecipeObject> value) {
           for (RecipeObject recipeObject : value) {
-            //Add each of the recipe headers to the ArrayList
             recipeHeaders.add(recipeObject.getName());
           }
+          runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+              rvaAdapter.notifyDataSetChanged();
+            }
+          });
         }
       });
-      rvaAdapter.notifyDataSetChanged();
+      System.out.println("Size -> " + recipeHeaders.size());
     });
 
   }
@@ -241,7 +245,7 @@ public class IngredientsRecipesActivity extends AppCompatActivity implements
       }
 
     } catch (Exception ex) {
-      Toaster.toast("There was an issue connecting to the server for checking if the ingredient is valid.");
+      //Toaster.toast("There was an issue connecting to the server for checking if the ingredient is valid.");
       Log.d("IngredientsRecipesActivity", "Ran into issue with checking if ingredient valid");
     }
     return validIngredient;

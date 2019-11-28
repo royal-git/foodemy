@@ -12,8 +12,9 @@ import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Request.Builder;
 import okhttp3.Response;
-import xdroid.toaster.Toaster;
+//import xdroid.toaster.Toaster;
 
 /**
  * Class to call the Spoonacular API
@@ -78,9 +79,9 @@ public class APICaller {
       public void run() {
         OkHttpClient client = new OkHttpClient();
 
-        Request request = new Request.Builder()
+        Request request = new Builder()
             .url(
-                "https://api.spoonacular.com/recipes/findByIngredients?number=" + limit + "&ranking=" + ranking
+                "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=" + limit + "&ranking=" + ranking
                     + "&ignorePantry" +
                     "=false&ingredients=" + ingredients)
             .get()
@@ -91,6 +92,7 @@ public class APICaller {
         try {
           Response response = client.newCall(request).execute();
           JsonElement responseJson = new JsonParser().parse(response.body().string());
+          System.out.println(responseJson);
           if (responseJson.isJsonArray()) {
             responseJson.getAsJsonArray().forEach((element) -> {
               JsonObject returnObject = element.getAsJsonObject();
@@ -103,7 +105,7 @@ public class APICaller {
           }
         } catch (Exception ex) {
           ex.printStackTrace();
-          Toaster.toast(context.getString(R.string.error_api_message));
+          //Toaster.toast(context.getString(R.string.error_api_message));
         }
       }
     }).start();
