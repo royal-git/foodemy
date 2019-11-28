@@ -44,4 +44,10 @@ public class Home_Screen_DEV extends AppCompatActivity {
         startActivity(intent);
 
     }
+
+    public void onHome(View view)
+    {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 }
