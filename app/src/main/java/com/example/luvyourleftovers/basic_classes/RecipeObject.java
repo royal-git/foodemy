@@ -6,10 +6,36 @@ public class RecipeObject implements Recipe {
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
     private ArrayList<String> instructions = new ArrayList<>();
 
+    private String recipeName;
+    private String servings;
+    private String timeToCook;
+    private boolean isVegan;
     private String image;
     private int recipeId;
     private int missingIngredients=0;
 
+    public RecipeObject(String recipeName, int recipeId){
+        this.recipeName = recipeName;
+        this.recipeId = recipeId;
+    }
+
+    public RecipeObject(){
+
+    }
+
+    public void setIsVegan(boolean v){this.isVegan = v;}
+    public boolean isVegan(){return this.isVegan;}
+
+    public void setServings(String servings){
+        this.servings = servings;
+    }
+    public String getServings(){return servings;}
+
+    public void setTimeToCook(String timeToCook){
+        this.timeToCook = timeToCook;
+    }
+
+    public String getTimeToCook(){return this.timeToCook;}
     @Override
     public void addIngredient(Ingredient ingredient) {
         ingredients.add(ingredient);
@@ -18,6 +44,11 @@ public class RecipeObject implements Recipe {
     @Override
     public void addInstruction(String instruction) {
         instructions.add(instruction);
+    }
+
+    @Override
+    public String getRecipeName() {
+        return this.recipeName;
     }
 
     @Override

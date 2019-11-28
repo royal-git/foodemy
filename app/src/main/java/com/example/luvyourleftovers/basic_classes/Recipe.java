@@ -7,6 +7,7 @@ public interface Recipe
     //private ArrayList<Ingredient> ingredients = new ArrayList<>();
     //private ArrayList<String> instructions = new ArrayList<>();
 
+    public String getRecipeName();
     public ArrayList<Ingredient> getIngrediantList();
 
     public ArrayList<String> getInstructions();

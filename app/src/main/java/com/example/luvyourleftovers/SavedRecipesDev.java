@@ -1,9 +1,15 @@
 package com.example.luvyourleftovers;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +21,7 @@ import com.example.luvyourleftovers.basic_classes.Ingredient;
 import com.example.luvyourleftovers.basic_classes.IngredientObject;
 import com.example.luvyourleftovers.basic_classes.Recipe;
 import com.example.luvyourleftovers.basic_classes.RecipeObject;
+import com.example.luvyourleftovers.shopping_cart.CartItem;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -31,6 +38,61 @@ import static com.example.luvyourleftovers.basic_classes.Ingredient.*;
  * Each Recipe if clicked should send to a new Activity (Display Recipe Activity)
  **/
 public class SavedRecipesDev extends AppCompatActivity {
+
+
+    private class favouritesDBHelper extends SQLiteOpenHelper {
+        /** @author: Royal Thomas (blame it all on him) **/
+        public static final String DATABASE_NAME = "Favourites.db";
+
+        public favouritesDBHelper(@Nullable Context context) {
+            super(context, DATABASE_NAME, null, 1);
+        }
+
+
+        @Override
+        public void onCreate(SQLiteDatabase sqLiteDatabase) {
+            sqLiteDatabase.execSQL("create table favourites (id integer primary key, name text, ingredients text, instructions text, recipe_id int)");
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS favourites");
+            onCreate(sqLiteDatabase);
+        }
+
+        public void insertRecipe(RecipeObject recipe) {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put("name", recipe.getRecipeName());
+            String ingredientsList = TextUtils.join(", ", recipe.getIngrediantList());
+            values.put("ingredients", ingredientsList);
+            String instructionList = TextUtils.join(", ",recipe.getInstructions());
+            values.put("instructions", instructionList);
+            values.put("recipe_id", recipe.getRecipeId());
+            db.insert("favourites", null, values);
+        }
+
+
+        public ArrayList<RecipeObject> getAllRecipes() {
+            ArrayList<RecipeObject> recipes = new ArrayList<RecipeObject>();
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor res = db.rawQuery("select * from favourites", null);
+
+            res.moveToFirst();
+            while (res.isAfterLast() == false) {
+                recipes.add(new RecipeObject(res.getString(res.getColumnIndex("name")), 0));
+                res.moveToNext();
+            }
+            return recipes;
+        }
+
+    }
+
+    /*
+        TODO: change this whole class to a normal java class that will send user to DisplayRecipe
+         Activity with a list of RecipeObjects built from the given DB.
+     */
+
 
     public void makeRecipes(Context context){
 
