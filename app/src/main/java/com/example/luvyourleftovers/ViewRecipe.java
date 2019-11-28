@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import com.example.luvyourleftovers.basic_classes.APICaller;
@@ -32,9 +33,9 @@ public class ViewRecipe extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle message = intent.getExtras();
         recipe = (RecipeObject) intent.getSerializableExtra("recipe");
+        Toast.makeText(this, recipe.getName(), Toast.LENGTH_SHORT).show();
         TextView titleView = findViewById(R.id.RecipeDisplayText);
         titleView.setText(recipe.getName());
-
         if (!recipe.getImageLink().isEmpty()) {
             Picasso.get().load(recipe.getImageLink())
                 .into((ImageView) findViewById(R.id.recipeImage));
@@ -114,12 +115,13 @@ public class ViewRecipe extends AppCompatActivity {
                 TextView vegetarian = findViewById(R.id.vegetarian);
                 TextView costMeasure = findViewById(R.id.costRating);
 
+                System.out.println(recipe.getMissedIngredients());
                 instructionsTextView.setText(recipe.getInstructions());
                 timeToCook.setText("Ready in " + recipe.getTimeToCook() + " minutes!");
-                servings.setText("Servings: 8");
+                servings.setText("Servings: " + recipe.getServings());
                 String veg = recipe.isVegan() ? "Vegan" : "Non-Vegan";
                 vegetarian.setText(veg);
-                costMeasure.setText("Cost: $$/$$$$$");
+                costMeasure.setText(recipe.isCheap() ? "$$" : "$$$$");
             }
         });
     }
@@ -129,7 +131,6 @@ public class ViewRecipe extends AppCompatActivity {
             button
                 .setIconTint(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.red)));
         }else{
-
             button
                 .setIconTint(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.grey)));
         }

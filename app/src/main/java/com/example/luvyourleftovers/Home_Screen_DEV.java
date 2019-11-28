@@ -1,11 +1,18 @@
 package com.example.luvyourleftovers;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.luvyourleftovers.basic_classes.APICaller;
+import com.example.luvyourleftovers.basic_classes.FavouritesDB;
+import com.example.luvyourleftovers.basic_classes.Recipe;
 import com.example.luvyourleftovers.basic_classes.RecipeObject;
 import com.example.luvyourleftovers.shopping_cart.ShoppingCart;
+
+import java.util.ArrayList;
 
 public class Home_Screen_DEV extends AppCompatActivity {
 
@@ -13,18 +20,11 @@ public class Home_Screen_DEV extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home__screen__dev);
-
-
     }
 
 
     public void onMakeRecipe(View view) {
         Intent intent = new Intent(this, IngredientsRecipesActivity.class);
-        startActivity(intent);
-    }
-
-    public void onSavedRecipes(View view) {
-        Intent intent = new Intent(this, SavedRecipesDev.class);
         startActivity(intent);
     }
     public void onMapsActivity(View view){
@@ -49,5 +49,18 @@ public class Home_Screen_DEV extends AppCompatActivity {
     {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    public void openFavouritesActivity(View view){
+        FavouritesDB db = new FavouritesDB(this);
+
+        ArrayList<RecipeObject> data = db.getAllRecipes();
+        ArrayList<RecipeObject> recipeList = new ArrayList<>();
+
+        Intent intent = new Intent(this, RecipeList.class);
+        intent.putExtra("recipeHeaders", data);
+        intent.putExtra("RecipeTypes","Favourites");
+        startActivity(intent);
+
     }
 }

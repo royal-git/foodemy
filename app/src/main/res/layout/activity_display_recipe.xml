@@ -62,13 +62,13 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@color/design_default_color_primary_dark"/>
+                        android:src="@drawable/ic_timer_black_24dp"/>
                     <TextView
                         android:id="@+id/timeToCook"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginLeft="5dp"
                         android:text="..." />
                 </LinearLayout>
 
@@ -80,13 +80,13 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@color/colorAccent"/>
+                        android:src="@drawable/ic_people_outline_black_24dp"/>
                     <TextView
                         android:id="@+id/servings"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginLeft="5dp"
                         android:text="..." />
                 </LinearLayout>
                 <LinearLayout
@@ -97,13 +97,13 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@color/cardview_shadow_start_color"/>
+                        android:src="@drawable/ic_sprout_outline"/>
                     <TextView
                         android:id="@+id/vegetarian"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginLeft="5dp"
                         android:text="..." />
                 </LinearLayout>
                 <LinearLayout
@@ -113,13 +113,13 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@color/design_default_color_primary"/>
+                        android:src="@drawable/ic_attach_money_black_24dp"/>
                     <TextView
                         android:id="@+id/costRating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                      android:layout_marginStart="20dp"
+                      android:layout_marginStart="5dp"
                         android:text="..." />
                 </LinearLayout>
             </LinearLayout>
@@ -186,6 +186,49 @@
 
 
         <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="20dp"
+          android:layout_marginTop="30dp"
+          android:fontFamily="@font/cambay"
+          android:text="Missing Ingredients"
+          android:textSize="19sp"/>
+        <HorizontalScrollView
+          android:scrollbars="none"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+            <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+                <Button
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginRight="20dp"
+                  android:text="TEST" />
+                <Button
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginRight="20dp"
+                  android:text="TEST" />
+                <Button
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginRight="20dp"
+                  android:text="TEST" />
+                <Button
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginRight="20dp"
+                  android:text="TEST" />
+                <Button
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginRight="20dp"
+                  android:text="TEST" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
           android:layout_marginStart="20dp"
@@ -201,6 +244,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
           android:layout_marginStart="20dp"
+          android:layout_marginEnd="20dp"
           android:text="@string/loading_instructions" />
 
     </LinearLayout>

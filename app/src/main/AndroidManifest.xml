@@ -1,50 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  package="com.example.luvyourleftovers">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.luvyourleftovers">
 
-  <application
-    android:allowBackup="true"
-    android:fullBackupContent="true"
-    android:icon="@mipmap/ic_launcher"
-    android:label="@string/app_name"
-    android:supportsRtl="true"
-    android:theme="@style/AppTheme"
-    tools:ignore="GoogleAppIndexingWarning">
-    <activity
-      android:name=".shopping_cart.ShoppingCart"
-      android:parentActivityName=".Home_Screen_DEV" />
-    <activity
-      android:name=".MainActivity"
-      android:theme="@style/AppTheme.NoActionBar" />
-    <activity
-      android:name=".FindShops"
-      android:parentActivityName=".Home_Screen_DEV" />
-    <activity android:name=".DisplayRecipe" />
-    <activity
-      android:name=".ViewRecipe"
-      android:parentActivityName=".Home_Screen_DEV" />
-    <activity android:name=".Home_Screen_DEV">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
-        <category android:name="android.intent.category.LAUNCHER" />
-      </intent-filter>
-    </activity>
-    <activity
-      android:name=".SavedRecipesDev"
-      android:parentActivityName=".Home_Screen_DEV" />
-    <activity
-      android:name=".IngredientsRecipesActivity"
-      android:parentActivityName=".Home_Screen_DEV" />
+    <application
+        android:allowBackup="true"
+        android:fullBackupContent="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".RecipeList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".shopping_cart.ShoppingCart"
+            android:parentActivityName=".Home_Screen_DEV"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FindShops"
+            android:parentActivityName=".Home_Screen_DEV"
+            android:screenOrientation="portrait" />
+        <activity android:name=".DisplayRecipe"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ViewRecipe"
+            android:parentActivityName=".Home_Screen_DEV"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Home_Screen_DEV"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-    <meta-data
-      android:name="preloaded_fonts"
-      android:resource="@array/preloaded_fonts" />
-  </application>
-  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".IngredientsRecipesActivity"
+            android:parentActivityName=".Home_Screen_DEV"
+            android:screenOrientation="portrait" />
 
-  <uses-permission android:name="android.permission.CAMERA" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
 
 </manifest>

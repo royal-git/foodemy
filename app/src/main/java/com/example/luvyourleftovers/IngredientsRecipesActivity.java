@@ -2,6 +2,7 @@ package com.example.luvyourleftovers;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,36 +12,36 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
+import com.example.luvyourleftovers.basic_classes.APICaller;
+import com.example.luvyourleftovers.basic_classes.APICaller.OnReturnRecipeList;
+import com.example.luvyourleftovers.basic_classes.RecipeObject;
 import com.example.luvyourleftovers.shopping_cart.CartDBHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabeler;
 import com.koushikdutta.async.future.Future;
 import com.koushikdutta.ion.Ion;
-
-import org.apmem.tools.layouts.FlowLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.apmem.tools.layouts.FlowLayout;
+//import xdroid.toaster.Toaster;
 
-public class IngredientsRecipesActivity extends AppCompatActivity implements
-    RecyclerViewAdapter.ItemClickListener {
+public class IngredientsRecipesActivity extends AppCompatActivity {
 
   private static final int CAMERA_REQUEST = 1888;
   private static final int MY_CAMERA_PERMISSION_CODE = 100;
-  RecyclerViewAdapter rvaAdapter;
   ArrayList<String> ingredients;
   private Button searchButton;
   CartDBHelper db;
@@ -57,35 +58,11 @@ public class IngredientsRecipesActivity extends AppCompatActivity implements
     ArrayList<String > recipeHeaders = new ArrayList<>();
     ingredients = new ArrayList<>();
 
-    //TODO: Make this pull dynamically from API (@Royal Thomas)
-    //Add each of the recipe headers to the ArrayList
-
-    recipeHeaders.add("Pikachu Fried");
-    recipeHeaders.add("Chicken");
-    recipeHeaders.add("Yogurt");
-    recipeHeaders.add("Creme Brule");
-    recipeHeaders.add("Profiterol");
-    recipeHeaders.add("Pasta");
-    recipeHeaders.add("Samosa");
-    recipeHeaders.add("Couscous");
-    recipeHeaders.add("Sandwich");
-    recipeHeaders.add("Burger");
-    recipeHeaders.add("Lasagna");
-    recipeHeaders.add("Cheesecake");
-    recipeHeaders.add("Chocolate Mousse");
-    recipeHeaders.add("Soup");
-
-    // set up the RecyclerView
-    RecyclerView recyclerView = findViewById(R.id.rvRecipes);
-    recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    rvaAdapter = new RecyclerViewAdapter(this, recipeHeaders);
-    rvaAdapter.setClickListener(this);
-    recyclerView.setAdapter(rvaAdapter);
 
     // set it up to get user inputs
     final EditText ingredientInputArea = findViewById(R.id.inputBox);
     searchButton = findViewById(R.id.searchButton);
-    Button photoButton = findViewById(R.id.insertPhoto);
+    ImageButton photoButton = findViewById(R.id.insertPhoto);
     photoButton.setOnClickListener(v -> {
       if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
         requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
@@ -106,8 +83,30 @@ public class IngredientsRecipesActivity extends AppCompatActivity implements
 
     // What happens when search button is clicked.
     searchButton.setOnClickListener((view) -> {
-      // TODO add the ingredient to list of previously searched ingredients.
-      performSearch();
+      String formattedInput = android.text.TextUtils.join(",", ingredients);
+
+
+
+      //our Context
+      Context context = this;
+
+      new APICaller(this).fetchRecipes(formattedInput, 5, 1, new OnReturnRecipeList() {
+
+        @Override
+        public void onSuccess(ArrayList<RecipeObject> value) {
+          recipeHeaders.clear();
+
+          for (RecipeObject recipeObject : value) {
+            recipeHeaders.add(recipeObject.getName());
+          }
+          //send To Recipe List
+
+          Intent intent = new Intent(context, RecipeList.class);
+          intent.putExtra("recipeHeaders", value);
+          intent.putExtra("RecipeTypes","searchResult");
+          startActivity(intent);
+        }
+      });
     });
 
   }
@@ -151,14 +150,20 @@ public class IngredientsRecipesActivity extends AppCompatActivity implements
   public void addToContainer(String text) {
     ingredients.add(text);
     searchButton.setVisibility(View.VISIBLE);
-    Button newIngredientButton = new Button(this);
+
+    // Setup new ingredient buttons to allow users to delete their inputs.
+    MaterialButton newIngredientButton = new MaterialButton(this, null, R.attr.borderlessButtonStyle);
     newIngredientButton.setText(text);
+    newIngredientButton.setIcon(
+        ResourcesCompat.getDrawable(getResources(), R.drawable.ic_remove_circle_black_24dp, null));
+    newIngredientButton.setIconTintResource(R.color.red);
+    newIngredientButton.setTextColor(ContextCompat.getColor(this, R.color.black));
+
     final FlowLayout flowLayout = findViewById(R.id.flowLayout);
     flowLayout.addView(newIngredientButton);
 
     newIngredientButton.setOnClickListener((v) -> {
       ingredients.remove(newIngredientButton.getText());
-
       flowLayout.removeView(v);
       if (ingredients.size() == 0) {
         searchButton.setVisibility(View.GONE);
@@ -166,15 +171,6 @@ public class IngredientsRecipesActivity extends AppCompatActivity implements
     });
 
     Toast.makeText(this, ingredients.toString(), Toast.LENGTH_SHORT).show();
-  }
-
-  //TODO: Grab data on link in API Response header (@Royal Thomas is this your part?)
-  @Override
-  public void onItemClick(View view, int position) {
-    //Sending toast message, but it can also call a method to execute any intent/function call available in-app
-    Toast.makeText(this,
-        "You clicked " + rvaAdapter.getItem(position) + " on row number " + (position + 1),
-        Toast.LENGTH_SHORT).show();
   }
 
 
@@ -249,6 +245,7 @@ public class IngredientsRecipesActivity extends AppCompatActivity implements
       }
 
     } catch (Exception ex) {
+      //Toaster.toast("There was an issue connecting to the server for checking if the ingredient is valid.");
       Log.d("IngredientsRecipesActivity", "Ran into issue with checking if ingredient valid");
     }
     return validIngredient;

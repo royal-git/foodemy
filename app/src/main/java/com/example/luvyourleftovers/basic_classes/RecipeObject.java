@@ -1,24 +1,29 @@
 package com.example.luvyourleftovers.basic_classes;
 
 import androidx.core.text.HtmlCompat;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import java.io.Serializable;
 import java.util.ArrayList;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class RecipeObject implements Recipe, Serializable {
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
+    private ArrayList<String> missedIngredients = new ArrayList<>();
     private String instructions;
     private String name;
-    private String image;
+    private String image ="";
     private Boolean isVegan;
     private int timeToCook;
     private int recipeId;
-    private int missingIngredients = 0;
+    private int servings;
+    private boolean cheap;
+
+    public boolean isCheap() {
+        return cheap;
+    }
+
+    public void setCheap(boolean cheap) {
+        this.cheap = cheap;
+    }
+
 
     public RecipeObject(String name, Integer id, String imageUrl) {
         this.image = imageUrl;
@@ -79,16 +84,6 @@ public class RecipeObject implements Recipe, Serializable {
         this.recipeId = id;
     }
 
-    @Override
-    public void addMissingIngredients(int missingCount) {
-        missingIngredients = missingCount;
-    }
-
-    @Override
-    public void incrMissingIngredients() {
-        missingIngredients++;
-    }
-
 
     public String getImageLink() {
         return this.image;
@@ -103,7 +98,7 @@ public class RecipeObject implements Recipe, Serializable {
     }
 
     public int getCountOfMissingIngredients() {
-        return this.missingIngredients;
+        return missedIngredients.size();
     }
 
     public String toString() {
@@ -120,4 +115,19 @@ public class RecipeObject implements Recipe, Serializable {
         return ingredient_delimited + "@@" + getInstructions() + "\n";
     }
 
+    public int getServings() {
+        return servings;
+    }
+
+    public void setServings(int servings) {
+        this.servings = servings;
+    }
+
+    public ArrayList<String> getMissedIngredients() {
+        return missedIngredients;
+    }
+
+    public void setMissedIngredients(ArrayList<String> missedIngredients) {
+        this.missedIngredients = missedIngredients;
+    }
 }
