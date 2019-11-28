@@ -28,7 +28,6 @@ public class ViewRecipe extends AppCompatActivity {
         StringBuilder instructions = new StringBuilder();
         MaterialButton likeButton = findViewById(R.id.like_button);
 
-        favouritesDB.deleteAllRecipes();
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
         Bundle message = intent.getExtras();
@@ -45,14 +44,6 @@ public class ViewRecipe extends AppCompatActivity {
         setupLikeButton(likeButton);
 
         // Add/Remove to favourites based on user action.
-        likeButton.setOnClickListener((View) -> {
-            if(!favouritesDB.ifExists(recipe)){
-                favouritesDB.insertRecipe(recipe);
-            }else{
-                favouritesDB.deleteRecipe(recipe);
-            }
-            setupLikeButton(likeButton);
-        });
 
         // Check if recipe has instructions already.
         if (recipe.getInstructions().isEmpty()) {
@@ -63,6 +54,16 @@ public class ViewRecipe extends AppCompatActivity {
                 }
             });
         }
+
+
+      likeButton.setOnClickListener((View) -> {
+        if(!favouritesDB.ifExists(recipe)){
+          favouritesDB.insertRecipe(recipe);
+        }else{
+          favouritesDB.deleteRecipe(recipe);
+        }
+        setupLikeButton(likeButton);
+      });
 
 //
 //
