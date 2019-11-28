@@ -2,6 +2,7 @@ package com.example.luvyourleftovers;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -93,6 +94,12 @@ public class IngredientsRecipesActivity extends AppCompatActivity implements
     // What happens when search button is clicked.
     searchButton.setOnClickListener((view) -> {
       String formattedInput = android.text.TextUtils.join(",", ingredients);
+
+
+
+      //our Context
+      Context context = this;
+
       new APICaller(this).fetchRecipes(formattedInput, 5, 1, new OnReturnRecipeList() {
 
         @Override
@@ -102,7 +109,13 @@ public class IngredientsRecipesActivity extends AppCompatActivity implements
           for (RecipeObject recipeObject : value) {
             recipeHeaders.add(recipeObject.getName());
           }
+          //send To Recipe List
 
+          Intent intent = new Intent(context, RecipeList.class);
+          intent.putExtra("recipeHeaders", value);
+          intent.putExtra("RecipeTypes","searchResult");
+          startActivity(intent);
+          // TODO no idea if this causes trouble below????
           runOnUiThread(new Runnable() {
             @Override
             public void run() {
