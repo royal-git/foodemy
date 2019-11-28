@@ -1,20 +1,29 @@
 package com.example.luvyourleftovers.basic_classes;
 
 import androidx.core.text.HtmlCompat;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class RecipeObject implements Recipe {
+public class RecipeObject implements Recipe, Serializable {
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
-    private String servings;
-
     private String instructions;
     private String name;
     private String image;
     private Boolean isVegan;
     private int timeToCook;
     private int recipeId;
+    private int servings;
     private int missingIngredients = 0;
+
+    public boolean isCheap() {
+        return cheap;
+    }
+
+    public void setCheap(boolean cheap) {
+        this.cheap = cheap;
+    }
+
+    private boolean cheap;
 
     public RecipeObject(String name, Integer id, String imageUrl) {
         this.image = imageUrl;
@@ -22,20 +31,14 @@ public class RecipeObject implements Recipe {
         this.recipeId = id;
     }
 
-    public RecipeObject(){
-
+    public RecipeObject(String name, Integer id) {
+        this.name = name;
+        this.recipeId = id;
     }
 
-    public void setServings(String servings){
-        this.servings = servings;
-    }
-    public String getServings(){return servings;}
-
-    public void setTimeToCook(String timeToCook){
-        this.timeToCook = timeToCook;
+    public RecipeObject() {
     }
 
-    public String getTimeToCook(){return this.timeToCook;}
     @Override
     public void addIngredient(Ingredient ingredient) {
         ingredients.add(ingredient);
@@ -61,7 +64,6 @@ public class RecipeObject implements Recipe {
         instructions = HtmlCompat.fromHtml(instruction, HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
     }
 
-
     @Override
     public ArrayList<Ingredient> getIngrediantList() {
         return ingredients;
@@ -69,15 +71,13 @@ public class RecipeObject implements Recipe {
 
     @Override
     public String getInstructions() {
-        return instructions;
+        return instructions == null ? "" : instructions;
     }
 
     @Override
     public void addImageLink(String image) {
         this.image = image;
     }
-
-
 
     @Override
     public void addRecipeID(int id) {
@@ -123,5 +123,13 @@ public class RecipeObject implements Recipe {
         }
 
         return ingredient_delimited + "@@" + getInstructions() + "\n";
+    }
+
+    public int getServings() {
+        return servings;
+    }
+
+    public void setServings(int servings) {
+        this.servings = servings;
     }
 }
