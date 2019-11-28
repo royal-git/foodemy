@@ -73,29 +73,7 @@
         android:layout_gravity="center"
         android:visibility="gone" />
 
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:orientation="vertical">
 
-        <TextView
-          android:id="@+id/recipeListHeading"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_below="@+id/searchButton"
-          android:text="@string/recipe_results"
-          android:textSize="20sp"
-          android:textStyle="bold" />
-
-        <androidx.recyclerview.widget.RecyclerView
-          android:id="@+id/rvRecipes"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_below="@+id/recipeListHeading" />
-
-
-      </LinearLayout>
     </LinearLayout>
   </androidx.core.widget.NestedScrollView>
 </RelativeLayout>
