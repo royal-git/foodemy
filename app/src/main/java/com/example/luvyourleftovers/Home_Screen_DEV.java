@@ -34,7 +34,7 @@ public class Home_Screen_DEV extends AppCompatActivity {
     public void onDisplayRecipe(View view) {
         Intent intent = new Intent(this, ViewRecipe.class);
         intent.putExtra("id", 324694);
-        intent.putExtra("recipe", new RecipeObject("Toast", 3, "https://spoonacular.com/recipeImages/Grandmas-Apple-Crisp-645152.jpg"));
+        intent.putExtra("recipe", new RecipeObject("Toast", 479101, "https://spoonacular.com/recipeImages/Grandmas-Apple-Crisp-645152.jpg"));
         startActivity(intent);
     }
 
