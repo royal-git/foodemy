@@ -1,15 +1,10 @@
 package com.example.luvyourleftovers.basic_classes;
 
 import androidx.core.text.HtmlCompat;
-
 import java.util.ArrayList;
 
 public class RecipeObject implements Recipe {
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
-    private String servings;
-    private String timeToCook;
-    private boolean isVegan;
-
     private String instructions;
     private String name;
     private String image;
@@ -25,25 +20,8 @@ public class RecipeObject implements Recipe {
     }
 
     public RecipeObject() {
-    
-
-    public RecipeObject(){
-
     }
 
-    public void setIsVegan(boolean v){this.isVegan = v;}
-    public boolean isVegan(){return this.isVegan;}
-
-    public void setServings(String servings){
-        this.servings = servings;
-    }
-    public String getServings(){return servings;}
-
-    public void setTimeToCook(String timeToCook){
-        this.timeToCook = timeToCook;
-    }
-
-    public String getTimeToCook(){return this.timeToCook;}
     @Override
     public void addIngredient(Ingredient ingredient) {
         ingredients.add(ingredient);
@@ -67,11 +45,6 @@ public class RecipeObject implements Recipe {
 
     public void setInstructions(String instruction) {
         instructions = HtmlCompat.fromHtml(instruction, HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
-    }
-
-    @Override
-    public String getRecipeName() {
-        return this.recipeName;
     }
 
     @Override
