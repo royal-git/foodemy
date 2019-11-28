@@ -9,8 +9,8 @@ public interface Recipe
 
     public String getName();
     public ArrayList<Ingredient> getIngrediantList();
-
     public String getInstructions();
+
     public void addIngredient(Ingredient ingredient);
 
     public void setInstructions(String instruction);
@@ -19,7 +19,4 @@ public interface Recipe
     
     public void addRecipeID(int id);
 
-    public void addMissingIngredients(int missingCount);
-
-    public void incrMissingIngredients(); //increments by 1
 }

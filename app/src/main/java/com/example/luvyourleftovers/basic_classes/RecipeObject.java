@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class RecipeObject implements Recipe, Serializable {
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
+    private ArrayList<String> missedIngredients = new ArrayList<>();
     private String instructions;
     private String name;
     private String image;
@@ -13,7 +14,7 @@ public class RecipeObject implements Recipe, Serializable {
     private int timeToCook;
     private int recipeId;
     private int servings;
-    private int missingIngredients = 0;
+    private boolean cheap;
 
     public boolean isCheap() {
         return cheap;
@@ -23,7 +24,6 @@ public class RecipeObject implements Recipe, Serializable {
         this.cheap = cheap;
     }
 
-    private boolean cheap;
 
     public RecipeObject(String name, Integer id, String imageUrl) {
         this.image = imageUrl;
@@ -84,16 +84,6 @@ public class RecipeObject implements Recipe, Serializable {
         this.recipeId = id;
     }
 
-    @Override
-    public void addMissingIngredients(int missingCount) {
-        missingIngredients = missingCount;
-    }
-
-    @Override
-    public void incrMissingIngredients() {
-        missingIngredients++;
-    }
-
 
     public String getImageLink() {
         return this.image;
@@ -108,7 +98,7 @@ public class RecipeObject implements Recipe, Serializable {
     }
 
     public int getCountOfMissingIngredients() {
-        return this.missingIngredients;
+        return missedIngredients.size();
     }
 
     public String toString() {
@@ -131,5 +121,13 @@ public class RecipeObject implements Recipe, Serializable {
 
     public void setServings(int servings) {
         this.servings = servings;
+    }
+
+    public ArrayList<String> getMissedIngredients() {
+        return missedIngredients;
+    }
+
+    public void setMissedIngredients(ArrayList<String> missedIngredients) {
+        this.missedIngredients = missedIngredients;
     }
 }
