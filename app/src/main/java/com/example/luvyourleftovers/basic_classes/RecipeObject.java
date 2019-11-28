@@ -1,5 +1,8 @@
 package com.example.luvyourleftovers.basic_classes;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.core.text.HtmlCompat;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -10,7 +13,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class RecipeObject implements Recipe, Serializable {
+public class RecipeObject implements Recipe, Serializable{
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
     private String instructions;
     private String name;
@@ -119,5 +122,4 @@ public class RecipeObject implements Recipe, Serializable {
 
         return ingredient_delimited + "@@" + getInstructions() + "\n";
     }
-
 }
