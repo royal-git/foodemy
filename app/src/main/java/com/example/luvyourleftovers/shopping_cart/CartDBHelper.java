@@ -50,7 +50,7 @@ public class CartDBHelper extends SQLiteOpenHelper {
 
         res.moveToFirst();
         while (res.isAfterLast() == false) {
-            items.add(new CartItem(res.getInt(res.getColumnIndex("id")), res.getString(res.getColumnIndex("name")), 1));
+            items.add(new CartItem(res.getInt(res.getColumnIndex("id")), res.getString(res.getColumnIndex("name")), res.getInt(res.getColumnIndex("quantity"))));
             res.moveToNext();
         }
         return items;

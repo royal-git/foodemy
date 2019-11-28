@@ -3,6 +3,7 @@ package com.example.luvyourleftovers;
 import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -198,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements
 
   public void handleImageLebels(List<FirebaseVisionImageLabel> labels) {
     ArrayList<String> results = new ArrayList<>();
-    
+
     for (FirebaseVisionImageLabel label : labels) {
       String text = label.getText();
       if (isRecognizedIngredient(text)) {
@@ -219,6 +220,7 @@ public class MainActivity extends AppCompatActivity implements
             }
           })
           .setCancelable(false)
+          .setNegativeButton("Cancel", null)
           .setMultiChoiceItems(results.toArray(new String[0]), null,
               new DialogInterface.OnMultiChoiceClickListener() {
                 @Override
