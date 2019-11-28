@@ -184,7 +184,17 @@
 
         </LinearLayout>
 
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="20dp"
+          android:layout_marginTop="30dp"
+          android:fontFamily="@font/cambay"
+          android:text="Missing Ingredients"
+          android:textSize="19sp"/>
         <HorizontalScrollView
+          android:scrollbars="none"
           android:layout_width="match_parent"
           android:layout_height="wrap_content">
             <LinearLayout
