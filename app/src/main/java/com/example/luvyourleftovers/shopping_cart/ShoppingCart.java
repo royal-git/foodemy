@@ -1,10 +1,11 @@
 package com.example.luvyourleftovers.shopping_cart;
 
+import android.widget.Toolbar;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -33,6 +34,11 @@ public class ShoppingCart extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
+
+
+
+
+
         db = new CartDBHelper(this);
         recyclerView = (RecyclerView) findViewById(R.id.rv_shoppingcart);
         recyclerView.setHasFixedSize(true);

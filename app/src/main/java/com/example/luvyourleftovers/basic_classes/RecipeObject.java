@@ -1,9 +1,10 @@
 package com.example.luvyourleftovers.basic_classes;
 
 import androidx.core.text.HtmlCompat;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class RecipeObject implements Recipe {
+public class RecipeObject implements Recipe, Serializable {
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
     private String instructions;
     private String name;

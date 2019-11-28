@@ -1,49 +1,64 @@
 package com.example.luvyourleftovers;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.Html;
-import android.view.View;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import com.example.luvyourleftovers.basic_classes.FavouritesDB;
+import com.example.luvyourleftovers.basic_classes.RecipeObject;
+import com.google.android.material.button.MaterialButton;
 import com.google.gson.JsonObject;
-import com.koushikdutta.async.future.Future;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
+import com.squareup.picasso.Picasso;
 
 public class ViewRecipe extends AppCompatActivity {
+
+    FavouritesDB favouritesDB;
+    RecipeObject recipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_recipe);
-
-        int recipeIdentifier = 0;
+        favouritesDB = new FavouritesDB(this);
         String title = null;
         StringBuilder instructions = new StringBuilder();
+        MaterialButton likeButton = findViewById(R.id.like_button);
 
-
+        favouritesDB.deleteAllRecipes();
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
         Bundle message = intent.getExtras();
-        if (message != null) {
-            recipeIdentifier = message.getInt("id");
-            title = message.getString("title");
-            TextView titleView = findViewById(R.id.RecipeDisplayText);
-            titleView.setText(title);
+        recipe = (RecipeObject) intent.getSerializableExtra("recipe");
+        Toast.makeText(this, "Recipe id: " + recipe.getRecipeId(), Toast.LENGTH_SHORT).show();
+        TextView titleView = findViewById(R.id.RecipeDisplayText);
+        titleView.setText(recipe.getName());
+        if (!recipe.getImageLink().isEmpty()) {
+            Picasso.get().load(recipe.getImageLink())
+                .into((ImageView) findViewById(R.id.recipeImage));
         }
+
+        // Code for dealing with favourites.
+
+        setupLikeButton(likeButton);
+
+        likeButton.setOnClickListener((View) -> {
+            if(!favouritesDB.ifExists(recipe)){
+                Toast.makeText(this, "DOES NOT EXIST", Toast.LENGTH_SHORT).show();
+                favouritesDB.insertRecipe(recipe);
+            }else{
+                favouritesDB.deleteRecipe(recipe);
+            }
+            setupLikeButton(likeButton);
+        });
+
+
 
 
         Ion.getDefault(this).getConscryptMiddleware().enable(false);
@@ -81,5 +96,16 @@ public class ViewRecipe extends AppCompatActivity {
 
 
         // Set the text box to this value;
+    }
+
+    public void setupLikeButton(MaterialButton button) {
+        if (favouritesDB.ifExists(recipe)) {
+            button
+                .setIconTint(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.red)));
+        }else{
+
+            button
+                .setIconTint(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.grey)));
+        }
     }
 }

@@ -15,10 +15,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.luvyourleftovers.basic_classes.APICaller;
+import com.example.luvyourleftovers.basic_classes.APICaller.OnReturnRecipeList;
+import com.example.luvyourleftovers.basic_classes.RecipeObject;
 import com.example.luvyourleftovers.shopping_cart.CartDBHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -44,11 +49,20 @@ public class MainActivity extends AppCompatActivity implements
   CartDBHelper db;
   FirebaseVisionImageLabeler detector;
 
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     db = new CartDBHelper(this);
+
+    APICaller mApiCaller = new APICaller(this);
+    mApiCaller.fetchRecipes("apple, cream", 2, 1, new OnReturnRecipeList() {
+      @Override
+      public void onSuccess(ArrayList<RecipeObject> value) {
+        System.out.println(value.get(0).getInstructions());
+      }
+    });
 
     // data to populate the RecyclerView with
     ArrayList<String> recipeHeaders = new ArrayList<>();

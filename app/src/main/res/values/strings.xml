@@ -20,4 +20,8 @@
     <string name="open_shopping_cart">Open Shopping Cart</string>
 
     <string name="description">Description: </string>
+  <string name="about">About</string>
+    <string name="loading_about">Loading about...</string>
+    <string name="loading_instructions">Loading Instructions</string>
+    <string name="instructions">Instructions</string>
 </resources>
