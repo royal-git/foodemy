@@ -34,6 +34,9 @@ public class RecipeList extends AppCompatActivity implements  RecyclerViewAdapte
 //            Log.d("recipe", recipe);
 //        }
 
+        for (RecipeObject recipe : recipeHeaders) {
+            System.out.println(recipe.getImageLink());
+        }
         String recipeListHeading = getIntent().getStringExtra("RecipeTypes");
         TextView header = (TextView)findViewById(R.id.textView);
         //Set the heading text of the current recipe list (favourites, search results)
