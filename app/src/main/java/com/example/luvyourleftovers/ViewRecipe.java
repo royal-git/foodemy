@@ -36,21 +36,20 @@ public class ViewRecipe extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle message = intent.getExtras();
         recipe = (RecipeObject) intent.getSerializableExtra("recipe");
-        Toast.makeText(this, "Recipe id: " + recipe.getRecipeId(), Toast.LENGTH_SHORT).show();
         TextView titleView = findViewById(R.id.RecipeDisplayText);
         titleView.setText(recipe.getName());
+
         if (!recipe.getImageLink().isEmpty()) {
             Picasso.get().load(recipe.getImageLink())
                 .into((ImageView) findViewById(R.id.recipeImage));
         }
 
         // Code for dealing with favourites.
-
         setupLikeButton(likeButton);
 
+        // Add/Remove to favourites based on user action.
         likeButton.setOnClickListener((View) -> {
             if(!favouritesDB.ifExists(recipe)){
-                Toast.makeText(this, "DOES NOT EXIST", Toast.LENGTH_SHORT).show();
                 favouritesDB.insertRecipe(recipe);
             }else{
                 favouritesDB.deleteRecipe(recipe);
