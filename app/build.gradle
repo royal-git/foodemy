@@ -30,6 +30,7 @@ android {
 
 dependencies {
     implementation 'com.koushikdutta.ion:ion:3.0.0'
+    implementation 'com.shamanland:xdroid-toaster:0.0.5'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'org.apmem.tools:layouts:1.10@aar'
     implementation 'androidx.appcompat:appcompat:1.1.0'

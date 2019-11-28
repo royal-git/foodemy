@@ -2,30 +2,24 @@ package com.example.luvyourleftovers.basic_classes;
 
 
 import android.content.Context;
-import android.util.Log;
 
-import com.google.gson.JsonArray;
+import com.example.luvyourleftovers.R;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.koushikdutta.async.future.Future;
-import com.koushikdutta.ion.Ion;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
+import xdroid.toaster.Toaster;
 
 /**
  * Class to call the Spoonacular API
  */
 public class APICaller {
 
-  private String api = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/"; //spoonacular API Endpoint
-  private String apiKey = "&apiKey=d***REMOVED***"; //your personal API Key
   private Context context;
 
   public APICaller(Context context) {
@@ -83,10 +77,10 @@ public class APICaller {
       @Override
       public void run() {
         OkHttpClient client = new OkHttpClient();
+
         Request request = new Request.Builder()
             .url(
-                "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi" +
-                    ".com/recipes/findByIngredients?number=" + limit + "&ranking=" + ranking
+                "https://api.spoonacular.com/recipes/findByIngredients?number=" + limit + "&ranking=" + ranking
                     + "&ignorePantry" +
                     "=false&ingredients=" + ingredients)
             .get()
@@ -109,6 +103,7 @@ public class APICaller {
           }
         } catch (Exception ex) {
           ex.printStackTrace();
+          Toaster.toast(context.getString(R.string.error_api_message));
         }
       }
     }).start();

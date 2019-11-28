@@ -34,6 +34,8 @@ import java.util.List;
 import java.util.Objects;
 import org.apmem.tools.layouts.FlowLayout;
 
+import xdroid.toaster.Toaster;
+
 public class IngredientsRecipesActivity extends AppCompatActivity implements
     RecyclerViewAdapter.ItemClickListener {
 
@@ -55,24 +57,6 @@ public class IngredientsRecipesActivity extends AppCompatActivity implements
     // data to populate the RecyclerView with
     ArrayList<String > recipeHeaders = new ArrayList<>();
     ingredients = new ArrayList<>();
-
-    //TODO: Make this pull dynamically from API (@Royal Thomas)
-    //Add each of the recipe headers to the ArrayList
-
-    recipeHeaders.add("Pikachu Fried");
-    recipeHeaders.add("Chicken");
-    recipeHeaders.add("Yogurt");
-    recipeHeaders.add("Creme Brule");
-    recipeHeaders.add("Profiterol");
-    recipeHeaders.add("Pasta");
-    recipeHeaders.add("Samosa");
-    recipeHeaders.add("Couscous");
-    recipeHeaders.add("Sandwich");
-    recipeHeaders.add("Burger");
-    recipeHeaders.add("Lasagna");
-    recipeHeaders.add("Cheesecake");
-    recipeHeaders.add("Chocolate Mousse");
-    recipeHeaders.add("Soup");
 
     // set up the RecyclerView
     RecyclerView recyclerView = findViewById(R.id.rvRecipes);
@@ -110,6 +94,7 @@ public class IngredientsRecipesActivity extends AppCompatActivity implements
         @Override
         public void onSuccess(ArrayList<RecipeObject> value) {
           for (RecipeObject recipeObject : value) {
+            //Add each of the recipe headers to the ArrayList
             recipeHeaders.add(recipeObject.getName());
           }
         }
@@ -256,6 +241,7 @@ public class IngredientsRecipesActivity extends AppCompatActivity implements
       }
 
     } catch (Exception ex) {
+      Toaster.toast("There was an issue connecting to the server for checking if the ingredient is valid.");
       Log.d("IngredientsRecipesActivity", "Ran into issue with checking if ingredient valid");
     }
     return validIngredient;
