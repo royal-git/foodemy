@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.luvyourleftovers.basic_classes.APICaller;
@@ -23,6 +25,7 @@ import com.example.luvyourleftovers.basic_classes.RecipeObject;
 import com.example.luvyourleftovers.shopping_cart.CartDBHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel;
@@ -150,14 +153,20 @@ public class IngredientsRecipesActivity extends AppCompatActivity implements
   public void addToContainer(String text) {
     ingredients.add(text);
     searchButton.setVisibility(View.VISIBLE);
-    Button newIngredientButton = new Button(this);
+
+    // Setup new ingredient buttons to allow users to delete their inputs.
+    MaterialButton newIngredientButton = new MaterialButton(this, null, R.attr.borderlessButtonStyle);
     newIngredientButton.setText(text);
+    newIngredientButton.setIcon(
+        ResourcesCompat.getDrawable(getResources(), R.drawable.ic_remove_circle_black_24dp, null));
+    newIngredientButton.setIconTintResource(R.color.red);
+    newIngredientButton.setTextColor(ContextCompat.getColor(this, R.color.black));
+
     final FlowLayout flowLayout = findViewById(R.id.flowLayout);
     flowLayout.addView(newIngredientButton);
 
     newIngredientButton.setOnClickListener((v) -> {
       ingredients.remove(newIngredientButton.getText());
-
       flowLayout.removeView(v);
       if (ingredients.size() == 0) {
         searchButton.setVisibility(View.GONE);
