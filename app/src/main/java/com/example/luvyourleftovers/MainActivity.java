@@ -14,20 +14,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.luvyourleftovers.basic_classes.APICaller;
-import com.example.luvyourleftovers.basic_classes.Recipe;
 import com.example.luvyourleftovers.basic_classes.RecipeObject;
-import com.example.luvyourleftovers.shopping_cart.CartItem;
 import com.example.luvyourleftovers.shopping_cart.CartDBHelper;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
@@ -35,11 +30,9 @@ import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabeler;
 import com.koushikdutta.async.future.Future;
 import com.koushikdutta.ion.Ion;
-
-import org.apmem.tools.layouts.FlowLayout;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.apmem.tools.layouts.FlowLayout;
 
 public class MainActivity extends AppCompatActivity implements
     RecyclerViewAdapter.ItemClickListener {
@@ -59,12 +52,14 @@ public class MainActivity extends AppCompatActivity implements
     db = new CartDBHelper(this);
 
     APICaller mApiCaller = new APICaller(this);
-    mApiCaller.fetchRecipes("banana, bread, chocolate", 20, 1, new APICaller.OnReturnRecipeList() {
-      @Override
-      public void onSuccess(ArrayList<RecipeObject> recipeList) {
-        // recipeList contains the recipe objects, do something with it.
-      }
-    });
+    mApiCaller.fetchRecipes(
+        "banana, bread, chocolate", 20, 1,
+        new APICaller.OnReturnRecipeList() {
+          @Override
+          public void onSuccess(ArrayList<RecipeObject> recipeList) {
+            // recipeList contains the recipe objects, do something with it.
+          }
+        });
 
     // data to populate the RecyclerView with
     ArrayList<String> recipeHeaders = new ArrayList<>();
@@ -200,46 +195,41 @@ public class MainActivity extends AppCompatActivity implements
     Task<List<FirebaseVisionImageLabel>> result =
         detector.processImage(image)
             .addOnSuccessListener(
-                new OnSuccessListener<List<FirebaseVisionImageLabel>>() {
-                  @Override
-                  public void onSuccess(List<FirebaseVisionImageLabel> labels) {
-                    StringBuilder output = new StringBuilder();
+                labels -> {
+                  StringBuilder output = new StringBuilder();
 
-                    for (FirebaseVisionImageLabel label : labels) {
-                      String text = label.getText();
-                      if (isRecognizedIngredient(text)) {
-                        results.add(text);
-                      }
+                  for (FirebaseVisionImageLabel label : labels) {
+                    String text = label.getText();
+                    if (isRecognizedIngredient(text)) {
+                      results.add(text);
                     }
-                    if (results.size() > 0) {
-                      AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                      ArrayList<String> selections = new ArrayList<>();
-                      builder.setTitle("Find any items?")
-                          .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                              selections.forEach((value) -> {
-                                addToContainer(value);
-                              });
-                            }
-                          })
-                          .setCancelable(false)
-                          .setMultiChoiceItems(results.toArray(new String[0]), null,
-                              new DialogInterface.OnMultiChoiceClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which,
-                                    boolean isChecked) {
-                                  selections.add(results.get(which));
-                                }
-                              });
-                      builder.show();
-                    } else {
-                      Toast.makeText(context, "Didn't find any ingredients, oops!",
-                          Toast.LENGTH_SHORT).show();
-                    }
-
                   }
-
+                  if (results.size() > 0) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    ArrayList<String> selections = new ArrayList<>();
+                    builder.setTitle("Find any items?")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                          @Override
+                          public void onClick(DialogInterface dialogInterface, int i) {
+                            selections.forEach((value) -> {
+                              addToContainer(value);
+                            });
+                          }
+                        })
+                        .setCancelable(false)
+                        .setMultiChoiceItems(results.toArray(new String[0]), null,
+                            new DialogInterface.OnMultiChoiceClickListener() {
+                              @Override
+                              public void onClick(DialogInterface dialog, int which,
+                                  boolean isChecked) {
+                                selections.add(results.get(which));
+                              }
+                            });
+                    builder.show();
+                  } else {
+                    Toast.makeText(context, "Didn't find any ingredients, oops!",
+                        Toast.LENGTH_SHORT).show();
+                  }
 
                 })
             .addOnFailureListener(
