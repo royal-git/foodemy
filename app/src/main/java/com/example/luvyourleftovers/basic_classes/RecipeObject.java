@@ -1,14 +1,8 @@
 package com.example.luvyourleftovers.basic_classes;
 
 import androidx.core.text.HtmlCompat;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import java.io.Serializable;
 import java.util.ArrayList;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class RecipeObject implements Recipe, Serializable {
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
@@ -18,7 +12,18 @@ public class RecipeObject implements Recipe, Serializable {
     private Boolean isVegan;
     private int timeToCook;
     private int recipeId;
+    private int servings;
     private int missingIngredients = 0;
+
+    public boolean isCheap() {
+        return cheap;
+    }
+
+    public void setCheap(boolean cheap) {
+        this.cheap = cheap;
+    }
+
+    private boolean cheap;
 
     public RecipeObject(String name, Integer id, String imageUrl) {
         this.image = imageUrl;
@@ -120,4 +125,11 @@ public class RecipeObject implements Recipe, Serializable {
         return ingredient_delimited + "@@" + getInstructions() + "\n";
     }
 
+    public int getServings() {
+        return servings;
+    }
+
+    public void setServings(int servings) {
+        this.servings = servings;
+    }
 }
