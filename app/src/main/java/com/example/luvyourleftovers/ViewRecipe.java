@@ -39,8 +39,6 @@ public class ViewRecipe extends AppCompatActivity {
         if (!recipe.getImageLink().isEmpty()) {
             Picasso.get().load(recipe.getImageLink())
                 .into((ImageView) findViewById(R.id.recipeImage));
-        }else{
-            System.out.println("TESTSTSTADASDASDASDSAD");
         }
 
         // Code for dealing with favourites.
