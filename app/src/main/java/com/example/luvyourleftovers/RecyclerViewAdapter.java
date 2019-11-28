@@ -44,8 +44,8 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String animal = mData.get(position);
-        holder.myTextView.setText(animal);
+        String recipe = mData.get(position);
+        holder.myTextView.setText(recipe);
     }
 
     //get size of list (number of items)
@@ -61,7 +61,7 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.tvRecipeTitle);
+            myTextView = itemView.findViewById(R.id.recipe_name);
             itemView.setOnClickListener(this);
         }
 

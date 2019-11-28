@@ -7,12 +7,13 @@ public interface Recipe
     //private ArrayList<Ingredient> ingredients = new ArrayList<>();
     //private ArrayList<String> instructions = new ArrayList<>();
 
+    public String getName();
     public ArrayList<Ingredient> getIngrediantList();
 
-    public ArrayList<String> getInstructions();
+    public String getInstructions();
     public void addIngredient(Ingredient ingredient);
 
-    public void addInstruction(String instruction);
+    public void setInstructions(String instruction);
 
     public void addImageLink(String image);
     

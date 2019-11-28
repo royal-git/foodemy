@@ -1,9 +1,15 @@
 package com.example.luvyourleftovers;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,7 +18,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.luvyourleftovers.basic_classes.Ingredient;
+import com.example.luvyourleftovers.basic_classes.IngredientObject;
 import com.example.luvyourleftovers.basic_classes.Recipe;
+import com.example.luvyourleftovers.basic_classes.RecipeObject;
+import com.example.luvyourleftovers.shopping_cart.CartItem;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -30,120 +39,60 @@ import static com.example.luvyourleftovers.basic_classes.Ingredient.*;
  **/
 public class SavedRecipesDev extends AppCompatActivity {
 
-    public static class savedIngredients implements Ingredient
-    {
-        private String name;
-        private Types type;
 
-        private boolean isInStock;
+    private class favouritesDBHelper extends SQLiteOpenHelper {
+        /** @author: Royal Thomas (blame it all on him) **/
+        public static final String DATABASE_NAME = "Favourites.db";
+
+        public favouritesDBHelper(@Nullable Context context) {
+            super(context, DATABASE_NAME, null, 1);
+        }
 
 
-        public savedIngredients(String name, int type){
-            this.name = name;
-            this.type = Types.values()[5];
-            isInStock = true;
+        @Override
+        public void onCreate(SQLiteDatabase sqLiteDatabase) {
+            sqLiteDatabase.execSQL("create table favourites (id integer primary key, name text, ingredients text, instructions text, recipe_id int)");
         }
 
         @Override
-        public String getName() {
-            return this.name;
+        public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS favourites");
+            onCreate(sqLiteDatabase);
         }
 
-        @Override
-        public void setName(String name) {
-            this.name = name;
+        public void insertRecipe(RecipeObject recipe) {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put("name", recipe.getName());
+            String ingredientsList = TextUtils.join(", ", recipe.getIngrediantList());
+            values.put("ingredients", ingredientsList);
+            String instructionList = recipe.getInstructions();
+            values.put("instructions", instructionList);
+            values.put("recipe_id", recipe.getRecipeId());
+            db.insert("favourites", null, values);
         }
 
-        @Override
-        public void setType(Types type) {
-            this.type = Types.values()[5];
+
+        public ArrayList<RecipeObject> getAllRecipes() {
+            ArrayList<RecipeObject> recipes = new ArrayList<RecipeObject>();
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor res = db.rawQuery("select * from favourites", null);
+
+            res.moveToFirst();
+            while (res.isAfterLast() == false) {
+                recipes.add(new RecipeObject(res.getString(res.getColumnIndex("name")), 0));
+                res.moveToNext();
+            }
+            return recipes;
         }
 
-        @Override
-        public void haveIngredient(boolean isInStock) {
-            this.isInStock = isInStock;
-        }
     }
 
+    /*
+        TODO: change this whole class to a normal java class that will send user to DisplayRecipe
+         Activity with a list of RecipeObjects built from the given DB.
+     */
 
-    public static class savedRecipe implements Recipe
-    {
-
-        private ArrayList<Ingredient> ingredients = new ArrayList<>();
-        private ArrayList<String> instructions = new ArrayList<>();
-
-        private String image;
-        private int recipeId;
-        private int missingIngredients=0;
-
-        @Override
-        public void addIngredient(Ingredient ingredient) {
-            ingredients.add(ingredient);
-        }
-
-        @Override
-        public void addInstruction(String instruction) {
-            instructions.add(instruction);
-        }
-
-        @Override
-        public ArrayList<Ingredient> getIngrediantList() {
-            return ingredients;
-        }
-
-        @Override
-        public ArrayList<String> getInstructions() {
-            return instructions;
-        }
-
-        @Override
-        public void addImageLink(String image) {
-            this.image = image;
-        }
-
-        @Override
-        public void addRecipeID(int id) {
-            this.recipeId = id;
-        }
-
-        @Override
-        public void addMissingIngredients(int missingCount) {
-            missingIngredients = missingCount;
-        }
-
-        @Override
-        public void incrMissingIngredients() {
-            missingIngredients++;
-        }
-
-
-        public String getImageLink(){return this.image;}
-        public int getRecipeId(){return this.recipeId;}
-        public int getCountOfMissingIngredients(){return this.missingIngredients;}
-
-        public String toString(){
-            String ingredient_delimited = "";
-            int i =0;
-            for(Ingredient ingredient: ingredients){
-                if(i-1 == ingredients.size())
-                    ingredient_delimited+=ingredient.getName();
-                else
-                    ingredient_delimited+=ingredient.getName()+",";
-                i++;
-            }
-
-            String instruction_delimited = "";
-            i =0;
-            for(String instruction: instructions){
-                if(i-1 == ingredients.size())
-                    instruction_delimited+=instruction;
-                else
-                    instruction_delimited+=instruction+",";
-                i++;
-            }
-            return ingredient_delimited+"@@"+instruction_delimited+"\n";
-        }
-    }
 
     public void makeRecipes(Context context){
 
@@ -159,15 +108,15 @@ public class SavedRecipesDev extends AppCompatActivity {
             ArrayList<Ingredient> ingredients = new ArrayList<>();
 
             for (String ingredient : ingredient_names) {
-                savedIngredients ingr = new savedIngredients(ingredient, 0);
+                IngredientObject ingr = new IngredientObject(ingredient, 0);
                 ingredients.add(ingr);
 
             }
 
-            ArrayList<savedRecipe> saved_recipes = new ArrayList<>();
+            ArrayList<RecipeObject> saved_recipes = new ArrayList<>();
             for (int i = 0; i < 5; i++) {
                 int j = 0;
-                savedRecipe newRecipe = new savedRecipe();
+                RecipeObject newRecipe = new RecipeObject();
                 // add 3 random ingredients to the recipe list.
                 while (j < 3) {
                     double randomDouble = Math.random();
@@ -177,8 +126,7 @@ public class SavedRecipesDev extends AppCompatActivity {
                     newRecipe.addIngredient(ingredients.get(randomInt));
                     j++;
                 }
-                newRecipe.addInstruction("Stop being dumb");
-                newRecipe.addInstruction("Fool!");
+                newRecipe.setInstructions("Stop being dumb, fool!");
                 saved_recipes.add(newRecipe);
             }
 
@@ -186,9 +134,9 @@ public class SavedRecipesDev extends AppCompatActivity {
         }
     }
 
-    public void writeRecipes(ArrayList<savedRecipe> recipes, Context context){
+    public void writeRecipes(ArrayList<RecipeObject> recipes, Context context){
         String data = "";
-        for(savedRecipe recipe: recipes)
+        for(RecipeObject recipe: recipes)
             data += recipe.toString();
 
         try{

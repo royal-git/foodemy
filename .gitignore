@@ -32,3 +32,5 @@ app/build
 .idea/
 
 local.properties
+
+*.iml

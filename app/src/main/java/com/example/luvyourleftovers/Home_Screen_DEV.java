@@ -1,11 +1,10 @@
 package com.example.luvyourleftovers;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.luvyourleftovers.shopping_cart.ShoppingCart;
 
 public class Home_Screen_DEV extends AppCompatActivity {
 
@@ -13,11 +12,13 @@ public class Home_Screen_DEV extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home__screen__dev);
+
+
     }
 
 
     public void onMakeRecipe(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, IngredientsRecipesActivity.class);
         startActivity(intent);
     }
 
@@ -34,5 +35,12 @@ public class Home_Screen_DEV extends AppCompatActivity {
         intent.putExtra("id", 324694);
         intent.putExtra("title", "Silver Dollar Buttermilk-Pecan Pancakes with Bourbon Molasses Butter and Maple Syrup");
         startActivity(intent);
+    }
+
+    public void onOpenShoppingCart(View view){
+
+        Intent intent = new Intent(this, ShoppingCart.class);
+        startActivity(intent);
+
     }
 }
