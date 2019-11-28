@@ -40,8 +40,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.ItemClickListener {
-
+public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.ItemClickListener
+{
     private static final int CAMERA_REQUEST = 1888;
     private ImageView imageView;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     Button searchButton;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -87,12 +87,18 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         final EditText ingredientInputArea = findViewById(R.id.inputBox);
         searchButton = findViewById(R.id.searchButton);
         Button photoButton = findViewById(R.id.insertPhoto);
-        photoButton.setOnClickListener(new View.OnClickListener() {
+
+        photoButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            public void onClick(View v)
+            {
+                if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+                {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
-                } else {
+                }
+                else
+                {
                     Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(cameraIntent, CAMERA_REQUEST);
                 }
@@ -101,16 +107,20 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
 
         // User inserts an ingredient.
-        findViewById(R.id.insertButton).setOnClickListener((view) -> {
+        findViewById(R.id.insertButton).setOnClickListener((view) ->
+        {
             String input = ingredientInputArea.getText().toString();
-            if (!input.isEmpty()) {
+
+            if (!input.isEmpty())
+            {
                 addToContainer(ingredientInputArea.getText().toString());
                 ingredientInputArea.setText("");
             }
         });
 
         // What happens when search button is clicked.
-        searchButton.setOnClickListener((view) -> {
+        searchButton.setOnClickListener((view) ->
+        {
             // TODO add the ingredient to list of previously searched ingredients.
             performSearch();
         });
@@ -118,14 +128,20 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == MY_CAMERA_PERMISSION_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+        if (requestCode == MY_CAMERA_PERMISSION_CODE)
+        {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
                 Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
-            } else {
+            }
+            else
+            {
                 Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
             }
         }
@@ -133,39 +149,48 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+
+        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK)
+        {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(photo);
-            FirebaseVisionImageLabeler detector = FirebaseVision.getInstance()
-                    .getCloudImageLabeler();
+            FirebaseVisionImageLabeler detector = FirebaseVision.getInstance().getCloudImageLabeler();
             callDetector(detector, image, this);
-
         }
     }
 
 
-    public void performSearch() {
+    public void performSearch()
+    {
         String formattedInput = android.text.TextUtils.join(",", ingredients);
         Toast.makeText(this, formattedInput, Toast.LENGTH_SHORT).show();
     }
 
 
-    public void addToContainer(String text) {
+    public void addToContainer(String text)
+    {
         ingredients.add(text);
         searchButton.setVisibility(View.VISIBLE);
+
         Button newIngredientButton = new Button(this);
         newIngredientButton.setText(text);
+
         final FlowLayout flowLayout = findViewById(R.id.flowLayout);
         flowLayout.addView(newIngredientButton);
 
-        newIngredientButton.setOnClickListener((v) -> {
+        newIngredientButton.setOnClickListener((v) ->
+        {
             ingredients.remove(newIngredientButton.getText());
             
             flowLayout.removeView(v);
+
             if (ingredients.size() == 0)
+            {
                 searchButton.setVisibility(View.GONE);
+            }
         });
 
         Toast.makeText(this, ingredients.toString(), Toast.LENGTH_SHORT).show();
@@ -173,85 +198,99 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
     //TODO: Grab data on link in API Response header (@Royal Thomas is this your part?)
     @Override
-    public void onItemClick(View view, int position) {
+    public void onItemClick(View view, int position)
+    {
         //Sending toast message, but it can also call a method to execute any intent/function call available in-app
         Toast.makeText(this, "You clicked " + rvaAdapter.getItem(position) + " on row number " + (position + 1), Toast.LENGTH_SHORT).show();
     }
 
 
-    protected void callDetector(FirebaseVisionImageLabeler detector, FirebaseVisionImage image, Context context) {
+    protected void callDetector(FirebaseVisionImageLabeler detector, FirebaseVisionImage image, Context context)
+    {
         ArrayList<String> results = new ArrayList<>();
         Toast.makeText(context, "Generating Result, Hold on!", Toast.LENGTH_SHORT).show();
-        Task<List<FirebaseVisionImageLabel>> result =
-                detector.processImage(image)
+
+        Task<List<FirebaseVisionImageLabel>> result  = detector.processImage(image)
                         .addOnSuccessListener(
                                 new OnSuccessListener<List<FirebaseVisionImageLabel>>() {
                                     @Override
-                                    public void onSuccess(List<FirebaseVisionImageLabel> labels) {
+                                    public void onSuccess(List<FirebaseVisionImageLabel> labels)
+                                    {
                                         StringBuilder output = new StringBuilder();
 
-                                        for (FirebaseVisionImageLabel label : labels) {
+                                        for (FirebaseVisionImageLabel label : labels)
+                                        {
                                             String text = label.getText();
                                             if (isRecognizedIngredient(text))
                                                 results.add(text);
                                         }
-                                        if (results.size() > 0) {
+
+                                        if (results.size() > 0)
+                                        {
                                             AlertDialog.Builder builder = new AlertDialog.Builder(context);
                                             ArrayList<String> selections = new ArrayList<>();
-                                            builder.setTitle("Find any items?")
-                                                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                            builder.setTitle("Find any items?").setPositiveButton("Ok", new DialogInterface.OnClickListener()
+                                                    {
                                                         @Override
-                                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                                        public void onClick(DialogInterface dialogInterface, int i)
+                                                        {
                                                             selections.forEach((value) -> {
                                                                 addToContainer(value);
                                                             });
                                                         }
                                                     })
                                                     .setCancelable(false)
-                                                    .setMultiChoiceItems(results.toArray(new String[0]), null, new DialogInterface.OnMultiChoiceClickListener() {
+                                                    .setMultiChoiceItems(results.toArray(new String[0]), null, new DialogInterface.OnMultiChoiceClickListener()
+                                                    {
                                                         @Override
-                                                        public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                                                        public void onClick(DialogInterface dialog, int which, boolean isChecked)
+                                                        {
                                                             selections.add(results.get(which));
                                                         }
                                                     });
                                             builder.show();
-                                        } else {
+                                        }
+                                        else
+                                        {
                                             Toast.makeText(context, "Didn't find any ingredients, oops!", Toast.LENGTH_SHORT).show();
                                         }
-
                                     }
-
-
                                 })
                         .addOnFailureListener(
-                                new OnFailureListener() {
+                                new OnFailureListener()
+                                {
                                     @Override
-                                    public void onFailure(@NonNull Exception e) {
+                                    public void onFailure(@NonNull Exception e)
+                                    {
                                         System.out.println(e);
                                     }
                                 });
 
     }
 
-    Boolean isRecognizedIngredient(String ingredient) {
+    Boolean isRecognizedIngredient(String ingredient)
+    {
         Boolean validIngredient = false;
         Future<String> result = Ion.with(this).load("http://royalthomas.me/checkIngredient.php?ingredient=" + uriEncode(ingredient)).asString();
-        try {
-            ;
-            if (result.get().contains("True")) {
+
+        try
+        {
+            if (result.get().contains("True"))
+            {
                 validIngredient = true;
                 System.out.println("YES??!???AS?DAS" + ingredient);
             }
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             System.out.println(ex);
         }
 
         return validIngredient;
     }
 
-    String uriEncode(String input) {
+    String uriEncode(String input)
+    {
         return input.replaceAll(" ", "+").toLowerCase();
     }
-
-
 }
