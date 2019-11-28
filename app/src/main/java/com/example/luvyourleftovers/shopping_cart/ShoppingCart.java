@@ -107,11 +107,9 @@ class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
 
         removeButton.setOnClickListener((View) -> {
             CartDBHelper db = new CartDBHelper(View.getContext());
-
             db.removeItem(id);
             dataSet.remove(listPosition);
             notifyDataSetChanged();
-
         });
     }
 
