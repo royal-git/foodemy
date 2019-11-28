@@ -2,14 +2,10 @@ package com.example.luvyourleftovers.basic_classes;
 
 
 import android.content.Context;
-
-import com.example.luvyourleftovers.R;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import java.util.ArrayList;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Request.Builder;
@@ -44,7 +40,7 @@ public class APICaller {
       @Override
       public void run() {
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
+        Request request = new Builder()
             .url("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" + id
                 + "/information")
             .get()
@@ -60,7 +56,13 @@ public class APICaller {
             System.out.println(element);
             recipe.setIsVegan(element.get("vegan").getAsBoolean());
             recipe.setTimeToCook(element.get("readyInMinutes").getAsInt());
-            recipe.setInstructions(element.get("instructions").getAsString());
+            if (!element.get("instructions").isJsonNull()) {
+              recipe.setInstructions(element.get("instructions").getAsString());
+            } else {
+              recipe.setInstructions(
+                  "Server does not have instructions for this recipe. Seems quite simple though, "
+                      + "doesn't it? Look at the image, the ingredients and do it - just do it!");
+            }
             recipe.setServings(element.get("servings").getAsInt());
             recipe.setCheap(element.get("cheap").getAsBoolean());
             callback.onSuccess(true);
@@ -98,9 +100,9 @@ public class APICaller {
           if (responseJson.isJsonArray()) {
             responseJson.getAsJsonArray().forEach((element) -> {
               JsonObject returnObject = element.getAsJsonObject();
-              String name = returnObject.get("title").toString();
+              String name = returnObject.get("title").getAsString();
               Integer id = Integer.parseInt(returnObject.get("id").toString());
-              String image = returnObject.get("image").toString();
+              String image = returnObject.get("image").getAsString();
               recipes.add(new RecipeObject(name, id, image));
             });
             callback.onSuccess(recipes);

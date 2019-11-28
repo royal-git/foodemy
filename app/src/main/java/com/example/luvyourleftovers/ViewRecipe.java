@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import com.example.luvyourleftovers.basic_classes.APICaller;
@@ -32,11 +33,14 @@ public class ViewRecipe extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle message = intent.getExtras();
         recipe = (RecipeObject) intent.getSerializableExtra("recipe");
+        Toast.makeText(this, recipe.getName(), Toast.LENGTH_SHORT).show();
         TextView titleView = findViewById(R.id.RecipeDisplayText);
         titleView.setText(recipe.getName());
         if (!recipe.getImageLink().isEmpty()) {
             Picasso.get().load(recipe.getImageLink())
                 .into((ImageView) findViewById(R.id.recipeImage));
+        }else{
+            System.out.println("TESTSTSTADASDASDASDSAD");
         }
 
         // Code for dealing with favourites.

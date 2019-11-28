@@ -12,14 +12,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import com.example.luvyourleftovers.basic_classes.APICaller;
 import com.example.luvyourleftovers.basic_classes.APICaller.OnReturnRecipeList;
 import com.example.luvyourleftovers.basic_classes.RecipeObject;
@@ -39,12 +38,10 @@ import java.util.Objects;
 import org.apmem.tools.layouts.FlowLayout;
 //import xdroid.toaster.Toaster;
 
-public class IngredientsRecipesActivity extends AppCompatActivity implements
-    RecyclerViewAdapter.ItemClickListener {
+public class IngredientsRecipesActivity extends AppCompatActivity {
 
   private static final int CAMERA_REQUEST = 1888;
   private static final int MY_CAMERA_PERMISSION_CODE = 100;
-  RecyclerViewAdapter rvaAdapter;
   ArrayList<String> ingredients;
   private Button searchButton;
   CartDBHelper db;
@@ -61,17 +58,11 @@ public class IngredientsRecipesActivity extends AppCompatActivity implements
     ArrayList<String > recipeHeaders = new ArrayList<>();
     ingredients = new ArrayList<>();
 
-    // set up the RecyclerView
-    RecyclerView recyclerView = findViewById(R.id.rvRecipes);
-    recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    rvaAdapter = new RecyclerViewAdapter(this, recipeHeaders);
-    rvaAdapter.setClickListener(this);
-    recyclerView.setAdapter(rvaAdapter);
 
     // set it up to get user inputs
     final EditText ingredientInputArea = findViewById(R.id.inputBox);
     searchButton = findViewById(R.id.searchButton);
-    Button photoButton = findViewById(R.id.insertPhoto);
+    ImageButton photoButton = findViewById(R.id.insertPhoto);
     photoButton.setOnClickListener(v -> {
       if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
         requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
@@ -114,13 +105,6 @@ public class IngredientsRecipesActivity extends AppCompatActivity implements
           intent.putExtra("recipeHeaders", value);
           intent.putExtra("RecipeTypes","searchResult");
           startActivity(intent);
-          // TODO no idea if this causes trouble below????
-          runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-//              rvaAdapter.notifyDataSetChanged();
-            }
-          });
         }
       });
     });
@@ -187,15 +171,6 @@ public class IngredientsRecipesActivity extends AppCompatActivity implements
     });
 
     Toast.makeText(this, ingredients.toString(), Toast.LENGTH_SHORT).show();
-  }
-
-  //TODO: Grab data on link in API Response header (@Royal Thomas is this your part?)
-  @Override
-  public void onItemClick(View view, int position) {
-    //Sending toast message, but it can also call a method to execute any intent/function call available in-app
-    Toast.makeText(this,
-        "You clicked " + rvaAdapter.getItem(position) + " on row number " + (position + 1),
-        Toast.LENGTH_SHORT).show();
   }
 
 
