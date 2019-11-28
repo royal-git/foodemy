@@ -15,6 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="@string/add_ingredient"
+            android:background="@drawable/rounded_edittext"
             android:inputType="text"
             android:maxLines="1" />
 
@@ -22,12 +23,14 @@
             android:id="@+id/insertButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edittext"
             android:text="@string/insert" />
 
         <Button
             android:id="@+id/insertPhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edittext"
             android:text="@string/photo" />
 
 
