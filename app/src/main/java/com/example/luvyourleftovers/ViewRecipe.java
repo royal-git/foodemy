@@ -36,7 +36,6 @@ public class ViewRecipe extends AppCompatActivity {
         Toast.makeText(this, recipe.getName(), Toast.LENGTH_SHORT).show();
         TextView titleView = findViewById(R.id.RecipeDisplayText);
         titleView.setText(recipe.getName());
-
         if (!recipe.getImageLink().isEmpty()) {
             Picasso.get().load(recipe.getImageLink())
                 .into((ImageView) findViewById(R.id.recipeImage));

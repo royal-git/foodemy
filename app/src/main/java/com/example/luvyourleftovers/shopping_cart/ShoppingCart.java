@@ -35,10 +35,6 @@ public class ShoppingCart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
 
-
-
-
-
         db = new CartDBHelper(this);
         recyclerView = (RecyclerView) findViewById(R.id.rv_shoppingcart);
         recyclerView.setHasFixedSize(true);

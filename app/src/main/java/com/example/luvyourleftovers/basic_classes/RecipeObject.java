@@ -9,7 +9,7 @@ public class RecipeObject implements Recipe, Serializable {
     private ArrayList<String> missedIngredients = new ArrayList<>();
     private String instructions;
     private String name;
-    private String image;
+    private String image ="";
     private Boolean isVegan;
     private int timeToCook;
     private int recipeId;
