@@ -15,21 +15,30 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".RecipeList"></activity>
+        <activity
+            android:name=".RecipeList"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".shopping_cart.ShoppingCart"
-            android:parentActivityName=".Home_Screen_DEV" />
+            android:parentActivityName=".Home_Screen_DEV"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".FindShops"
-            android:parentActivityName=".Home_Screen_DEV" />
-        <activity android:name=".DisplayRecipe" />
+            android:parentActivityName=".Home_Screen_DEV"
+            android:screenOrientation="portrait" />
+        <activity android:name=".DisplayRecipe"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ViewRecipe"
-            android:parentActivityName=".Home_Screen_DEV" />
-        <activity android:name=".Home_Screen_DEV">
+            android:parentActivityName=".Home_Screen_DEV"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Home_Screen_DEV"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,7 +47,8 @@
         </activity>
         <activity
             android:name=".IngredientsRecipesActivity"
-            android:parentActivityName=".Home_Screen_DEV" />
+            android:parentActivityName=".Home_Screen_DEV"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="preloaded_fonts"
