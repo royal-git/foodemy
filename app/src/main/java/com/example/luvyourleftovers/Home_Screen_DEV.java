@@ -13,8 +13,6 @@ public class Home_Screen_DEV extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home__screen__dev);
-
-
     }
 
 

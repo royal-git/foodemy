@@ -1,20 +1,13 @@
 package com.example.luvyourleftovers.basic_classes;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import androidx.core.text.HtmlCompat;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import java.io.Serializable;
-import java.util.ArrayList;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
-public class RecipeObject implements Recipe, Serializable{
+import java.util.ArrayList;
+
+public class RecipeObject implements Recipe {
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
+    private String servings;
+
     private String instructions;
     private String name;
     private String image;
@@ -29,14 +22,20 @@ public class RecipeObject implements Recipe, Serializable{
         this.recipeId = id;
     }
 
-    public RecipeObject(String name, Integer id) {
-        this.name = name;
-        this.recipeId = id;
+    public RecipeObject(){
+
     }
 
-    public RecipeObject() {
+    public void setServings(String servings){
+        this.servings = servings;
+    }
+    public String getServings(){return servings;}
+
+    public void setTimeToCook(String timeToCook){
+        this.timeToCook = timeToCook;
     }
 
+    public String getTimeToCook(){return this.timeToCook;}
     @Override
     public void addIngredient(Ingredient ingredient) {
         ingredients.add(ingredient);
@@ -62,6 +61,7 @@ public class RecipeObject implements Recipe, Serializable{
         instructions = HtmlCompat.fromHtml(instruction, HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
     }
 
+
     @Override
     public ArrayList<Ingredient> getIngrediantList() {
         return ingredients;
@@ -69,13 +69,15 @@ public class RecipeObject implements Recipe, Serializable{
 
     @Override
     public String getInstructions() {
-        return instructions == null ? "" : instructions;
+        return instructions;
     }
 
     @Override
     public void addImageLink(String image) {
         this.image = image;
     }
+
+
 
     @Override
     public void addRecipeID(int id) {

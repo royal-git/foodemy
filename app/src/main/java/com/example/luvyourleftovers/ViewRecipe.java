@@ -116,10 +116,10 @@ public class ViewRecipe extends AppCompatActivity {
 
                 instructionsTextView.setText(recipe.getInstructions());
                 timeToCook.setText("Ready in " + recipe.getTimeToCook() + " minutes!");
-                servings.setText("Servings: 8");
+                servings.setText("Servings: " + recipe.getServings());
                 String veg = recipe.isVegan() ? "Vegan" : "Non-Vegan";
                 vegetarian.setText(veg);
-                costMeasure.setText("Cost: $$/$$$$$");
+                costMeasure.setText(recipe.isCheap() ? "$$" : "$$$$");
             }
         });
     }

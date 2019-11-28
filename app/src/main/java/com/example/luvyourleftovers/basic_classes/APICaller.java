@@ -61,6 +61,8 @@ public class APICaller {
             recipe.setIsVegan(element.get("vegan").getAsBoolean());
             recipe.setTimeToCook(element.get("readyInMinutes").getAsInt());
             recipe.setInstructions(element.get("instructions").getAsString());
+            recipe.setServings(element.get("servings").getAsInt());
+            recipe.setCheap(element.get("cheap").getAsBoolean());
             callback.onSuccess(true);
           }
         } catch (Exception ex) {
