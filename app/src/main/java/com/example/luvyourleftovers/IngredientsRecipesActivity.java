@@ -89,12 +89,17 @@ public class IngredientsRecipesActivity extends AppCompatActivity implements
     // What happens when search button is clicked.
     searchButton.setOnClickListener((view) -> {
       String formattedInput = android.text.TextUtils.join(",", ingredients);
+
       new APICaller(this).fetchRecipes(formattedInput, 5, 1, new OnReturnRecipeList() {
+
         @Override
         public void onSuccess(ArrayList<RecipeObject> value) {
+          recipeHeaders.clear();
+
           for (RecipeObject recipeObject : value) {
             recipeHeaders.add(recipeObject.getName());
           }
+
           runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -103,7 +108,6 @@ public class IngredientsRecipesActivity extends AppCompatActivity implements
           });
         }
       });
-      System.out.println("Size -> " + recipeHeaders.size());
     });
 
   }
