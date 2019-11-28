@@ -22,6 +22,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.luvyourleftovers.basic_classes.APICaller;
+import com.example.luvyourleftovers.basic_classes.Recipe;
+import com.example.luvyourleftovers.basic_classes.RecipeObject;
 import com.example.luvyourleftovers.shopping_cart.CartItem;
 import com.example.luvyourleftovers.shopping_cart.CartDBHelper;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -58,7 +60,19 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         db.insertItem(new CartItem((db.getAllItems().size() + 1) + " - " + "An Item"));
 
         APICaller mApiCaller = new APICaller(this);
-        mApiCaller.fetchRecipes("apple, bread, chocolate", 20, 1);
+        mApiCaller.fetchRecipes("banana, bread, chocolate", 20, 1, new APICaller.OnReturnRecipeList() {
+            @Override
+            public void onSuccess(ArrayList<RecipeObject> value) {
+                RecipeObject current = value.get(0);
+                mApiCaller.getRecipeInformation(current, new APICaller.OnFetchRecipeDetails() {
+                    @Override
+                    public void onSuccess(Boolean result) {
+                        System.out.println("Identifier -> " + current.getRecipeId());
+                        System.out.println(current.getInstructions());
+                    }
+                });
+            }
+        });
 
 
         // data to populate the RecyclerView with
