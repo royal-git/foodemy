@@ -19,7 +19,7 @@ public class Home_Screen_DEV extends AppCompatActivity {
 
 
     public void onMakeRecipe(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, IngredientsRecipesActivity.class);
         startActivity(intent);
     }
 

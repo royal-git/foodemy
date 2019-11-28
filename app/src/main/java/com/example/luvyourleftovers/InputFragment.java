@@ -21,7 +21,7 @@ public class InputFragment extends Fragment
 
 
     public void onLaunch(View view) {
-        Intent intent = new Intent(getActivity(), MainActivity.class);
+        Intent intent = new Intent(getActivity(), IngredientsRecipesActivity.class);
         startActivity(intent);
     }
 

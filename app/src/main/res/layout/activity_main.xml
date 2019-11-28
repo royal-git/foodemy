@@ -14,7 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Add Ingredient"
+            android:hint="@string/add_ingredient"
             android:inputType="text"
             android:maxLines="1" />
 
@@ -22,19 +22,19 @@
             android:id="@+id/insertButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Insert" />
+            android:text="@string/insert" />
 
         <Button
             android:id="@+id/insertPhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Photo" />
+            android:text="@string/photo" />
 
 
 
     </LinearLayout>
 
-    <org.apmem.tools.layouts.FlowLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <org.apmem.tools.layouts.FlowLayout
         android:id="@+id/flowLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="10px">
+        android:padding="10dp">
 
 
 
@@ -55,7 +55,16 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/flowLayout"
         android:visibility="gone"
-        android:text="Search" />
+        android:text="@string/search" />
+
+    <TextView
+        android:id="@+id/recipeListHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searchButton"
+        android:text="@string/recipe_results"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRecipes"
