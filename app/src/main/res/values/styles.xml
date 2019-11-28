@@ -3,20 +3,18 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@android:color/transparent</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@android:color/white</item>
+
     </style>
+
 
     <style name = "AppTheme.NoActionBar" >
         <item name = "windowActionBar">false</item>
         <item name = "windowNoTitle">true</item>
     </style>
 
-    <style name="Base.TextAppearance.AppCompat.Widget.ActionBar.Title" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/title_color</item>
-        <item name="android:textSize">19sp</item>
-
-    </style>
 
 </resources>

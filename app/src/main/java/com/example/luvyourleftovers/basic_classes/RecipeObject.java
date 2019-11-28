@@ -1,23 +1,31 @@
 package com.example.luvyourleftovers.basic_classes;
 
+import androidx.core.text.HtmlCompat;
+
 import java.util.ArrayList;
 
 public class RecipeObject implements Recipe {
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
-    private ArrayList<String> instructions = new ArrayList<>();
-
-    private String recipeName;
     private String servings;
     private String timeToCook;
     private boolean isVegan;
-    private String image;
-    private int recipeId;
-    private int missingIngredients=0;
 
-    public RecipeObject(String recipeName, int recipeId){
-        this.recipeName = recipeName;
-        this.recipeId = recipeId;
+    private String instructions;
+    private String name;
+    private String image;
+    private Boolean isVegan;
+    private int timeToCook;
+    private int recipeId;
+    private int missingIngredients = 0;
+
+    public RecipeObject(String name, Integer id, String imageUrl) {
+        this.image = imageUrl;
+        this.name = name;
+        this.recipeId = id;
     }
+
+    public RecipeObject() {
+    
 
     public RecipeObject(){
 
@@ -41,9 +49,24 @@ public class RecipeObject implements Recipe {
         ingredients.add(ingredient);
     }
 
-    @Override
-    public void addInstruction(String instruction) {
-        instructions.add(instruction);
+    public void setIsVegan(Boolean value) {
+        this.isVegan = value;
+    }
+
+    public Boolean isVegan() {
+        return isVegan;
+    }
+
+    public void setTimeToCook(Integer value) {
+        this.timeToCook = value;
+    }
+
+    public Integer getTimeToCook() {
+        return timeToCook;
+    }
+
+    public void setInstructions(String instruction) {
+        instructions = HtmlCompat.fromHtml(instruction, HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
     }
 
     @Override
@@ -57,7 +80,7 @@ public class RecipeObject implements Recipe {
     }
 
     @Override
-    public ArrayList<String> getInstructions() {
+    public String getInstructions() {
         return instructions;
     }
 
@@ -82,30 +105,33 @@ public class RecipeObject implements Recipe {
     }
 
 
-    public String getImageLink(){return this.image;}
-    public int getRecipeId(){return this.recipeId;}
-    public int getCountOfMissingIngredients(){return this.missingIngredients;}
+    public String getImageLink() {
+        return this.image;
+    }
 
-    public String toString(){
+    public int getRecipeId() {
+        return this.recipeId;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public int getCountOfMissingIngredients() {
+        return this.missingIngredients;
+    }
+
+    public String toString() {
         String ingredient_delimited = "";
-        int i =0;
-        for(Ingredient ingredient: ingredients){
-            if(i-1 == ingredients.size())
-                ingredient_delimited+=ingredient.getName();
+        int i = 0;
+        for (Ingredient ingredient : ingredients) {
+            if (i - 1 == ingredients.size())
+                ingredient_delimited += ingredient.getName();
             else
-                ingredient_delimited+=ingredient.getName()+",";
+                ingredient_delimited += ingredient.getName() + ",";
             i++;
         }
 
-        String instruction_delimited = "";
-        i =0;
-        for(String instruction: instructions){
-            if(i-1 == ingredients.size())
-                instruction_delimited+=instruction;
-            else
-                instruction_delimited+=instruction+",";
-            i++;
-        }
-        return ingredient_delimited+"@@"+instruction_delimited+"\n";
+        return ingredient_delimited + "@@" + getInstructions() + "\n";
     }
 }

@@ -38,15 +38,19 @@ public class CartDBHelper extends SQLiteOpenHelper {
         db.insert("cart", null, values);
     }
 
+    public void removeItem(Integer id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("cart", "id = '" + id +"'", null);
+    }
 
-    public ArrayList<CartItem> getAllContacts() {
+    public ArrayList<CartItem> getAllItems() {
         ArrayList<CartItem> items = new ArrayList<CartItem>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("select * from cart", null);
 
         res.moveToFirst();
         while (res.isAfterLast() == false) {
-            items.add(new CartItem(res.getString(res.getColumnIndex("name")), 1));
+            items.add(new CartItem(res.getInt(res.getColumnIndex("id")), res.getString(res.getColumnIndex("name")), 1));
             res.moveToNext();
         }
         return items;

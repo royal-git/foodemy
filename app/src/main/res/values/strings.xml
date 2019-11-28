@@ -19,4 +19,5 @@
     <string name="show_single_recipe">Show Single Recipe</string>
     <string name="open_shopping_cart">Open Shopping Cart</string>
 
+    <string name="description">Description: </string>
 </resources>

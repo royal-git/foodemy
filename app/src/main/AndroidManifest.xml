@@ -1,36 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.luvyourleftovers">
+  xmlns:tools="http://schemas.android.com/tools"
+  package="com.example.luvyourleftovers">
 
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  <application
+    android:allowBackup="true"
+    android:fullBackupContent="true"
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:supportsRtl="true"
+    android:theme="@style/AppTheme"
+    tools:ignore="GoogleAppIndexingWarning">
+    <activity
+      android:name=".shopping_cart.ShoppingCart"
+      android:parentActivityName=".Home_Screen_DEV" />
+    <activity
+      android:name=".HomeActivity"
+      android:theme="@style/AppTheme.NoActionBar" />
+    <activity
+      android:name=".FindShops"
+      android:parentActivityName=".Home_Screen_DEV" />
+    <activity android:name=".DisplayRecipe" />
+    <activity
+      android:name=".ViewRecipe"
+      android:parentActivityName=".Home_Screen_DEV" />
+    <activity android:name=".Home_Screen_DEV">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
 
-    <application
-        android:allowBackup="true"
-        android:fullBackupContent="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".shopping_cart.ShoppingCart"></activity>
-        <activity
-            android:name=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".FindShops" />
-        <activity android:name=".DisplayRecipe" />
-        <activity android:name=".ViewRecipe" />
-        <activity android:name=".Home_Screen_DEV">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+    <activity
+      android:name=".SavedRecipesDev"
+      android:parentActivityName=".Home_Screen_DEV" />
+    <activity
+      android:name=".MainActivity"
+      android:parentActivityName=".Home_Screen_DEV" />
+  </application>
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".SavedRecipesDev" />
-        <activity android:name=".MainActivity" />
-    </application>
+  <uses-permission android:name="android.permission.CAMERA" />
 
 </manifest>
