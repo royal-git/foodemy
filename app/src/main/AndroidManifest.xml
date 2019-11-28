@@ -31,10 +31,7 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-    <activity
-      android:name=".SavedRecipesDev"
-      android:parentActivityName=".Home_Screen_DEV" />
-    <activity
+      <activity
       android:name=".IngredientsRecipesActivity"
       android:parentActivityName=".Home_Screen_DEV" />
 

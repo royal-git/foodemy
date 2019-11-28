@@ -20,11 +20,6 @@ public class Home_Screen_DEV extends AppCompatActivity {
         Intent intent = new Intent(this, IngredientsRecipesActivity.class);
         startActivity(intent);
     }
-
-    public void onSavedRecipes(View view) {
-        Intent intent = new Intent(this, SavedRecipesDev.class);
-        startActivity(intent);
-    }
     public void onMapsActivity(View view){
         Intent intent = new Intent(this, FindShops.class);
         startActivity(intent);
