@@ -12,13 +12,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.example.luvyourleftovers.basic_classes.APICaller;
+import com.example.luvyourleftovers.basic_classes.APICaller.OnReturnRecipeList;
+import com.example.luvyourleftovers.basic_classes.RecipeObject;
 import com.example.luvyourleftovers.shopping_cart.CartDBHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -28,12 +29,10 @@ import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabeler;
 import com.koushikdutta.async.future.Future;
 import com.koushikdutta.ion.Ion;
-
-import org.apmem.tools.layouts.FlowLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.apmem.tools.layouts.FlowLayout;
 
 public class IngredientsRecipesActivity extends AppCompatActivity implements
     RecyclerViewAdapter.ItemClickListener {
@@ -106,8 +105,16 @@ public class IngredientsRecipesActivity extends AppCompatActivity implements
 
     // What happens when search button is clicked.
     searchButton.setOnClickListener((view) -> {
-      // TODO add the ingredient to list of previously searched ingredients.
-      performSearch();
+      String formattedInput = android.text.TextUtils.join(",", ingredients);
+      new APICaller(this).fetchRecipes(formattedInput, 5, 1, new OnReturnRecipeList() {
+        @Override
+        public void onSuccess(ArrayList<RecipeObject> value) {
+          for (RecipeObject recipeObject : value) {
+            recipeHeaders.add(recipeObject.getName());
+          }
+        }
+      });
+      rvaAdapter.notifyDataSetChanged();
     });
 
   }
