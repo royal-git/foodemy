@@ -142,9 +142,9 @@ public class APICaller {
       missingIngredients.add(ingredient.getAsJsonObject().get("name").getAsString());
     }
 
-    System.out.println(name + "->" + missingIngredients);
-
-    return new RecipeObject(name, id, image);
+    RecipeObject recipe = new RecipeObject(name, id, image);
+    recipe.setMissedIngredients(missingIngredients);
+    return recipe;
   }
 
 

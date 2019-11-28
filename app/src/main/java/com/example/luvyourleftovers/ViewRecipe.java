@@ -115,6 +115,7 @@ public class ViewRecipe extends AppCompatActivity {
                 TextView vegetarian = findViewById(R.id.vegetarian);
                 TextView costMeasure = findViewById(R.id.costRating);
 
+                System.out.println(recipe.getMissedIngredients());
                 instructionsTextView.setText(recipe.getInstructions());
                 timeToCook.setText("Ready in " + recipe.getTimeToCook() + " minutes!");
                 servings.setText("Servings: " + recipe.getServings());
@@ -130,7 +131,6 @@ public class ViewRecipe extends AppCompatActivity {
             button
                 .setIconTint(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.red)));
         }else{
-
             button
                 .setIconTint(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.grey)));
         }
