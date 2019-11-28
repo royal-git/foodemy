@@ -19,6 +19,11 @@ public class RecipeObject implements Recipe {
         this.recipeId = id;
     }
 
+    public RecipeObject(String name, Integer id) {
+        this.name = name;
+        this.recipeId = id;
+    }
+
     public RecipeObject() {
     }
 

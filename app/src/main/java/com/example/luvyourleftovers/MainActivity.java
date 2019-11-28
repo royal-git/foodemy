@@ -2,7 +2,6 @@ package com.example.luvyourleftovers;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,8 +18,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.luvyourleftovers.basic_classes.APICaller;
-import com.example.luvyourleftovers.basic_classes.RecipeObject;
 import com.example.luvyourleftovers.shopping_cart.CartDBHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -44,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements
   ArrayList<String> ingredients;
   Button searchButton;
   CartDBHelper db;
+  FirebaseVisionImageLabeler detector;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -134,10 +132,9 @@ public class MainActivity extends AppCompatActivity implements
     if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
       Bitmap photo = (Bitmap) data.getExtras().get("data");
       FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(photo);
-      FirebaseVisionImageLabeler detector = FirebaseVision.getInstance()
+      detector = FirebaseVision.getInstance()
           .getCloudImageLabeler();
-      callDetector(detector, image, this);
-
+      callDetector(image);
     }
   }
 
@@ -178,58 +175,63 @@ public class MainActivity extends AppCompatActivity implements
   }
 
 
-  protected void callDetector(FirebaseVisionImageLabeler detector, FirebaseVisionImage image,
-      Context context) {
+  protected void callDetector(FirebaseVisionImage image) {
     ArrayList<String> results = new ArrayList<>();
-    Toast.makeText(context, "Generating Result, Hold on!", Toast.LENGTH_SHORT).show();
+    Toast.makeText(this, "Generating Result, Hold on!", Toast.LENGTH_SHORT).show();
+
     Task<List<FirebaseVisionImageLabel>> result =
         detector.processImage(image)
             .addOnSuccessListener(
                 labels -> {
-                  StringBuilder output = new StringBuilder();
-
-                  for (FirebaseVisionImageLabel label : labels) {
-                    String text = label.getText();
-                    if (isRecognizedIngredient(text)) {
-                      results.add(text);
-                    }
-                  }
-                  if (results.size() > 0) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    ArrayList<String> selections = new ArrayList<>();
-                    builder.setTitle("Find any items?")
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                          @Override
-                          public void onClick(DialogInterface dialogInterface, int i) {
-                            selections.forEach((value) -> {
-                              addToContainer(value);
-                            });
-                          }
-                        })
-                        .setCancelable(false)
-                        .setMultiChoiceItems(results.toArray(new String[0]), null,
-                            new DialogInterface.OnMultiChoiceClickListener() {
-                              @Override
-                              public void onClick(DialogInterface dialog, int which,
-                                  boolean isChecked) {
-                                selections.add(results.get(which));
-                              }
-                            });
-                    builder.show();
-                  } else {
-                    Toast.makeText(context, "Didn't find any ingredients, oops!",
-                        Toast.LENGTH_SHORT).show();
-                  }
-
+                  handleImageLebels(labels);
                 })
             .addOnFailureListener(
                 new OnFailureListener() {
                   @Override
                   public void onFailure(@NonNull Exception e) {
-                    System.out.println(e);
+                    Toast.makeText(MainActivity.this, "Error Fetching from Vision API.",
+                        Toast.LENGTH_SHORT).show();
                   }
                 });
 
+  }
+
+  public void handleImageLebels(List<FirebaseVisionImageLabel> labels) {
+    ArrayList<String> results = new ArrayList<>();
+    
+    for (FirebaseVisionImageLabel label : labels) {
+      String text = label.getText();
+      if (isRecognizedIngredient(text)) {
+        results.add(text);
+      }
+    }
+
+    if (results.size() > 0) {
+      AlertDialog.Builder builder = new AlertDialog.Builder(this);
+      ArrayList<String> selections = new ArrayList<>();
+      builder.setTitle("Find any items?")
+          .setPositiveButton("Add to list!", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+              selections.forEach((value) -> {
+                addToContainer(value);
+              });
+            }
+          })
+          .setCancelable(false)
+          .setMultiChoiceItems(results.toArray(new String[0]), null,
+              new DialogInterface.OnMultiChoiceClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which,
+                    boolean isChecked) {
+                  selections.add(results.get(which));
+                }
+              });
+      builder.show();
+    } else {
+      Toast.makeText(this, "Didn't find any ingredients, oops!",
+          Toast.LENGTH_SHORT).show();
+    }
   }
 
   Boolean isRecognizedIngredient(String ingredient) {

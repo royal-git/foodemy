@@ -63,10 +63,10 @@ public class SavedRecipesDev extends AppCompatActivity {
         public void insertRecipe(RecipeObject recipe) {
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put("name", recipe.getRecipeName());
+            values.put("name", recipe.getName());
             String ingredientsList = TextUtils.join(", ", recipe.getIngrediantList());
             values.put("ingredients", ingredientsList);
-            String instructionList = TextUtils.join(", ",recipe.getInstructions());
+            String instructionList = recipe.getInstructions();
             values.put("instructions", instructionList);
             values.put("recipe_id", recipe.getRecipeId());
             db.insert("favourites", null, values);
