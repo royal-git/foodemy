@@ -118,7 +118,7 @@ public class IngredientsRecipesActivity extends AppCompatActivity implements
           runOnUiThread(new Runnable() {
             @Override
             public void run() {
-              rvaAdapter.notifyDataSetChanged();
+//              rvaAdapter.notifyDataSetChanged();
             }
           });
         }

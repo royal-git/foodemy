@@ -13,6 +13,8 @@ package com.example.luvyourleftovers;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.Context;
@@ -36,17 +38,24 @@ import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
-public class FindShops extends AppCompatActivity {
+public class FindShops extends AppCompatActivity implements
+        RecyclerViewAdapter.ItemClickListener{
 
+    RecyclerViewAdapter rvaAdapter;
+    ArrayList<Shop> shopList;
+    @Override
+    public void onItemClick(View view, int position) {
+        Shop clickedShop = (Shop) shopList.get(position);
+//
+      Toast.makeText(FindShops.this,clickedShop.getName(),Toast.LENGTH_LONG).show();
+      String url = "https://www.google.com/maps/search/?api=1&query="+clickedShop.getVicinity().replace("\"", "")+"&query_place_id="+clickedShop.getPlace_id().replace("\"", "");
+
+      String uri = url;//"http://maps.google.com/maps?saddr=" + sourceLatitude + "," + sourceLongitude + "&daddr=" + destinationLatitude + "," + destinationLongitude;
+      Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+      startActivity(intent);
+    }
 
     private class Shop{
         /* Private inner class that creates the data structure that 
@@ -170,13 +179,15 @@ public class FindShops extends AppCompatActivity {
             with the given place open as its current place.
         */
 
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         //function returns a url containing users location and a set of parameters indicating type of 
         //place to look for  (for our app we are only looking for 'stores' for ingredients not available.) 
         String url = makeNearbySearch(location);
         //TODO change this, very bad lmao
         String apiKey = "&key=***REMOVED***";
-
+       ArrayList<String> shopListNames = new ArrayList<>();
         //Use Ion to make a api call via http. This will return a JSON Object 
         //which we use to get the nearest places (shops) of a user.
         Ion.getDefault(this).getConscryptMiddleware().enable(false);
@@ -188,7 +199,7 @@ public class FindShops extends AppCompatActivity {
                     public void onCompleted(Exception e, JsonObject result) {
                         try {
 
-                            ArrayList<Shop> shopList = new ArrayList<Shop>();
+                            shopList = new ArrayList<Shop>();
                             for(JsonElement g: result.getAsJsonArray("results")){
                                 String place_id = g.getAsJsonObject().get("place_id").toString();
                                 String name = g.getAsJsonObject().get("name").toString();
@@ -201,33 +212,17 @@ public class FindShops extends AppCompatActivity {
 //                                }
 
                                 shopList.add(new Shop(place_id, name, vicinity));
+                                shopListNames.add(name);
 //                                shopListString.add(name);
 
                             }
                             Log.d("Shop List Size:", Integer.toString(shopList.size()));
-                            final ListView list = findViewById(R.id.shopList);
-
-                            ArrayAdapter<Shop> arrayAdapter = new ArrayAdapter<Shop>(context,
-                                    android.R.layout.simple_list_item_1, shopList);
-                            list.setAdapter(arrayAdapter);
-                            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                                    Shop clickedShop = (Shop) list.getItemAtPosition(position);
-
-                                    Toast.makeText(FindShops.this,clickedShop.getName(),Toast.LENGTH_LONG).show();
-                                    Log.d("Place_ID:",clickedShop.getPlace_id());
-
-                                    String url = "https://www.google.com/maps/search/?api=1&query="+clickedShop.getVicinity().replace("\"", "")+"&query_place_id="+clickedShop.getPlace_id().replace("\"", "");
-
-                                    String uri = url;//"http://maps.google.com/maps?saddr=" + sourceLatitude + "," + sourceLongitude + "&daddr=" + destinationLatitude + "," + destinationLongitude;
-                                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                                    startActivity(intent);
-                                }
-                            });
 
 
+                            rvaAdapter = new RecyclerViewAdapter(context, shopListNames);
+                            recyclerView.setAdapter(rvaAdapter);
+
+                            rvaAdapter.setClickListener(FindShops.this::onItemClick);
                         } catch (Exception ex) {
                             Toast.makeText(FindShops.this, "Error Loading from API, please try again.", Toast.LENGTH_SHORT).show();
                         }

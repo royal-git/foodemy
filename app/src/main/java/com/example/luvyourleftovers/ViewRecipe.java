@@ -34,7 +34,6 @@ public class ViewRecipe extends AppCompatActivity {
         recipe = (RecipeObject) intent.getSerializableExtra("recipe");
         TextView titleView = findViewById(R.id.RecipeDisplayText);
         titleView.setText(recipe.getName());
-
         if (!recipe.getImageLink().isEmpty()) {
             Picasso.get().load(recipe.getImageLink())
                 .into((ImageView) findViewById(R.id.recipeImage));
