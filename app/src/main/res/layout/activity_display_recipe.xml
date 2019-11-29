@@ -175,12 +175,14 @@
               tools:ignore="SmallSp" />
         </LinearLayout>
         <TextView
+          android:id="@+id/used_ingredients_textview"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="20dp"
           android:textColor="@color/black"
           android:layout_marginTop="30dp"
           android:fontFamily="@font/cambay"
+          android:visibility="gone"
           android:text="@string/used_ingredients"
           android:textSize="19sp" />
         <HorizontalScrollView
@@ -200,20 +202,24 @@
           android:layout_height="wrap_content"
           android:orientation="horizontal">
             <TextView
+              android:id="@+id/missing_ingredients_textview"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginStart="20dp"
               android:layout_marginTop="30dp"
               android:fontFamily="@font/cambay"
+              android:visibility="gone"
               android:text="@string/missing_ingredients"
               android:textColor="@color/black"
               android:textSize="19sp" />
             <TextView
+              android:id="@+id/add_to_cart_textview"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginStart="20dp"
               android:layout_marginTop="30dp"
               android:layout_marginBottom="20dp"
+              android:visibility="gone"
               android:text="@string/click_to_add_to_cart"
               android:textColor="@android:color/holo_orange_light" />
         </LinearLayout>
