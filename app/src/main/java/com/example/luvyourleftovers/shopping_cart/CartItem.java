@@ -40,6 +40,7 @@ public class CartItem {
     private Integer id;
     private String imageUrl;
 
+    //return an id of 1 if id is null, else return the objects id.
     public Integer getId() {
         return this.id == null ? 1 : this.id;
     }

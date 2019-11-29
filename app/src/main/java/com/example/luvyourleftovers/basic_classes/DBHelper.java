@@ -44,7 +44,7 @@ public class DBHelper extends SQLiteOpenHelper {
   public void insert(Recipe recipe) {
     SQLiteDatabase db = this.getWritableDatabase();
     ContentValues values = new ContentValues();
-    // Ensure it doesn't already exist there.
+    // Ensure recipe doesn't already exist there.
     if (!exists(recipe)) {
       values.put("name", recipe.getName());
       String ingredientsList = TextUtils.join(", ", recipe.getIngrediantList());
