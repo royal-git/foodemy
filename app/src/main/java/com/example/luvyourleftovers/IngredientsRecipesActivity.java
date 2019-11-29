@@ -151,13 +151,6 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
   }
 
 
-  public void performSearch() {
-    formattedInput = android.text.TextUtils.join(",", ingredients);
-    Toast.makeText(this, formattedInput, Toast.LENGTH_SHORT).show();
-
-  }
-
-
   public void addToContainer(String text) {
     ingredients.add(text);
     searchButton.setVisibility(View.VISIBLE);

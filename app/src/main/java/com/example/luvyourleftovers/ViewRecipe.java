@@ -43,7 +43,6 @@ public class ViewRecipe extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle message = intent.getExtras();
         recipe = (RecipeObject) intent.getSerializableExtra("recipe");
-        Toast.makeText(this, recipe.getName(), Toast.LENGTH_SHORT).show();
         TextView titleView = findViewById(R.id.RecipeDisplayText);
         titleView.setText(recipe.getName());
         if (!recipe.getImageLink().isEmpty()) {

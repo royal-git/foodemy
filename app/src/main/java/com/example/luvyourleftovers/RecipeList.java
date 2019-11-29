@@ -51,15 +51,9 @@ public class RecipeList extends AppCompatActivity implements  RecyclerViewAdapte
 
     @Override
     public void onItemClick(View view, int position) {
-        //For the RecyclerView
 
-//        Toast.makeText(this,
-//                "You clicked " + rvaAdapter.getItem(position) + " on row number " + (position + 1),
-//                Toast.LENGTH_SHORT).show();
         RecipeObject recipe = recipeHeaders.get(position);
         int recipeId = recipeHeaders.get(position).getRecipeId();
-        Toast.makeText(this, "You Clicked on Recipe: "+recipeHeaders.get(position).getName()
-                +" RecipeID: "+Integer.toString(recipeId), Toast.LENGTH_SHORT).show();
 
 
         Intent intent = new Intent(this, ViewRecipe.class);
