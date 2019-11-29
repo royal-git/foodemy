@@ -47,11 +47,11 @@ public class FindShops extends AppCompatActivity implements
 
 
 
-
-
+    //initialize permission ID
     private static final int PERMISSION_ID = 44;
+    //declare Location variables
     private Location location;
-
+    //Location service variables declared.
     private LocationManager lm;
     private LocationListener ll;
 
@@ -61,9 +61,9 @@ public class FindShops extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_shops);
-        if(!checkPermissions())
-            requestPermissions();
-        //LocationManager is initiailised (with TODO Explain more).
+        if(!checkPermissions()) //check if location permissions for COARSE and FINE are set
+            requestPermissions();// Request for these permissions not granted.
+        //LocationManager is initiailised
         lm = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         if ( ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
@@ -71,13 +71,11 @@ public class FindShops extends AppCompatActivity implements
         }
 
 
+        //going through a list of providers to find if passive exists, if so use that provider
         for(String provider: lm.getAllProviders()){
-            Log.d("Provider",provider);
             if(provider.equalsIgnoreCase("passive")){
-                //below case checks if permissions are granted for Coarse and Fine Location
-                //Permissions. If not then these permissions are requested.
-                //Location of user is achieved here. Use this for finding nearby shops.
                 try{
+                    //Location of user is achieved here. Use this for finding nearby shops.
                     location = lm.getLastKnownLocation(provider);
                 }catch (SecurityException e){
                     e.printStackTrace();
@@ -85,7 +83,8 @@ public class FindShops extends AppCompatActivity implements
             }
         }
         try {
-            CreateListOfShops(this, location);
+            //
+            connectToPlacesAPI(this, location);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -135,9 +134,9 @@ public class FindShops extends AppCompatActivity implements
         return url+location_parameter+query;
     }
 
-    private void CreateListOfShops(Context context, Location location) throws InterruptedException {
+    private void connectToPlacesAPI(Context context, Location location) throws InterruptedException {
         /*
-            CreateListOfShops uses the Google Maps API in order to call for a given maps query.
+            connectToPlacesAPI uses the Google Maps API in order to call for a given maps query.
             The list of returned places is then displayed in this Activity (FindShops).
             A user clicks on the shop they prefer and the application sends them off to Maps App
             with the given place open as its current place.
@@ -149,10 +148,8 @@ public class FindShops extends AppCompatActivity implements
         //function returns a url containing users location and a set of parameters indicating type of 
         //place to look for  (for our app we are only looking for 'stores' for ingredients not available.) 
         String url = makeNearbySearch(location);
-        //TODO change this, very bad lmao
         String apiKey = "&key=***REMOVED***";
        ArrayList<String> shopListNames = new ArrayList<>();
-//       String apiKey = "&key=***REMOVED***";
         //Use Ion to make a api call via http. This will return a JSON Object 
         //which we use to get the nearest places (shops) of a user.
         Ion.getDefault(this).getConscryptMiddleware().enable(false);
@@ -169,32 +166,16 @@ public class FindShops extends AppCompatActivity implements
                                 String place_id = g.getAsJsonObject().get("place_id").toString();
                                 String name = g.getAsJsonObject().get("name").toString();
                                 String vicinity = g.getAsJsonObject().get("vicinity").toString();
-//                                 String photo_reference = "cannot";//"https://maps.googleapis.com/maps/api/place/photo?photoreference="+photos+"&sensor=false&maxheight=100&maxwidth=100"+apiKey;
-
-                                Log.d("KeySet2: ",g.getAsJsonObject().toString());
-//                                for(JsonElement mElement: g.getAsJsonArray()){
-//                                    Log.d("Vals", mElement.getAsJsonObject().keySet().toString());
-//                                }
 
                                 shopList.add(new Shop(place_id, name.replace("\"", ""), vicinity.replace("\"", "")));
                                 shopListNames.add(name);
-//                                shopListString.add(name);
-
                             }
-                            Log.d("Shop List Size:", Integer.toString(shopList.size()));
-
                             rvaAdapter = new CustomAdapter(context, shopList);
-
                             recyclerView.setAdapter(rvaAdapter);
-
-//                            rvaAdapter.setClickListener(FindShops.this::onItemClick);
                         } catch (Exception ex) {
                             Toast.makeText(FindShops.this, "Error Loading from API, please try again.", Toast.LENGTH_SHORT).show();
                         }
-
-
                     }
-
                 });
     }
 }
@@ -249,6 +230,7 @@ class CustomAdapter extends
 
         public MyViewHolder(View itemView) {
             super(itemView);
+            //save shopName and address in TextView.
             this.shopName = (TextView) itemView.findViewById(R.id.shop_name_single);
 
             this.address  = (TextView) itemView.findViewById(R.id.address_field);
@@ -291,7 +273,7 @@ class CustomAdapter extends
     public void onBindViewHolder(
         final com.example.luvyourleftovers.CustomAdapter.MyViewHolder holder,
         final int listPosition) {
-
+        //Build up the general TextViewers used to display shop details (name and address).
         TextView textViewName = holder.shopName;
         textViewName.setText(dataSet.get(listPosition).getName());
 

@@ -49,12 +49,17 @@ import xdroid.toaster.Toaster;
  */
 public class IngredientsRecipesActivity extends AppCompatActivity {
 
+  //set up Camera properties
   private static final int CAMERA_REQUEST = 1888;
   private static final int MY_CAMERA_PERMISSION_CODE = 100;
+
   ArrayList<String> ingredients;
+  
   private Button searchButton;
   DBHelper db;
+  
   String formattedInput;
+  //used for the Google Cloud Vision utility for classifying objects in an image.
   FirebaseVisionImageLabeler detector;
 
   @Override

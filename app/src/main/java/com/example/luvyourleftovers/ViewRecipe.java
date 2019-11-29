@@ -85,7 +85,7 @@ public class ViewRecipe extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                // Setup the things.
+                // Setup the Recipe details as TextViews.
                 TextView instructionsTextView = findViewById(R.id.instructions);
                 TextView timeToCook = findViewById(R.id.timeToCook);
                 TextView servings = findViewById(R.id.servings);
@@ -94,7 +94,7 @@ public class ViewRecipe extends AppCompatActivity {
                 ArrayList<Ingredient> missingIngredients = recipe.getMissedIngredients();
                 ArrayList<Ingredient> usedIngredients = recipe.getUsedIngredients();
 
-                // Probably coming in from favourites.
+                // Recipe details coming in from favourites.
                 if (missingIngredients.size() > 0) {
                     findViewById(R.id.missing_ingredients_textview).setVisibility(View.VISIBLE);
                     findViewById(R.id.add_to_cart_textview).setVisibility(View.VISIBLE);

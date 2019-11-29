@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.luvyourleftovers.shopping_cart.ShoppingCart;
-
+/**
+ * Splash activity that shows the splash screen momentarily.
+ */
 public class SplashActivity extends AppCompatActivity
 {
 
