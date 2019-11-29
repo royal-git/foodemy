@@ -1,6 +1,7 @@
 package com.example.luvyourleftovers.shopping_cart;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.luvyourleftovers.FindShops;
 import com.example.luvyourleftovers.R;
 import com.example.luvyourleftovers.basic_classes.DBHelper;
 import com.squareup.picasso.Picasso;
@@ -42,10 +44,17 @@ public class ShoppingCart extends AppCompatActivity {
 
     }
 
+
+    public void openShops(View view) {
+        Intent intent = new Intent(this, FindShops.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
     }
+
 }
 
 class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {

@@ -43,7 +43,6 @@ public class FindShops extends AppCompatActivity implements
     @Override
     public void onItemClick(View view, int position) {
         Shop clickedShop = (Shop) shopList.get(position);
-//
       Toast.makeText(FindShops.this,clickedShop.getName(),Toast.LENGTH_LONG).show();
       String url = "https://www.google.com/maps/search/?api=1&query="+clickedShop.getVicinity().replace("\"", "")+"&query_place_id="+clickedShop.getPlace_id().replace("\"", "");
 
