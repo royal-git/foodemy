@@ -52,20 +52,19 @@ public class APICaller {
       public void run() {
         OkHttpClient client = new OkHttpClient();
         Request request = new Builder()
-//            DONT DELETE
-//            .url("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" + id
-//                + "/information")
-//            .get()
-//            .addHeader("x-rapidapi-host", API_HOST)
-//            .addHeader("x-rapidapi-key", API_KEY)
-//            .build();
-
-            .url("https://pastebin.com/raw/wTuQ3KVX?" + id
+            .url("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" + id
                 + "/information")
             .get()
             .addHeader("x-rapidapi-host", API_HOST)
             .addHeader("x-rapidapi-key", API_KEY)
             .build();
+
+//            .url("https://pastebin.com/raw/wTuQ3KVX?" + id
+//                + "/information")
+//            .get()
+//            .addHeader("x-rapidapi-host", API_HOST)
+//            .addHeader("x-rapidapi-key", API_KEY)
+//            .build();
 
         try {
           Response response = client.newCall(request).execute();
@@ -108,24 +107,24 @@ public class APICaller {
 
         Request request = new Builder()
 //            DONT DELETE
-//            .url(
-//                "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=" + limit + "&ranking=" + ranking
-//                    + "&ignorePantry" +
-//                    "=true&ingredients=" + ingredients)
-//            .get()
-//            .addHeader("x-rapidapi-host", API_HOST)
-//            .addHeader("x-rapidapi-key", API_KEY)
-//            .build();
-
             .url(
-                "https://pastebin.com/raw/RCMnLHjf?number=" + limit + "&ranking="
-                    + ranking
+                "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=" + limit + "&ranking=" + ranking
                     + "&ignorePantry" +
-                    "=false&ingredients=" + ingredients)
+                    "=true&ingredients=" + ingredients)
             .get()
             .addHeader("x-rapidapi-host", API_HOST)
             .addHeader("x-rapidapi-key", API_KEY)
             .build();
+
+//            .url(
+//                "https://pastebin.com/raw/RCMnLHjf?number=" + limit + "&ranking="
+//                    + ranking
+//                    + "&ignorePantry" +
+//                    "=false&ingredients=" + ingredients)
+//            .get()
+//            .addHeader("x-rapidapi-host", API_HOST)
+//            .addHeader("x-rapidapi-key", API_KEY)
+//            .build();
 
         try {
           Response response = client.newCall(request).execute();
