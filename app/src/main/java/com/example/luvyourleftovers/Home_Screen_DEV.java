@@ -61,32 +61,32 @@ public class Home_Screen_DEV extends AppCompatActivity implements NavigationView
         {
 //            1
             case R.id.nav_home:
-                i = new Intent(this, MainActivity.class);
-                startActivity(i);
+                Intent home = new Intent(this, Home_Screen_DEV.class);
+                startActivity(home);
                 break;
 
 //                2
             case R.id.nav_recipes:
-                i = new Intent(this, IngredientsRecipesActivity.class);
-                startActivity(i);
+                Intent ingredientRecipes= new Intent(this, IngredientsRecipesActivity.class);
+                startActivity(ingredientRecipes);
                 break;
 
 //                3
             case R.id.nav_nearby_shops:
-                i = new Intent(this, FindShops.class);
-                startActivity(i);
+                Intent shops = new Intent(this, FindShops.class);
+                startActivity(shops);
                 break;
 
 //                4
             case R.id.nav_shoppingList:
-                i = new Intent(this, ShoppingListFragment.class);
-                startActivity(i);
+                Intent shoppingList = new Intent(this, ShoppingCart.class);
+                startActivity(shoppingList);
                 break;
 
 //                5
             case R.id.nav_favourites:
-                i = new Intent(this, FavouritesFragment.class);
-                startActivity(i);
+                Intent favourites = new Intent(this, FavouritesFragment.class);
+                startActivity(favourites);
                 break;
         }
 

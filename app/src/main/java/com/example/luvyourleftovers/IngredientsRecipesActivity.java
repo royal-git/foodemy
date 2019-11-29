@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.apmem.tools.layouts.FlowLayout;
-//import xdroid.toaster.Toaster;
 
 public class IngredientsRecipesActivity extends AppCompatActivity {
 
