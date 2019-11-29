@@ -33,14 +33,15 @@
     <string name="insert">Insert</string>
     <string name="add_ingredient">Add Ingredient</string>
     <string name="error_api_message">Make sure your internet connection is working or try again later...</string>
-  <string name="used_ingredients">Used Ingredients</string>
-  <string name="missing_ingredients">Missing Ingredients</string>
-  <string name="click_to_add_to_cart">(Click to add to cart)</string>
-  <string name="did_you_know_that_you_can_click_on_the_camera_icon_to_let_the_app_find_the_ingredients_using_your_camera">Did you know that you can click on the camera icon to let the app find the ingredients using your camera?</string>
-  <string name="loading">...</string>
-  <string name="share">Share</string>
-  <string name="like">like</string>
+    <string name="used_ingredients">Used Ingredients</string>
+    <string name="missing_ingredients">Missing Ingredients</string>
+    <string name="click_to_add_to_cart">(Click to add to cart)</string>
+    <string name="did_you_know_that_you_can_click_on_the_camera_icon_to_let_the_app_find_the_ingredients_using_your_camera">Did you know that you can click on the camera icon to let the app find the ingredients using your camera?</string>
+    <string name="loading">...</string>
+    <string name="share">Share</string>
+    <string name="like">like</string>
     <string name="find_nearby_shops">Find Nearby Shops</string>
     <string name="input_your_ingredients_below_and_hit_search_to_begin">Input your ingredients below and hit search to begin!</string>
+    <string name="get_started_button">Get Started</string>
 
 </resources>
