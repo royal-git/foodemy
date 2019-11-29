@@ -10,10 +10,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.luvyourleftovers.basic_classes.Recipe;
 import java.util.ArrayList;
 
+/**
+ * View that shows a list of recipes that is sent to it -> Primary purpose is to display search
+ * results.
+ */
 public class RecipeList extends AppCompatActivity implements  RecyclerViewAdapter.ItemClickListener{
 
     RecyclerViewAdapter rvaAdapter;
     ArrayList<Recipe> recipeHeaders;
+
+    // Setup everything as required so that search results can be shown.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,10 +41,9 @@ public class RecipeList extends AppCompatActivity implements  RecyclerViewAdapte
         header.setText(recipeListHeading);
         /**
          * @author: Lorenzo Battilocchi
-        */
+         */
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
 
         rvaAdapter = new RecyclerViewAdapter(this, recipeHeaders);
         recyclerView.setAdapter(rvaAdapter);
@@ -48,12 +53,13 @@ public class RecipeList extends AppCompatActivity implements  RecyclerViewAdapte
 
     }
 
+    // When an item inside the search results is clicked
+    // -> send to the screen where that recipe can be viewed
     @Override
     public void onItemClick(View view, int position) {
 
         Recipe recipe = recipeHeaders.get(position);
         int recipeId = recipeHeaders.get(position).getRecipeId();
-
 
         Intent intent = new Intent(this, ViewRecipe.class);
         intent.putExtra("id", recipeId);

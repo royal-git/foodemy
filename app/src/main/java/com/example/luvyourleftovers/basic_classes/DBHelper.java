@@ -150,7 +150,7 @@ public class DBHelper extends SQLiteOpenHelper {
   }
 
 
-  // Fetch all recipes in the favourites table and return as a list of recipes. 
+  // Fetch all recipes in the favourites table and return as a list of recipes.
   public ArrayList<Recipe> getAllRecipes() {
     ArrayList<Recipe> recipes = new ArrayList<Recipe>();
     SQLiteDatabase db = this.getReadableDatabase();

@@ -23,6 +23,11 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import xdroid.toaster.Toaster;
 
+/**
+ * View that handles a single recipe display screen. It gets a recipe object and then works on that
+ * by fetching more informatino for that recipe using the APICaller and then displays the content
+ * back to the user.
+ */
 public class ViewRecipe extends AppCompatActivity {
 
     DBHelper db;
@@ -51,8 +56,6 @@ public class ViewRecipe extends AppCompatActivity {
         // Code for dealing with favourites.
         setupLikeButton(likeButton);
 
-        // Add/Remove to favourites based on user action.
-
         // Check if recipe has instructions already.
         if (recipe.getInstructions().isEmpty()) {
             new APICaller(this).getRecipeInformation(recipe, new OnFetchRecipeDetails() {
@@ -63,22 +66,26 @@ public class ViewRecipe extends AppCompatActivity {
             });
         }
 
-
-      likeButton.setOnClickListener((View) -> {
-          if (!db.exists(recipe)) {
-              db.insert(recipe);
-        }else{
-              db.delete(recipe);
-        }
-        setupLikeButton(likeButton);
-      });
+        // Handles when user clicks the 'like' button. If it is already a favourite,
+        // it will be removed from favourites.
+        likeButton.setOnClickListener((View) -> {
+            if (!db.exists(recipe)) {
+                db.insert(recipe);
+            } else {
+                db.delete(recipe);
+            }
+            setupLikeButton(likeButton);
+        });
 
     }
 
+    // Used to change the components of the view after the recipe contents have been fetched
+    // this is done an an ui thread since secondary threads are not allowed to modify UI components.
     private void updateTextViews(Recipe recipe) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                // Setup the things.
                 TextView instructionsTextView = findViewById(R.id.instructions);
                 TextView timeToCook = findViewById(R.id.timeToCook);
                 TextView servings = findViewById(R.id.servings);
@@ -87,7 +94,7 @@ public class ViewRecipe extends AppCompatActivity {
                 ArrayList<Ingredient> missingIngredients = recipe.getMissedIngredients();
                 ArrayList<Ingredient> usedIngredients = recipe.getUsedIngredients();
 
-                System.out.println(recipe.getMissedIngredients());
+                // Now set the values as per what we know.
                 instructionsTextView.setText(recipe.getInstructions());
                 timeToCook.setText("Ready in " + recipe.getTimeToCook() + " minutes!");
                 servings.setText("Servings: " + recipe.getServings());
@@ -95,9 +102,9 @@ public class ViewRecipe extends AppCompatActivity {
                 vegetarian.setText(veg);
                 costMeasure.setText(recipe.isCheap() ? "$$" : "$$$$");
 
+                // Used to show a horizontal scrollview that lists the ingredients the user is missing.
                 LinearLayout layout = (LinearLayout)findViewById(R.id.missing_ingredients_layout);
                 for (Ingredient ingredient : missingIngredients) {
-
                     // Setup the views and add it as a child to the parent for missing ingredients.
                     View child = getLayoutInflater().inflate(R.layout.single_ingredient, null);
                     ImageView imgView = child.findViewById(R.id.single_ingredient_image);
@@ -115,16 +122,15 @@ public class ViewRecipe extends AppCompatActivity {
                     layout.addView(child);
                 }
 
+                // Used to show a horizontal scrollview that lists the ingredients the user is using
                 layout = (LinearLayout) findViewById(R.id.used_ingredients_layout);
                 for (Ingredient ingredient : usedIngredients) {
-
                     // Setup the views and add it as a child to the parent for missing ingredients.
                     View child = getLayoutInflater().inflate(R.layout.single_ingredient, null);
                     ImageView imgView = child.findViewById(R.id.single_ingredient_image);
                     TextView textView = child.findViewById(R.id.single_ingredient_text);
                     Picasso.get().load(ingredient.getImageUrl()).into(imgView);
                     textView.setText(ingredient.getName());
-
                     layout.addView(child);
                 }
 
@@ -132,6 +138,7 @@ public class ViewRecipe extends AppCompatActivity {
         });
     }
 
+    // Ask the user if they want to add the item to the cart when the user clicks on an item they do not have.
     public void alertConfirmationDialog(String item, String imageUrl) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Would you like to add " + item + " to your cart?");
@@ -145,10 +152,8 @@ public class ViewRecipe extends AppCompatActivity {
         });
 
         builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // Do nothing
                 dialog.dismiss();
             }
         });
@@ -156,6 +161,8 @@ public class ViewRecipe extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
+
+    // Handles when user clicks 'like'.
     public void setupLikeButton(MaterialButton button) {
         if (db.exists(recipe)) {
             button
