@@ -28,14 +28,12 @@ public class Ingredient implements Serializable {
         this.imageUrl = imageUrl;
     }
 
-
     public void setName(String name) {
         this.name = name;
     }
 
 
-
-
+    //sets the stock boolean to wether it is in stock or not.
     public void haveIngredient(boolean isInStock) {
         this.isInStock = isInStock;
     }
