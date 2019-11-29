@@ -2,6 +2,7 @@ package com.example.luvyourleftovers.basic_classes;
 
 
 import android.content.Context;
+import android.util.Log;
 import com.example.luvyourleftovers.R;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -16,7 +17,7 @@ import xdroid.toaster.Toaster;
 //import xdroid.toaster.Toaster;
 
 /**
- * Class to call the Spoonacular API
+ * Class to call the Spoonacular API, Fetch Results and Build Objects based n the results.
  */
 public class APICaller {
 
@@ -28,15 +29,22 @@ public class APICaller {
     this.context = context;
   }
 
+  // These two are used to make callbacks so that that the methods calling this class and its
+  // fetchers are then able to work on the results without constantly polling to see if the result changed.
   public interface OnReturnRecipeList {
+
     void onSuccess(ArrayList<Recipe> value);
   }
 
+  // Same as above.
   public interface OnFetchRecipeDetails {
+
     void onSuccess(Boolean result);
   }
 
 
+  // Gets a single recipe as input -> Fetches all relevant information
+  // regarding the recipe and stores it inside the object
   public void getRecipeInformation(Recipe recipe, OnFetchRecipeDetails callback) {
     int id = recipe.getRecipeId();
     new Thread(new Runnable() {
@@ -62,6 +70,8 @@ public class APICaller {
         try {
           Response response = client.newCall(request).execute();
           JsonElement responseJson = new JsonParser().parse(response.body().string());
+
+          // If this check didn't pass, there's an issue - it should.
           if (responseJson.isJsonObject()) {
             JsonObject element = responseJson.getAsJsonObject();
             recipe.setIsVegan(element.get("vegan").getAsBoolean());
@@ -76,6 +86,8 @@ public class APICaller {
             recipe.setServings(element.get("servings").getAsInt());
             recipe.setCheap(element.get("cheap").getAsBoolean());
             callback.onSuccess(true);
+          }else{
+            Log.d("Error", "Had issues parsing recipe information for recipe: " + recipe.getRecipeId());
           }
         } catch (Exception ex) {
           ex.printStackTrace();
