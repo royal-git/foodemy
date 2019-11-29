@@ -86,9 +86,7 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
     // What happens when search button is clicked.
     searchButton.setOnClickListener((view) -> {
       String formattedInput = android.text.TextUtils.join(",", ingredients);
-
-
-
+      Toaster.toastLong("Hold up, put on thy aprons because we're fetching some delicious recipes!");
       //our Context
       Context context = this;
 
@@ -101,8 +99,8 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
           for (RecipeObject recipeObject : value) {
             recipeHeaders.add(recipeObject.getName());
           }
-          //send To Recipe List
 
+          //send To Recipe List
           Intent intent = new Intent(context, RecipeList.class);
           intent.putExtra("recipeHeaders", value);
           intent.putExtra("RecipeTypes","searchResult");

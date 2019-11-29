@@ -49,7 +49,7 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
         holder.recipeName.setText(recipe.getName());
         Picasso.get().load(recipe.getImageLink()).into(holder.recipeImage);
         holder.missingIngredients
-            .setText("Missing Ingredients: " + recipe.getMissedIngredients().size());
+            .setText("Ingredients match: (" + recipe.getUsedIngredients().size() + "/" + (recipe.getMissedIngredients().size() + recipe.getUsedIngredients().size()) + ")");
     }
 
     //get size of list (number of items)
