@@ -29,14 +29,49 @@ public class CartDBHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
+    public boolean exists(CartItem item) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = null;
+        String checkQuery =
+            "SELECT name FROM cart WHERE name = '" + item.getName() + "'";
+        cursor = db.rawQuery(checkQuery, null);
+        boolean exists = (cursor.getCount() > 0);
+        cursor.close();
+        return exists;
+    }
+
+    public CartItem fetchSingleItem(String name) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from cart", null);
+
+        if (res != null) {
+            res.moveToFirst();
+        }
+
+        CartItem item = new CartItem(res.getString(res.getColumnIndex("name")),
+            res.getInt(res.getColumnIndex("quantity")),
+            res.getString(res.getColumnIndex("imageUrl")));
+
+        return item;
+    }
+
     public void insertItem(CartItem item) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("name", item.getName());
-        values.put("quantity", item.getQuantity());
-        values.put("imageUrl", item.getImageUrl());
-        db.insert("cart", null, values);
+
+        if (!exists(item)) {
+            values.put("name", item.getName());
+            values.put("quantity", item.getQuantity());
+            values.put("imageUrl", item.getImageUrl());
+            db.insert("cart", null, values);
+        } else {
+            System.out.println("FOUND ITEM -> " + item.getName());
+            CartItem singleItem = fetchSingleItem(item.getName());
+            values.put("quantity", singleItem.getQuantity() + 1);
+            db.update("cart", values, "name='" + item.getName()+"'", null);
+        }
     }
+
 
     public void removeItem(CartItem item) {
         SQLiteDatabase db = this.getWritableDatabase();
