@@ -1,19 +1,18 @@
 package com.example.luvyourleftovers.basic_classes;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-public class IngredientObject implements Ingredient {
+public class IngredientObject implements Ingredient, Serializable {
 
     private String name;
     private Types type;
-
     private boolean isInStock;
 
-
-    public IngredientObject(String name, int type){
+    public IngredientObject(String name, String type) {
         this.name = name;
-        this.type = Types.values()[5];
+        setType(type);
         isInStock = true;
     }
 
@@ -29,7 +28,9 @@ public class IngredientObject implements Ingredient {
 
     @Override
     public void setType(String type) {
-        if (contains(type, new String[]{"Beverages", "Alcoholic"})) {
+        if (contains(type, new String[]{"Alcohol"})) {
+            this.type = Types.ALCOHOL_BEVERAGES;
+        } else if (contains(type, new String[]{"Beverages"})) {
             this.type = Types.BEVERAGES;
         } else if (contains(type, new String[]{"Cheese", "Milk", "Eggs"})) {
             this.type = Types.DAIRY;
@@ -39,7 +40,8 @@ public class IngredientObject implements Ingredient {
             this.type = Types.REFRIGERATED;
         } else if (contains(type, new String[]{"Ethnic", "Pasta", "Rice", "Health Foods"})) {
             this.type = Types.HEALTHY;
-        } else if (contains(type, new String[]{"Oil", "Vinegar", "Salad Dressing"})) {
+        } else if (contains(type, new String[]{"Oil", "Vinegar", "Salad Dressing"}) || name
+            .toLowerCase().contains("oil")) {
             this.type = Types.OIL;
         } else if (contains(type, new String[]{"Meat"})) {
             this.type = Types.MEAT;
@@ -49,10 +51,15 @@ public class IngredientObject implements Ingredient {
             this.type = Types.PRODUCE;
         } else if (contains(type, new String[]{"Spices"})) {
             this.type = Types.SPICE;
+        }else if(name.toLowerCase().equals("salt")){
+            this.type = Types.SALT_SUGAR;
         } else{
             this.type = Types.OTHER;
         }
+    }
 
+    public String getType() {
+        return this.type.name();
     }
 
     public boolean contains(String input, String[] items) {

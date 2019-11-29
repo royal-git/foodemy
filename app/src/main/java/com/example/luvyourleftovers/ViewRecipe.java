@@ -3,7 +3,9 @@ package com.example.luvyourleftovers;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -122,6 +124,10 @@ public class ViewRecipe extends AppCompatActivity {
                 String veg = recipe.isVegan() ? "Vegan" : "Non-Vegan";
                 vegetarian.setText(veg);
                 costMeasure.setText(recipe.isCheap() ? "$$" : "$$$$");
+
+                LinearLayout layout = (LinearLayout)findViewById(R.id.missing_ingredients_layout);
+                View child = getLayoutInflater().inflate(R.layout.missing_ingredient, null);
+                layout.addView(child);
             }
         });
     }

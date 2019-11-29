@@ -138,9 +138,13 @@ public class APICaller {
 
     JsonArray missingIngredientsArray = returnObject.get("missedIngredients").getAsJsonArray();
     System.out.println(missingIngredientsArray);
-    ArrayList<String> missingIngredients = new ArrayList<>();
+    ArrayList<IngredientObject> missingIngredients = new ArrayList<>();
     for (JsonElement ingredient : missingIngredientsArray) {
-      missingIngredients.add(ingredient.getAsJsonObject().get("name").getAsString());
+      missingIngredients.add(new IngredientObject(ingredient.getAsJsonObject().get("name").getAsString(), ingredient.getAsJsonObject().get("aisle").getAsString()));
+    }
+
+    for (IngredientObject ingredient : missingIngredients) {
+      System.out.println(ingredient.getName() + "->" + ingredient.getType());
     }
 
     RecipeObject recipe = new RecipeObject(name, id, image);

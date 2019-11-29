@@ -20,8 +20,9 @@ public interface Ingredient
         SPICE,
         SWEET,
         FRUIT,
+        SALT_SUGAR,
         PROCESSED,
-        OTHER
+        OTHER,
     }
 
     /*

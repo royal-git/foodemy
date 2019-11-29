@@ -198,6 +198,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content">
             <LinearLayout
+              android:id="@+id/missing_ingredients_layout"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content">
                 <Button
@@ -205,11 +206,7 @@
                   android:layout_height="wrap_content"
                   android:layout_marginRight="20dp"
                   android:text="TEST" />
-                <Button
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginRight="20dp"
-                  android:text="TEST" />
+
                 <Button
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"

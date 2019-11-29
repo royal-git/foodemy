@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class RecipeObject implements Recipe, Serializable {
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
-    private ArrayList<String> missedIngredients = new ArrayList<>();
+    private ArrayList<IngredientObject> missedIngredients = new ArrayList<>();
     private String instructions;
     private String name;
     private String image ="";
@@ -123,11 +123,11 @@ public class RecipeObject implements Recipe, Serializable {
         this.servings = servings;
     }
 
-    public ArrayList<String> getMissedIngredients() {
+    public ArrayList<IngredientObject> getMissedIngredients() {
         return missedIngredients;
     }
 
-    public void setMissedIngredients(ArrayList<String> missedIngredients) {
+    public void setMissedIngredients(ArrayList<IngredientObject> missedIngredients) {
         this.missedIngredients = missedIngredients;
     }
 }
