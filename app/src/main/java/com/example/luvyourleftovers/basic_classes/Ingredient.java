@@ -57,8 +57,12 @@ public class Ingredient implements Serializable {
         this.name = name;
     }
 
-
+    
     public void setType(String type) {
+        /*
+        *   This metho gets a string type and converts it to an enum type.
+        *   Useful for Foodemys icon categorization
+        */
         if (contains(type, new String[]{"Alcohol"})) {
             this.type = Types.ALCOHOL_BEVERAGES;
         } else if (contains(type, new String[]{"Beverages"})) {
@@ -96,12 +100,13 @@ public class Ingredient implements Serializable {
         return this.type.name().toLowerCase();
     }
 
+    //Checks wether a given input contains 
     public boolean contains(String input, String[] items) {
         List<String> itemsList = Arrays.asList(items);
         return itemsList.contains(input);
     }
 
-
+    //sets the stock boolean to wether it is in stock or not.
     public void haveIngredient(boolean isInStock) {
         this.isInStock = isInStock;
     }

@@ -1,3 +1,11 @@
+/**
+ * This is the Recipe class where a recipe object is made using the details
+ * gathered from spoonacular or the FavouritesDB. This class is made
+ * for Foodemy services to send each other recipe data in a compact and architecture-wide
+ * understanding.
+ */
+
+
 package com.example.luvyourleftovers.basic_classes;
 
 import androidx.core.text.HtmlCompat;
@@ -5,9 +13,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Recipe implements Serializable {
+    /*
+     *  declare and initialize the variables of Recipe. 
+     */
+    //List of ingredients.
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
+    //List of ingredients not available by user (not mentioned by user-client).
     private ArrayList<Ingredient> missedIngredients = new ArrayList<>();
-
+    //returns list of usedINgredients.
     public ArrayList<Ingredient> getUsedIngredients() {
         return usedIngredients;
     }
@@ -18,6 +31,7 @@ public class Recipe implements Serializable {
     }
 
     private ArrayList<Ingredient> usedIngredients = new ArrayList<>();
+    //List of Spoonacular data declared.
     private String instructions;
     private String name;
     private String image ="";
@@ -35,13 +49,21 @@ public class Recipe implements Serializable {
         this.cheap = cheap;
     }
 
-
+    /**
+     * @param name name of recipe
+     * @param id recipeId used to identify recipe in spoonacular.
+     * @param imageUrl string path to image of the recipe.
+     */
     public Recipe(String name, Integer id, String imageUrl) {
         this.image = imageUrl;
         this.name = name;
         this.recipeId = id;
     }
 
+    /**
+     * @param name name of recipe
+     * @param id recipeId used for recipe identification with spoonacular system
+     */
     public Recipe(String name, Integer id) {
         this.name = name;
         this.recipeId = id;
@@ -49,7 +71,7 @@ public class Recipe implements Serializable {
 
     public Recipe() {
     }
-
+    //Below are basic setters and getters of Recipe attributes.
 
     public void addIngredient(Ingredient ingredient) {
         ingredients.add(ingredient);
@@ -71,6 +93,10 @@ public class Recipe implements Serializable {
         return timeToCook;
     }
 
+    /**
+     * @param instruction is a String with HTML attributes 
+     * cleaned using the HtmlCompat.
+     */
     public void setInstructions(String instruction) {
         instructions = HtmlCompat.fromHtml(instruction, HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
     }
@@ -79,8 +105,8 @@ public class Recipe implements Serializable {
         return ingredients;
     }
 
-
     public String getInstructions() {
+        //returns empty string if null else the instruction string.
         return instructions == null ? "" : instructions;
     }
 
