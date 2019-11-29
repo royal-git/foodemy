@@ -21,6 +21,9 @@ import com.example.luvyourleftovers.basic_classes.Recipe;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
+/**
+ * Activity that lists the list of favourites thte user has.
+ */
 public class FavouritesList extends AppCompatActivity {
 
   private RecyclerView recyclerView;
@@ -30,6 +33,8 @@ public class FavouritesList extends AppCompatActivity {
   private DBHelper db;
 
   @Override
+
+  // Basic setup just like shopping list.
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_favourites_list);
@@ -61,7 +66,7 @@ public class FavouritesList extends AppCompatActivity {
   }
 
 
-  // Adapter that handles the RecyclerView for the shopping List.
+  // Adapter that handles the RecyclerView for the favourites List.
   class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
 
     private ArrayList<Recipe> dataSet;
