@@ -77,13 +77,21 @@ public class FindShops extends AppCompatActivity implements
                 //below case checks if permissions are granted for Coarse and Fine Location
                 //Permissions. If not then these permissions are requested.
                 //Location of user is achieved here. Use this for finding nearby shops.
-                location = lm.getLastKnownLocation(provider);
+                try{
+                    location = lm.getLastKnownLocation(provider);
+                }catch (SecurityException e){
+                    e.printStackTrace();
+                }
             }
         }
         try {
             CreateListOfShops(this, location);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            Log.e("PermissionException", "Failed to get the location permission in time");
         }
 
     }
