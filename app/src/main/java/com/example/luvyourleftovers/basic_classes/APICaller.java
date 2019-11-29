@@ -137,6 +137,7 @@ public class APICaller {
     String image = returnObject.get("image").getAsString();
 
     JsonArray missingIngredientsArray = returnObject.get("missedIngredients").getAsJsonArray();
+    System.out.println(missingIngredientsArray);
     ArrayList<String> missingIngredients = new ArrayList<>();
     for (JsonElement ingredient : missingIngredientsArray) {
       missingIngredients.add(ingredient.getAsJsonObject().get("name").getAsString());
