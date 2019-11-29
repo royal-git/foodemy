@@ -19,8 +19,8 @@ public class SplashActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        ImageView imageView = findViewById(R.id.imageView);
-        imageView.setVisibility(View.VISIBLE);
+//        ImageView imageView = findViewById(R.id.imageView);
+//        imageView.setVisibility(View.VISIBLE);
         try {
             Thread.sleep(2000);
             launchMain();
