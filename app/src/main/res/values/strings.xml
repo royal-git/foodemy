@@ -10,7 +10,7 @@
     <string name="drawer_menu_label_nearby_shops">Nearby Shops</string>
     <string name="drawer_menu_label_input_ingredients">Input Ingredients</string>
 
-    <string name="drawer_header_text">Sample Text.exe</string>
+    <string name="drawer_header_text">Foodemy</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
 
