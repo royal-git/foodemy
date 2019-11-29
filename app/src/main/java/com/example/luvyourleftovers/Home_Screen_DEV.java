@@ -86,7 +86,7 @@ public class Home_Screen_DEV extends AppCompatActivity implements NavigationView
 //                5
             case R.id.nav_favourites:
 
-                FavouritesDB db = new FavouritesDB(this);
+                DBHelper db = new DBHelper(this);
 
                 ArrayList<RecipeObject> data = db.getAllRecipes();
                 ArrayList<RecipeObject> recipeList = new ArrayList<>();

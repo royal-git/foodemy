@@ -27,9 +27,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+
 import android.widget.Toast;
 
 
@@ -186,9 +184,9 @@ public class FindShops extends AppCompatActivity implements
         //place to look for  (for our app we are only looking for 'stores' for ingredients not available.) 
         String url = makeNearbySearch(location);
         //TODO change this, very bad lmao
-//        String apiKey = "&key=***REMOVED***";
+        String apiKey = "&key=***REMOVED***";
        ArrayList<String> shopListNames = new ArrayList<>();
-       String apiKey = "&key=***REMOVED***";
+//       String apiKey = "&key=***REMOVED***";
         //Use Ion to make a api call via http. This will return a JSON Object 
         //which we use to get the nearest places (shops) of a user.
         Ion.getDefault(this).getConscryptMiddleware().enable(false);
