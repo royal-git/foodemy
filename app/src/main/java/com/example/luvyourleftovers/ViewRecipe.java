@@ -134,7 +134,7 @@ public class ViewRecipe extends AppCompatActivity {
 
     public void alertConfirmationDialog(String item, String imageUrl) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Would you like to add this to your cart?");
+        builder.setMessage("Would you like to add " + item + " to your cart?");
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
