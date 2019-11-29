@@ -21,7 +21,9 @@ import xdroid.toaster.Toaster;
 public class APICaller {
 
   private Context context;
-  private static final String API_KEY = "d***REMOVED***";
+  //private static final String API_KEY = "d***REMOVED***";
+  private static final String API_KEY = "***REMOVED***";
+
   private static final String API_HOST = "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com";
 
   public APICaller(Context context) {

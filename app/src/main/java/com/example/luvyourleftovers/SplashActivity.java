@@ -1,12 +1,8 @@
 package com.example.luvyourleftovers;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-
-import com.example.luvyourleftovers.shopping_cart.ShoppingCart;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity
 {
@@ -16,12 +12,10 @@ public class SplashActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        try {
-            Thread.sleep(2000);
-            launchMain();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+        launchMain();
+
+
 
     }
 
