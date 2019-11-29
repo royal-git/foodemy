@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -51,22 +52,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
     {
+        Intent i;
+
         switch (menuItem.getItemId())
         {
+//            1
             case R.id.nav_home:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new InputFragment()).commit();
+                i = new Intent(this, MainActivity.class);
+                startActivity(i);
                 break;
 
-            case R.id.nav_favourites:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FavouritesFragment()).commit();
+//                2
+            case R.id.nav_recipes:
+                i = new Intent(this, IngredientsRecipesActivity.class);
+                startActivity(i);
                 break;
 
+//                3
+            case R.id.nav_nearby_shops:
+                i = new Intent(this, FindShops.class);
+                startActivity(i);
+                break;
+
+//                4
             case R.id.nav_shoppingList:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ShoppingListFragment()).commit();
+                i = new Intent(this, ShoppingListFragment.class);
+                startActivity(i);
                 break;
 
-            case R.id.nav_settings:
-                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+//                5
+            case R.id.nav_favourites:
+                i = new Intent(this, FavouritesFragment.class);
+                startActivity(i);
                 break;
         }
 
