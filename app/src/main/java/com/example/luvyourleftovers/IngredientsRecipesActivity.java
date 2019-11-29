@@ -71,6 +71,7 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
     final EditText ingredientInputArea = findViewById(R.id.inputBox);
     searchButton = findViewById(R.id.searchButton);
     ImageButton photoButton = findViewById(R.id.insertPhoto);
+
     photoButton.setOnClickListener(v -> {
       if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
         requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
@@ -98,7 +99,7 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
           "Hold up, put on thy aprons because we're fetching some delicious recipes!",
           Toast.LENGTH_LONG).show();
 
-      new APICaller(this).fetchRecipes(formattedInput, 5, 1, new OnReturnRecipeList() {
+      new APICaller(this).fetchRecipes(formattedInput, 25, 1, new OnReturnRecipeList() {
         @Override
         public void onSuccess(ArrayList<Recipe> value) {
 
