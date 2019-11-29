@@ -17,7 +17,8 @@
     android:id="@+id/single_ingredient_text"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textAllCaps="true"
+    android:fontFamily="@font/cambay"
+    android:textSize="9sp"
     android:gravity="center"
     android:maxWidth="125dp" />
 </LinearLayout>
