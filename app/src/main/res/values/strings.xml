@@ -41,5 +41,6 @@
   <string name="share">Share</string>
   <string name="like">like</string>
     <string name="find_nearby_shops">Find Nearby Shops</string>
+    <string name="input_your_ingredients_below_and_hit_search_to_begin">Input your ingredients below and hit search to begin!</string>
 
 </resources>

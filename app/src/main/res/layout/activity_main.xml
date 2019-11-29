@@ -7,8 +7,29 @@
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:orientation="vertical">
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="20dp"
+      android:layout_marginTop="30dp"
+      android:layout_marginRight="20dp"
+      android:fontFamily="@font/cambay"
+      android:textColor="@android:color/black"
+      android:text="Welcome to Foodemy!"
+      android:textSize="19sp" />
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="20dp"
+      android:layout_marginTop="10dp"
+      android:layout_marginRight="20dp"
+      android:fontFamily="@font/cambay"
+      android:textColor="@android:color/holo_blue_dark"
+      android:text="@string/input_your_ingredients_below_and_hit_search_to_begin" />
+
     <LinearLayout
       android:id="@+id/inputLayout"
       android:layout_width="match_parent"
