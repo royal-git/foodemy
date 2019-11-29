@@ -22,8 +22,8 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import com.example.luvyourleftovers.basic_classes.APICaller;
 import com.example.luvyourleftovers.basic_classes.APICaller.OnReturnRecipeList;
+import com.example.luvyourleftovers.basic_classes.DBHelper;
 import com.example.luvyourleftovers.basic_classes.RecipeObject;
-import com.example.luvyourleftovers.shopping_cart.CartDBHelper;
 import com.example.luvyourleftovers.shopping_cart.ShoppingCart;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -46,7 +46,7 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
   private static final int MY_CAMERA_PERMISSION_CODE = 100;
   ArrayList<String> ingredients;
   private Button searchButton;
-  CartDBHelper db;
+  DBHelper db;
   String formattedInput;
   FirebaseVisionImageLabeler detector;
 
@@ -54,7 +54,7 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    db = new CartDBHelper(this);
+    db = new DBHelper(this);
 
     // data to populate the RecyclerView with
     ArrayList<String > recipeHeaders = new ArrayList<>();
