@@ -94,6 +94,16 @@ public class ViewRecipe extends AppCompatActivity {
                 ArrayList<Ingredient> missingIngredients = recipe.getMissedIngredients();
                 ArrayList<Ingredient> usedIngredients = recipe.getUsedIngredients();
 
+                // Probably coming in from favourites.
+                if (missingIngredients.size() > 0) {
+                    findViewById(R.id.missing_ingredients_textview).setVisibility(View.VISIBLE);
+                    findViewById(R.id.add_to_cart_textview).setVisibility(View.VISIBLE);
+                }
+
+                if (usedIngredients.size() > 0) {
+                    findViewById(R.id.used_ingredients_textview).setVisibility(View.VISIBLE);
+                }
+
                 // Now set the values as per what we know.
                 instructionsTextView.setText(recipe.getInstructions());
                 timeToCook.setText("Ready in " + recipe.getTimeToCook() + " minutes!");

@@ -122,10 +122,9 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
 
   }
 
-  //TODO -> MAKE IT OPEN FAVOURITES
   public void openFavourites(View view) {
-//    Intent intent = new Intent(this, Fav.class);
-//    startActivity(intent);
+    Intent intent = new Intent(this, FavouritesList.class);
+    startActivity(intent);
   }
 
   public void openCart(View view) {

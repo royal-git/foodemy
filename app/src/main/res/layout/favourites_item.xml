@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  app:cardCornerRadius="4dp"
+  android:layout_marginLeft="14dp"
+  android:layout_marginRight="14dp"
+  android:layout_marginBottom="9dp">
+
+  <RelativeLayout
+    android:id="@+id/single_favourites_item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    >
+
+    <ImageView
+      android:id="@+id/itemImage"
+      android:layout_width="50dp"
+      android:layout_height="50dp"
+      android:layout_marginRight="20dp" />
+    <TextView
+      android:id="@+id/itemName"
+      android:layout_toRightOf="@id/itemImage"
+      android:layout_width="250dp"
+      android:layout_height="wrap_content"
+      android:textSize="15sp"
+      android:text="Line 1"
+      android:layout_centerVertical="true"
+      android:textColor="@android:color/black" />
+    <com.google.android.material.button.MaterialButton
+      style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+      android:layout_width="40dp"
+      android:textColor="@android:color/holo_orange_dark"
+      android:layout_height="wrap_content"
+      android:text="x"
+      android:layout_centerVertical="true"
+      android:layout_alignParentRight="true"
+      android:id="@+id/removeItemButton" />
+
+  </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

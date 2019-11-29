@@ -16,10 +16,17 @@ public class SplashActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        try {
+            Thread.sleep(2000);
+            launchMain();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     // Simple button on the splash screen that launches the main activity.
-    public void launchMain(View view)
+    public void launchMain()
     {
         Intent main = new Intent(this, IngredientsRecipesActivity.class);
         startActivity(main);
