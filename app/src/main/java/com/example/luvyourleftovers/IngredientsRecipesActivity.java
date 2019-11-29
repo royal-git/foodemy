@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.example.luvyourleftovers.basic_classes.APICaller;
 import com.example.luvyourleftovers.basic_classes.APICaller.OnReturnRecipeList;
 import com.example.luvyourleftovers.basic_classes.RecipeObject;
 import com.example.luvyourleftovers.shopping_cart.CartDBHelper;
+import com.example.luvyourleftovers.shopping_cart.ShoppingCart;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
@@ -36,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.apmem.tools.layouts.FlowLayout;
+import xdroid.toaster.Toaster;
 
 public class IngredientsRecipesActivity extends AppCompatActivity {
 
@@ -110,6 +113,17 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
 
   }
 
+  //TODO -> MAKE IT OPEN FAVOURITES
+  public void openFavourites(View view) {
+//    Intent intent = new Intent(this, Fav.class);
+//    startActivity(intent);
+  }
+
+  public void openCart(View view) {
+    Intent intent = new Intent(this, ShoppingCart.class);
+    startActivity(intent);
+  }
+
   @Override
   public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
       @NonNull int[] grantResults) {
@@ -153,6 +167,7 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
     // Setup new ingredient buttons to allow users to delete their inputs.
     MaterialButton newIngredientButton = new MaterialButton(this, null, R.attr.borderlessButtonStyle);
     newIngredientButton.setText(text);
+    newIngredientButton.setTypeface(null, Typeface.NORMAL);
     newIngredientButton.setIcon(
         ResourcesCompat.getDrawable(getResources(), R.drawable.ic_remove_circle_black_24dp, null));
     newIngredientButton.setIconTintResource(R.color.red);
@@ -169,7 +184,6 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
       }
     });
 
-    Toast.makeText(this, ingredients.toString(), Toast.LENGTH_SHORT).show();
   }
 
 
@@ -244,7 +258,7 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
       }
 
     } catch (Exception ex) {
-      //Toaster.toast("There was an issue connecting to the server for checking if the ingredient is valid.");
+      Toaster.toast("There was an issue connecting to the server for checking if the ingredient is valid.");
       Log.d("IngredientsRecipesActivity", "Ran into issue with checking if ingredient valid");
     }
     return validIngredient;

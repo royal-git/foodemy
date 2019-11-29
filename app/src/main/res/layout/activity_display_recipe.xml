@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-
   android:fillViewport="true">
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
-            android:orientation="vertical">
-
-
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="20dp"
+          android:layout_marginTop="10dp"
+          android:layout_marginRight="20dp"
+          android:orientation="vertical">
             <TextView
               android:id="@+id/RecipeDisplayText"
               android:layout_width="fill_parent"
@@ -35,156 +31,141 @@
               android:text="Almond Cake"
               android:textColor="@android:color/black"
               android:textStyle="bold" />
-
         </LinearLayout>
-
-
         <LinearLayout
-
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="20dp"
           android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
+          android:layout_marginTop="10dp"
+          android:orientation="horizontal">
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
+              android:layout_width="fill_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:orientation="vertical">
                 <LinearLayout
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="fill_parent"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginBottom="10dp"
+                  android:orientation="horizontal">
                     <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/ic_timer_black_24dp"/>
+                      android:layout_width="25dp"
+                      android:layout_height="25dp"
+                      android:src="@drawable/ic_timer_black_24dp" />
                     <TextView
-                        android:id="@+id/timeToCook"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
-                        android:text="..." />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="fill_parent"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/ic_people_outline_black_24dp"/>
-                    <TextView
-                        android:id="@+id/servings"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
-                        android:text="..." />
+                      android:id="@+id/timeToCook"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center_vertical"
+                      android:layout_marginLeft="5dp"
+                      android:text="@string/loading" />
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="fill_parent"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginBottom="10dp"
+                  android:orientation="horizontal">
                     <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/ic_sprout_outline"/>
+                      android:layout_width="25dp"
+                      android:layout_height="25dp"
+                      android:src="@drawable/ic_people_outline_black_24dp" />
                     <TextView
-                        android:id="@+id/vegetarian"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
-                        android:text="..." />
+                      android:id="@+id/servings"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center_vertical"
+                      android:layout_marginLeft="5dp"
+                      android:text="@string/loading" />
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginBottom="10dp"
+                  android:orientation="horizontal">
                     <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/ic_attach_money_black_24dp"/>
+                      android:layout_width="25dp"
+                      android:layout_height="25dp"
+                      android:src="@drawable/ic_sprout_outline" />
                     <TextView
-                        android:id="@+id/costRating"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                      android:id="@+id/vegetarian"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center_vertical"
+                      android:layout_marginLeft="5dp"
+                      android:text="@string/loading" />
+                </LinearLayout>
+                <LinearLayout
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal">
+                    <ImageView
+                      android:layout_width="25dp"
+                      android:layout_height="25dp"
+                      android:src="@drawable/ic_attach_money_black_24dp" />
+                    <TextView
+                      android:id="@+id/costRating"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center_vertical"
                       android:layout_marginStart="5dp"
-                        android:text="..." />
+                      android:text="@string/loading" />
                 </LinearLayout>
             </LinearLayout>
-
             <ImageView
               android:id="@+id/recipeImage"
-                android:layout_width="180dp"
-                android:layout_height="133dp"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="true"
-                android:src="@drawable/sampleimage" />
-
+              android:layout_width="180dp"
+              android:layout_height="133dp"
+              android:adjustViewBounds="true"
+              android:contentDescription="contains the image of the recipe"
+              android:scaleType="fitCenter"
+              android:src="@drawable/sampleimage" />
         </LinearLayout>
-
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="30dp"
-          android:layout_marginHorizontal="20dp"
+          android:layout_marginLeft="20dp"
+          android:layout_marginRight="20dp"
           android:orientation="horizontal">
-
-
-
             <View
               android:layout_width="0dp"
               android:layout_height="0dp"
               android:layout_weight="1" />
-
             <com.google.android.material.button.MaterialButton
               android:id="@+id/share_button"
               style="@style/Widget.MaterialComponents.Button.OutlinedButton"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="Share"
+              android:layout_marginEnd="20dp"
               android:textSize="9sp"
               app:iconSize="12dp"
               android:width="100dp"
               android:minHeight="40dp"
               android:minWidth="40dp"
-              android:layout_marginRight="20dp"
+              android:text="@string/share"
               android:textColor="@android:color/black"
               app:icon="@drawable/ic_share_black_24dp"
               app:iconGravity="start"
               app:iconTint="@android:color/darker_gray" />
-
             <com.google.android.material.button.MaterialButton
               android:id="@+id/like_button"
               style="@style/Widget.MaterialComponents.Button.OutlinedButton"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="like"
+              android:layout_marginEnd="5dp"
               android:textSize="9sp"
               app:iconSize="12dp"
               android:minHeight="40dp"
               android:minWidth="40dp"
               android:width="100dp"
-              android:layout_marginRight="5dp"
+              android:text="@string/like"
               android:textColor="@android:color/black"
               app:icon="@drawable/ic_heart_multiple"
               app:iconGravity="start"
-              app:iconTint="@android:color/darker_gray" />
-
+              app:iconTint="@android:color/darker_gray"
+              tools:ignore="SmallSp" />
         </LinearLayout>
-
-
         <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -203,7 +184,6 @@
               android:layout_height="wrap_content"
               android:orientation="horizontal" />
         </HorizontalScrollView>
-
         <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -211,7 +191,7 @@
           android:layout_marginTop="30dp"
           android:fontFamily="@font/cambay"
           android:text="@string/missing_ingredients"
-          android:textSize="19sp"/>
+          android:textSize="19sp" />
         <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -228,31 +208,22 @@
               android:orientation="horizontal"
               android:id="@+id/missing_ingredients_layout"
               android:layout_width="wrap_content"
-              android:layout_height="wrap_content">
-
-            </LinearLayout>
+              android:layout_height="wrap_content" />
         </HorizontalScrollView>
-
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
           android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp"
+          android:layout_marginTop="30dp"
           android:fontFamily="@font/cambay"
           android:text="@string/instructions"
           android:textSize="19sp" />
-
-
         <TextView
-            android:id="@+id/instructions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+          android:id="@+id/instructions"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
           android:layout_marginStart="20dp"
           android:layout_marginEnd="20dp"
           android:text="@string/loading_instructions" />
-
     </LinearLayout>
 </ScrollView>
-
-
-

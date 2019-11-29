@@ -2,6 +2,7 @@ package com.example.luvyourleftovers.basic_classes;
 
 
 import android.content.Context;
+import com.example.luvyourleftovers.R;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -11,6 +12,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Request.Builder;
 import okhttp3.Response;
+import xdroid.toaster.Toaster;
 //import xdroid.toaster.Toaster;
 
 /**
@@ -42,6 +44,7 @@ public class APICaller {
       public void run() {
         OkHttpClient client = new OkHttpClient();
         Request request = new Builder()
+//            DONT DELETE
 //            .url("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" + id
 //                + "/information")
 //            .get()
@@ -92,6 +95,7 @@ public class APICaller {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Builder()
+//            DONT DELETE
 //            .url(
 //                "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=" + limit + "&ranking=" + ranking
 //                    + "&ignorePantry" +
@@ -114,7 +118,7 @@ public class APICaller {
         try {
           Response response = client.newCall(request).execute();
           JsonElement responseJson = new JsonParser().parse(response.body().string());
-          System.out.println(responseJson);
+
           if (responseJson.isJsonArray()) {
             responseJson.getAsJsonArray().forEach((element) -> {
               recipes.add(buildRecipe(element.getAsJsonObject()));
@@ -123,8 +127,9 @@ public class APICaller {
           }
         } catch (Exception ex) {
           ex.printStackTrace();
-          //Toaster.toast(context.getString(R.string.error_api_message));
+          Toaster.toast(context.getString(R.string.error_api_message));
         }
+
       }
     }).start();
   }
