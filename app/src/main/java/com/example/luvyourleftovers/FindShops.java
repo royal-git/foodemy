@@ -44,6 +44,9 @@ public class FindShops extends AppCompatActivity implements
     public void onItemClick(View view, int position) {
         Shop clickedShop = (Shop) shopList.get(position);
 //
+
+
+        Log.d("Shop Clicked: ",clickedShop.getName());
       Toast.makeText(FindShops.this,clickedShop.getName(),Toast.LENGTH_LONG).show();
       String url = "https://www.google.com/maps/search/?api=1&query="+clickedShop.getVicinity().replace("\"", "")+"&query_place_id="+clickedShop.getPlace_id().replace("\"", "");
 
@@ -52,38 +55,7 @@ public class FindShops extends AppCompatActivity implements
       startActivity(intent);
     }
 
-    private class Shop{
-        /* Private inner class that creates the data structure that 
-            acts as an object type store (which we abstract from the google
-            maps api into our simplified version).
 
-            classic getter method that is initialised with all its necessary
-            data at the start. at the start.
-
-        */
-        // private String photos;
-        private String place_id;
-        private String name;
-        private String vicinity;    //represents the address. (name kept for convention sake).
-
-        public Shop(String place_id, String name,String vicinity){
-            // this.photos =photos;
-            this.place_id  = place_id;
-            this.vicinity = vicinity;
-            this.name = name;
-        }
-
-        //getter methods for all our objects.
-        // public String getPhotos(){return photos;}
-        public String getPlace_id(){return place_id;}
-        public String getName(){return name;}
-        public String getVicinity(){return vicinity;}
-
-
-        public String toString(){
-            return "Name: "+this.name+"\nAddress: "+this.vicinity;
-        }
-    }
 
 
 
@@ -99,7 +71,8 @@ public class FindShops extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_shops);
-
+        if(!checkPermissions())
+            requestPermissions();
         //LocationManager is initiailised (with TODO Explain more).
         lm = (LocationManager) getSystemService(LOCATION_SERVICE);
 
@@ -113,8 +86,6 @@ public class FindShops extends AppCompatActivity implements
             if(provider.equalsIgnoreCase("passive")){
                 //below case checks if permissions are granted for Coarse and Fine Location
                 //Permissions. If not then these permissions are requested.
-                if(!checkPermissions())
-                    requestPermissions();
                 //Location of user is achieved here. Use this for finding nearby shops.
                 location = lm.getLastKnownLocation(provider);
             }
@@ -160,7 +131,7 @@ public class FindShops extends AppCompatActivity implements
 
         String full_query_url = "";
         String location_parameter = "location="+latitude+","+longitude;
-        String query ="&rankby=distance&type=store&type=food";
+        String query ="&rankby=distance&type=supermarket";
 
         Log.d("Current Location", longitude+","+latitude);
         return url+location_parameter+query;
@@ -202,20 +173,23 @@ public class FindShops extends AppCompatActivity implements
                                 String vicinity = g.getAsJsonObject().get("vicinity").toString();
 //                                 String photo_reference = "cannot";//"https://maps.googleapis.com/maps/api/place/photo?photoreference="+photos+"&sensor=false&maxheight=100&maxwidth=100"+apiKey;
 
-//                                Log.d("KeySet2: ",g.getAsJsonObject().getAsJsonArray("reference").toString());
+                                Log.d("KeySet2: ",g.getAsJsonObject().toString());
 //                                for(JsonElement mElement: g.getAsJsonArray()){
 //                                    Log.d("Vals", mElement.getAsJsonObject().keySet().toString());
 //                                }
 
-                                shopList.add(new Shop(place_id, name, vicinity));
+                                shopList.add(new Shop(place_id, name.replace("\"", ""), vicinity.replace("\"", "")));
                                 shopListNames.add(name);
 //                                shopListString.add(name);
 
                             }
                             Log.d("Shop List Size:", Integer.toString(shopList.size()));
 
-                            rvaAdapter = new CustomAdapter(context, shopListNames);
+                            rvaAdapter = new CustomAdapter(context, shopList);
+
                             recyclerView.setAdapter(rvaAdapter);
+
+//                            rvaAdapter.setClickListener(FindShops.this::onItemClick);
                         } catch (Exception ex) {
                             Toast.makeText(FindShops.this, "Error Loading from API, please try again.", Toast.LENGTH_SHORT).show();
                         }
@@ -227,24 +201,63 @@ public class FindShops extends AppCompatActivity implements
     }
 }
 
+class Shop{
+    /* Private inner class that creates the data structure that
+        acts as an object type store (which we abstract from the google
+        maps api into our simplified version).
+
+        classic getter method that is initialised with all its necessary
+        data at the start. at the start.
+
+    */
+     private String photos;
+    private String place_id;
+    private String name;
+    private String vicinity;    //represents the address. (name kept for convention sake).
+
+    public Shop(String place_id, String name,String vicinity){
+        // this.photos =photos;
+        this.place_id  = place_id;
+        this.vicinity = vicinity;
+        this.name = name;
+    }
+
+    //getter methods for all our objects.
+    // public String getPhotos(){return photos;}
+    public String getPlace_id(){return place_id;}
+    public String getName(){return name;}
+    public String getVicinity(){return vicinity;}
+
+    public void setPhoto(String photos){this.photos = photos;}
+
+    public String getPhotos(){return this.photos;}
+
+
+    public String toString(){
+        return "Name: "+this.name+"\nAddress: "+this.vicinity;
+    }
+}
 
 class CustomAdapter extends
     RecyclerView.Adapter<com.example.luvyourleftovers.CustomAdapter.MyViewHolder> {
 
-    private ArrayList<String> dataSet;
+    private ArrayList<Shop> dataSet;
     DBHelper db;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView shopName;
+        TextView address;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             this.shopName = (TextView) itemView.findViewById(R.id.shop_name_single);
+
+            this.address  = (TextView) itemView.findViewById(R.id.address_field);
         }
     }
 
-    public CustomAdapter(Context context, ArrayList<String> data) {
+    public CustomAdapter(Context context, ArrayList<Shop> data) {
         db = new DBHelper(context);
         this.dataSet = data;
     }
@@ -256,6 +269,23 @@ class CustomAdapter extends
         View view = LayoutInflater.from(parent.getContext())
             .inflate(R.layout.shop_item, parent, false);
         MyViewHolder myViewHolder = new MyViewHolder(view);
+
+        //Set a onClick option to the ViewHolder. When user clicks on shop it gets transported
+        //to the google maps activity of that location.
+        myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Shop clickedShop = (Shop) dataSet.get(myViewHolder.getAdapterPosition());
+                String url = "https://www.google.com/maps/search/?api=1&query="+clickedShop.getVicinity().replace("\"", "")+"&query_place_id="+clickedShop.getPlace_id().replace("\"", "");
+
+                String uri = url;//"http://maps.google.com/maps?saddr=" + sourceLatitude + "," + sourceLongitude + "&daddr=" + destinationLatitude + "," + destinationLongitude;
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+
+                parent.getContext().startActivity(intent);
+
+            }
+        });
+
         return myViewHolder;
     }
 
@@ -265,7 +295,11 @@ class CustomAdapter extends
         final int listPosition) {
 
         TextView textViewName = holder.shopName;
-        textViewName.setText(dataSet.get(listPosition));
+        textViewName.setText(dataSet.get(listPosition).getName());
+
+        TextView address = holder.address;
+        address.setText(dataSet.get(listPosition).getVicinity());
+
     }
 
     @Override

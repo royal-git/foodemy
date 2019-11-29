@@ -9,23 +9,32 @@
   card_view:cardUseCompatPadding="true">
 
   <RelativeLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@android:color/transparent"
-    android:orientation="horizontal">
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="@android:color/transparent"
+      android:orientation="horizontal"
+      android:textAlignment="inherit">
 
     <TextView
-      android:layout_width="fill_parent"
-      android:id="@+id/shop_name_single"
-      android:layout_height="wrap_content"
-      android:fontFamily="@font/cambay"
-      android:textColor="#000000"
-      android:textSize="13sp"
-      android:textStyle="bold" />
+        android:id="@+id/address_field"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shop_name_single"
+        android:layout_marginTop="2dp"
+        android:text="address" />
+
+    <TextView
+        android:id="@+id/shop_name_single"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cambay"
+        android:text="shop_name"
+        android:textColor="#000000"
+        android:textSize="13sp"
+        android:textStyle="bold" />
 
 
-
-</RelativeLayout>
+  </RelativeLayout>
 
 
   </androidx.cardview.widget.CardView>
