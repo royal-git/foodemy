@@ -5,16 +5,7 @@
 * ranked by   
 */
 
-
-
-
 package com.example.luvyourleftovers;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.Context;
@@ -26,24 +17,28 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
-
-
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.example.luvyourleftovers.basic_classes.DBHelper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-
 import java.util.ArrayList;
 
 public class FindShops extends AppCompatActivity implements
         RecyclerViewAdapter.ItemClickListener{
 
-    RecyclerViewAdapter rvaAdapter;
+    CustomAdapter rvaAdapter;
     ArrayList<Shop> shopList;
     @Override
     public void onItemClick(View view, int position) {
@@ -118,7 +113,7 @@ public class FindShops extends AppCompatActivity implements
             if(provider.equalsIgnoreCase("passive")){
                 //below case checks if permissions are granted for Coarse and Fine Location
                 //Permissions. If not then these permissions are requested.
-                if(!checkPermissions()) 
+                if(!checkPermissions())
                     requestPermissions();
                 //Location of user is achieved here. Use this for finding nearby shops.
                 location = lm.getLastKnownLocation(provider);
@@ -219,12 +214,8 @@ public class FindShops extends AppCompatActivity implements
                             }
                             Log.d("Shop List Size:", Integer.toString(shopList.size()));
 
-
-                            //TODO NEEDS TO BE FIXED !!!!!
-                            //rvaAdapter = new RecyclerViewAdapter(context, shopListNames);
+                            rvaAdapter = new CustomAdapter(context, shopListNames);
                             recyclerView.setAdapter(rvaAdapter);
-
-                            rvaAdapter.setClickListener(FindShops.this::onItemClick);
                         } catch (Exception ex) {
                             Toast.makeText(FindShops.this, "Error Loading from API, please try again.", Toast.LENGTH_SHORT).show();
                         }
@@ -233,5 +224,52 @@ public class FindShops extends AppCompatActivity implements
                     }
 
                 });
+    }
+}
+
+
+class CustomAdapter extends
+    RecyclerView.Adapter<com.example.luvyourleftovers.CustomAdapter.MyViewHolder> {
+
+    private ArrayList<String> dataSet;
+    DBHelper db;
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+
+        TextView shopName;
+
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            this.shopName = (TextView) itemView.findViewById(R.id.shop_name_single);
+        }
+    }
+
+    public CustomAdapter(Context context, ArrayList<String> data) {
+        db = new DBHelper(context);
+        this.dataSet = data;
+    }
+
+
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+            .inflate(R.layout.shop_item, parent, false);
+        MyViewHolder myViewHolder = new MyViewHolder(view);
+        return myViewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(
+        final com.example.luvyourleftovers.CustomAdapter.MyViewHolder holder,
+        final int listPosition) {
+
+        TextView textViewName = holder.shopName;
+        textViewName.setText(dataSet.get(listPosition));
+    }
+
+    @Override
+    public int getItemCount() {
+        return dataSet.size();
     }
 }
