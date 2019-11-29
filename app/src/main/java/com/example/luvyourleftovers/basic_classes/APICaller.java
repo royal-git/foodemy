@@ -14,7 +14,6 @@ import okhttp3.Request;
 import okhttp3.Request.Builder;
 import okhttp3.Response;
 import xdroid.toaster.Toaster;
-//import xdroid.toaster.Toaster;
 
 /**
  * Class to call the Spoonacular API, Fetch Results and Build Objects based n the results.
@@ -59,13 +58,6 @@ public class APICaller {
             .addHeader("x-rapidapi-key", API_KEY)
             .build();
 
-//            .url("https://pastebin.com/raw/wTuQ3KVX?" + id
-//                + "/information")
-//            .get()
-//            .addHeader("x-rapidapi-host", API_HOST)
-//            .addHeader("x-rapidapi-key", API_KEY)
-//            .build();
-
         try {
           Response response = client.newCall(request).execute();
           JsonElement responseJson = new JsonParser().parse(response.body().string());
@@ -106,7 +98,6 @@ public class APICaller {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Builder()
-//            DONT DELETE
             .url(
                 "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=" + limit + "&ranking=" + ranking
                     + "&ignorePantry" +
@@ -116,15 +107,6 @@ public class APICaller {
             .addHeader("x-rapidapi-key", API_KEY)
             .build();
 
-//            .url(
-//                "https://pastebin.com/raw/RCMnLHjf?number=" + limit + "&ranking="
-//                    + ranking
-//                    + "&ignorePantry" +
-//                    "=false&ingredients=" + ingredients)
-//            .get()
-//            .addHeader("x-rapidapi-host", API_HOST)
-//            .addHeader("x-rapidapi-key", API_KEY)
-//            .build();
 
         try {
           Response response = client.newCall(request).execute();

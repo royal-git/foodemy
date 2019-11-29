@@ -27,12 +27,8 @@ public class RecipeList extends AppCompatActivity implements  RecyclerViewAdapte
         Intent intent = getIntent();
 
         Bundle message = intent.getExtras();
-//        Bundle myExtras = getIntent().getExtras();
 
         recipeHeaders = (ArrayList<Recipe>) intent.getSerializableExtra("recipeHeaders");
-//        for(String recipe: recipeHeaders){
-//            Log.d("recipe", recipe);
-//        }
 
         String recipeListHeading = getIntent().getStringExtra("RecipeTypes");
         TextView header = (TextView)findViewById(R.id.textView);
