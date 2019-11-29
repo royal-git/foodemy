@@ -92,23 +92,25 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
     // What happens when search button is clicked.
     searchButton.setOnClickListener((view) -> {
       String formattedInput = android.text.TextUtils.join(",", ingredients);
+      Context context = this;
+
       Toast.makeText(this,
           "Hold up, put on thy aprons because we're fetching some delicious recipes!",
           Toast.LENGTH_LONG).show();
-      //our Context
-      Context context = this;
 
       new APICaller(this).fetchRecipes(formattedInput, 5, 1, new OnReturnRecipeList() {
-
         @Override
         public void onSuccess(ArrayList<RecipeObject> value) {
+
+          // Clear past results.
           recipeHeaders.clear();
 
+          // Insert into the recyclerview.
           for (RecipeObject recipeObject : value) {
             recipeHeaders.add(recipeObject.getName());
           }
 
-          //send To Recipe List
+          //send To Search Results List
           Intent intent = new Intent(context, RecipeList.class);
           intent.putExtra("recipeHeaders", value);
           intent.putExtra("RecipeTypes","searchResult");
