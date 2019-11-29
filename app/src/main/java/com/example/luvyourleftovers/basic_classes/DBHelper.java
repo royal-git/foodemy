@@ -158,7 +158,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     res.moveToFirst();
     while (res.isAfterLast() == false) {
-      recipes.add(new Recipe(res.getString(res.getColumnIndex("name")), res.getInt(res.getColumnIndex("recipe_id"))));
+      recipes.add(new Recipe(res.getString(res.getColumnIndex("name")),
+          res.getInt(res.getColumnIndex("recipe_id")),
+          res.getString(res.getColumnIndex("imageUrl"))));
       res.moveToNext();
     }
     return recipes;
