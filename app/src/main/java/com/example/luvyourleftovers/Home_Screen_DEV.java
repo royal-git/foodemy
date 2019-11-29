@@ -12,7 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.luvyourleftovers.basic_classes.FavouritesDB;
+import com.example.luvyourleftovers.basic_classes.DBHelper;
 import com.example.luvyourleftovers.basic_classes.RecipeObject;
 import com.example.luvyourleftovers.shopping_cart.ShoppingCart;
 import com.google.android.material.navigation.NavigationView;
@@ -55,7 +55,7 @@ public class Home_Screen_DEV extends AppCompatActivity implements NavigationView
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
     {
-        Intent i;
+//        Intent i;
 
         switch (menuItem.getItemId())
         {
@@ -73,8 +73,8 @@ public class Home_Screen_DEV extends AppCompatActivity implements NavigationView
 
 //                3
             case R.id.nav_nearby_shops:
-                Intent shops = new Intent(this, FindShops.class);
-                startActivity(shops);
+                Intent intent = new Intent(this, FindShops.class);
+                startActivity(intent);
                 break;
 
 //                4
@@ -85,8 +85,16 @@ public class Home_Screen_DEV extends AppCompatActivity implements NavigationView
 
 //                5
             case R.id.nav_favourites:
-                Intent favourites = new Intent(this, FavouritesFragment.class);
-                startActivity(favourites);
+
+                DBHelper db = new DBHelper(this);
+
+                ArrayList<RecipeObject> data = db.getAllRecipes();
+                ArrayList<RecipeObject> recipeList = new ArrayList<>();
+
+                Intent recipeListIntent = new Intent(this, RecipeList.class);
+                recipeListIntent.putExtra("recipeHeaders", data);
+                recipeListIntent.putExtra("RecipeTypes","Favourites");
+                startActivity(recipeListIntent);
                 break;
         }
 
@@ -137,7 +145,7 @@ public class Home_Screen_DEV extends AppCompatActivity implements NavigationView
     }
 
     public void openFavouritesActivity(View view){
-        FavouritesDB db = new FavouritesDB(this);
+        DBHelper db = new DBHelper(this);
 
         ArrayList<RecipeObject> data = db.getAllRecipes();
         ArrayList<RecipeObject> recipeList = new ArrayList<>();
