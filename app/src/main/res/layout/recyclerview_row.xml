@@ -27,17 +27,17 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:layout_below="@id/recipe_name"
-            android:id="@+id/when"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="@string/description"
-            android:textColor="#dd5d7a"
-            tools:ignore="RtlHardcoded" />
+<!--        <TextView-->
+<!--            android:layout_below="@id/recipe_name"-->
+<!--            android:id="@+id/when"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="left"-->
+<!--            android:paddingTop="10dp"-->
+<!--            android:paddingBottom="10dp"-->
+<!--            android:text="@string/description"-->
+<!--            android:textColor="#dd5d7a"-->
+<!--            tools:ignore="RtlHardcoded" />-->
 
     </RelativeLayout>
 

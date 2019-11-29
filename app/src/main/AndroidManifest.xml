@@ -33,10 +33,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".DisplayRecipe"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ViewRecipe"
-            android:parentActivityName=".Home_Screen_DEV"
-            android:screenOrientation="portrait" />
+
         <activity android:name=".Home_Screen_DEV"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -49,6 +46,7 @@
             android:name=".IngredientsRecipesActivity"
             android:parentActivityName=".Home_Screen_DEV"
             android:screenOrientation="portrait" />
+        <activity android:name=".ViewRecipe" />
 
         <meta-data
             android:name="preloaded_fonts"
