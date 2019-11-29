@@ -119,7 +119,7 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
           //send To Search Results List
           Intent intent = new Intent(context, RecipeList.class);
           intent.putExtra("recipeHeaders", value);
-          intent.putExtra("RecipeTypes","searchResult");
+          intent.putExtra("RecipeTypes","Search Results");
           startActivity(intent);
         }
       });
