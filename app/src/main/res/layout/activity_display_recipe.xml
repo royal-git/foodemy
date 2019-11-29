@@ -186,6 +186,8 @@
         <HorizontalScrollView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:layout_marginStart="20dp"
+          android:layout_marginEnd="20dp"
           android:scrollbars="none">
             <LinearLayout
               android:id="@+id/used_ingredients_layout"
@@ -217,6 +219,8 @@
         </LinearLayout>
         <HorizontalScrollView
           android:scrollbars="none"
+          android:layout_marginStart="20dp"
+          android:layout_marginEnd="20dp"
           android:layout_width="match_parent"
           android:layout_height="wrap_content">
             <LinearLayout
