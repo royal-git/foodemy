@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.luvyourleftovers.basic_classes.RecipeObject;
+import com.example.luvyourleftovers.basic_classes.Recipe;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
@@ -24,12 +24,12 @@ import java.util.List;
 
 class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private List<RecipeObject> mData;
+    private List<Recipe> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    RecyclerViewAdapter(Context context, List<RecipeObject> data) {
+    RecyclerViewAdapter(Context context, List<Recipe> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -45,7 +45,7 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        RecipeObject recipe = mData.get(position);
+        Recipe recipe = mData.get(position);
         holder.recipeName.setText(recipe.getName());
         Picasso.get().load(recipe.getImageLink()).into(holder.recipeImage);
         holder.missingIngredients

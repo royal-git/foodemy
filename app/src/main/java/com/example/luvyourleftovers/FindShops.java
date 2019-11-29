@@ -42,17 +42,7 @@ public class FindShops extends AppCompatActivity implements
     ArrayList<Shop> shopList;
     @Override
     public void onItemClick(View view, int position) {
-        Shop clickedShop = (Shop) shopList.get(position);
-//
 
-
-        Log.d("Shop Clicked: ",clickedShop.getName());
-      Toast.makeText(FindShops.this,clickedShop.getName(),Toast.LENGTH_LONG).show();
-      String url = "https://www.google.com/maps/search/?api=1&query="+clickedShop.getVicinity().replace("\"", "")+"&query_place_id="+clickedShop.getPlace_id().replace("\"", "");
-
-      String uri = url;//"http://maps.google.com/maps?saddr=" + sourceLatitude + "," + sourceLongitude + "&daddr=" + destinationLatitude + "," + destinationLongitude;
-      Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-      startActivity(intent);
     }
 
 

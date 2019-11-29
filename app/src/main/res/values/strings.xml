@@ -40,5 +40,6 @@
   <string name="loading">...</string>
   <string name="share">Share</string>
   <string name="like">like</string>
+    <string name="find_nearby_shops">Find Nearby Shops</string>
 
 </resources>

@@ -13,7 +13,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.luvyourleftovers.basic_classes.DBHelper;
-import com.example.luvyourleftovers.basic_classes.RecipeObject;
+import com.example.luvyourleftovers.basic_classes.Recipe;
 import com.example.luvyourleftovers.shopping_cart.ShoppingCart;
 import com.google.android.material.navigation.NavigationView;
 
@@ -88,8 +88,8 @@ public class Home_Screen_DEV extends AppCompatActivity implements NavigationView
 
                 DBHelper db = new DBHelper(this);
 
-                ArrayList<RecipeObject> data = db.getAllRecipes();
-                ArrayList<RecipeObject> recipeList = new ArrayList<>();
+                ArrayList<Recipe> data = db.getAllRecipes();
+                ArrayList<Recipe> recipeList = new ArrayList<>();
 
                 Intent recipeListIntent = new Intent(this, RecipeList.class);
                 recipeListIntent.putExtra("recipeHeaders", data);
@@ -127,7 +127,7 @@ public class Home_Screen_DEV extends AppCompatActivity implements NavigationView
     public void onDisplayRecipe(View view) {
         Intent intent = new Intent(this, ViewRecipe.class);
         intent.putExtra("id", 324694);
-        intent.putExtra("recipe", new RecipeObject("Toast", 479101, "https://spoonacular.com/recipeImages/Grandmas-Apple-Crisp-645152.jpg"));
+        intent.putExtra("recipe", new Recipe("Toast", 479101, "https://spoonacular.com/recipeImages/Grandmas-Apple-Crisp-645152.jpg"));
         startActivity(intent);
     }
 
@@ -147,8 +147,8 @@ public class Home_Screen_DEV extends AppCompatActivity implements NavigationView
     public void openFavouritesActivity(View view){
         DBHelper db = new DBHelper(this);
 
-        ArrayList<RecipeObject> data = db.getAllRecipes();
-        ArrayList<RecipeObject> recipeList = new ArrayList<>();
+        ArrayList<Recipe> data = db.getAllRecipes();
+        ArrayList<Recipe> recipeList = new ArrayList<>();
 
         Intent intent = new Intent(this, RecipeList.class);
         intent.putExtra("recipeHeaders", data);

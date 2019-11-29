@@ -10,8 +10,12 @@ import androidx.annotation.Nullable;
 import com.example.luvyourleftovers.shopping_cart.CartItem;
 import java.util.ArrayList;
 
+/**
+ * Class that allows other classes to access, query and remove items from the database.
+ */
 public class DBHelper extends SQLiteOpenHelper {
 
+  // The database name.
   public static final String DATABASE_NAME = "Foodemy.db";
 
   public DBHelper(@Nullable Context context) {
@@ -19,6 +23,7 @@ public class DBHelper extends SQLiteOpenHelper {
   }
 
 
+  // Create tables if they do not exist.
   @Override
   public void onCreate(SQLiteDatabase sqLiteDatabase) {
     sqLiteDatabase.execSQL(
@@ -27,6 +32,7 @@ public class DBHelper extends SQLiteOpenHelper {
         "create table favourites (id integer primary key, name text, ingredients text, instructions text, recipe_id int, imageUrl text)");
   }
 
+  // Drop it and create a new one.
   @Override
   public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
     sqLiteDatabase.execSQL("DROP TABLE IF EXISTS favourites");
@@ -34,9 +40,11 @@ public class DBHelper extends SQLiteOpenHelper {
     onCreate(sqLiteDatabase);
   }
 
-  public void insert(RecipeObject recipe) {
+  // Insert a new recipe into the favourite table.
+  public void insert(Recipe recipe) {
     SQLiteDatabase db = this.getWritableDatabase();
     ContentValues values = new ContentValues();
+    // Ensure it doesn't already exist there.
     if (!exists(recipe)) {
       values.put("name", recipe.getName());
       String ingredientsList = TextUtils.join(", ", recipe.getIngrediantList());
@@ -49,29 +57,32 @@ public class DBHelper extends SQLiteOpenHelper {
     }
   }
 
+  // Insert a grocery into the shopping cart.
   public void insert(CartItem item) {
     SQLiteDatabase db = this.getWritableDatabase();
     ContentValues values = new ContentValues();
 
+    // If it doesn't already exist then quantity -> 1, otherwise quantity -> quantity + 1
     if (!exists(item)) {
       values.put("name", item.getName());
       values.put("quantity", item.getQuantity());
       values.put("imageUrl", item.getImageUrl());
       db.insert("cart", null, values);
     } else {
-      System.out.println("FOUND ITEM -> " + item.getName());
       CartItem singleItem = fetchSingleItem(item.getName());
       values.put("quantity", singleItem.getQuantity() + 1);
       db.update("cart", values, "name='" + item.getName() + "'", null);
     }
   }
 
+  // Remove all recipes, basically only used during testing.
   public void deleteAllRecipes() {
     SQLiteDatabase db = this.getWritableDatabase();
     db.execSQL("delete from favourites");
   }
 
-  public void delete(RecipeObject recipe) {
+  // Delete a certain recipe from the table
+  public void delete(Recipe recipe) {
     SQLiteDatabase db = this.getWritableDatabase();
     db.delete("favourites", "recipe_id = '" + recipe.getRecipeId() + "'", null);
   }
@@ -81,7 +92,8 @@ public class DBHelper extends SQLiteOpenHelper {
     db.delete("cart", "name = '" + item.getName() + "'", null);
   }
 
-  public boolean exists(RecipeObject recipe) {
+  // Check if a given recipe exists in the table.
+  public boolean exists(Recipe recipe) {
     SQLiteDatabase db = this.getWritableDatabase();
     Cursor cursor = null;
     String checkQuery =
@@ -92,6 +104,7 @@ public class DBHelper extends SQLiteOpenHelper {
     return exists;
   }
 
+  // Check if a given item exists in the cart.
   public boolean exists(CartItem item) {
     SQLiteDatabase db = this.getWritableDatabase();
     Cursor cursor = null;
@@ -103,6 +116,7 @@ public class DBHelper extends SQLiteOpenHelper {
     return exists;
   }
 
+  // Fetch a single cart item based on the name, used as a helper method for other methods.
   public CartItem fetchSingleItem(String name) {
     SQLiteDatabase db = this.getReadableDatabase();
     Cursor res = db.rawQuery("select * from cart", null);
@@ -119,7 +133,7 @@ public class DBHelper extends SQLiteOpenHelper {
   }
 
 
-
+  // Fetch all items in the shopping cart -> used to show shopping list.
   public ArrayList<CartItem> getAllCartItems() {
     ArrayList<CartItem> items = new ArrayList<CartItem>();
     SQLiteDatabase db = this.getReadableDatabase();
@@ -136,14 +150,15 @@ public class DBHelper extends SQLiteOpenHelper {
   }
 
 
-  public ArrayList<RecipeObject> getAllRecipes() {
-    ArrayList<RecipeObject> recipes = new ArrayList<RecipeObject>();
+  // Fetch all recipes in the favourites table and return as a list of recipes. 
+  public ArrayList<Recipe> getAllRecipes() {
+    ArrayList<Recipe> recipes = new ArrayList<Recipe>();
     SQLiteDatabase db = this.getReadableDatabase();
     Cursor res = db.rawQuery("select * from favourites", null);
 
     res.moveToFirst();
     while (res.isAfterLast() == false) {
-      recipes.add(new RecipeObject(res.getString(res.getColumnIndex("name")), res.getInt(res.getColumnIndex("recipe_id"))));
+      recipes.add(new Recipe(res.getString(res.getColumnIndex("name")), res.getInt(res.getColumnIndex("recipe_id"))));
       res.moveToNext();
     }
     return recipes;
