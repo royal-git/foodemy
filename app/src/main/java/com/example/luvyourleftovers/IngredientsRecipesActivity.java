@@ -23,7 +23,7 @@ import androidx.core.content.res.ResourcesCompat;
 import com.example.luvyourleftovers.basic_classes.APICaller;
 import com.example.luvyourleftovers.basic_classes.APICaller.OnReturnRecipeList;
 import com.example.luvyourleftovers.basic_classes.DBHelper;
-import com.example.luvyourleftovers.basic_classes.RecipeObject;
+import com.example.luvyourleftovers.basic_classes.Recipe;
 import com.example.luvyourleftovers.shopping_cart.ShoppingCart;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -100,14 +100,14 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
 
       new APICaller(this).fetchRecipes(formattedInput, 5, 1, new OnReturnRecipeList() {
         @Override
-        public void onSuccess(ArrayList<RecipeObject> value) {
+        public void onSuccess(ArrayList<Recipe> value) {
 
           // Clear past results.
           recipeHeaders.clear();
 
           // Insert into the recyclerview.
-          for (RecipeObject recipeObject : value) {
-            recipeHeaders.add(recipeObject.getName());
+          for (Recipe recipe : value) {
+            recipeHeaders.add(recipe.getName());
           }
 
           //send To Search Results List

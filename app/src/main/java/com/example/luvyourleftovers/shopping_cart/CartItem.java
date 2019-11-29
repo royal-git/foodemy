@@ -1,6 +1,11 @@
 package com.example.luvyourleftovers.shopping_cart;
 
+/**
+ * Class to hold each item inside the shopping cart, the things here are pretty much self
+ * explanatory.
+ */
 public class CartItem {
+
     public String getName() {
         return name;
     }

@@ -34,7 +34,7 @@ public class DBHelper extends SQLiteOpenHelper {
     onCreate(sqLiteDatabase);
   }
 
-  public void insert(RecipeObject recipe) {
+  public void insert(Recipe recipe) {
     SQLiteDatabase db = this.getWritableDatabase();
     ContentValues values = new ContentValues();
     if (!exists(recipe)) {
@@ -71,7 +71,7 @@ public class DBHelper extends SQLiteOpenHelper {
     db.execSQL("delete from favourites");
   }
 
-  public void delete(RecipeObject recipe) {
+  public void delete(Recipe recipe) {
     SQLiteDatabase db = this.getWritableDatabase();
     db.delete("favourites", "recipe_id = '" + recipe.getRecipeId() + "'", null);
   }
@@ -81,7 +81,7 @@ public class DBHelper extends SQLiteOpenHelper {
     db.delete("cart", "name = '" + item.getName() + "'", null);
   }
 
-  public boolean exists(RecipeObject recipe) {
+  public boolean exists(Recipe recipe) {
     SQLiteDatabase db = this.getWritableDatabase();
     Cursor cursor = null;
     String checkQuery =
@@ -136,14 +136,14 @@ public class DBHelper extends SQLiteOpenHelper {
   }
 
 
-  public ArrayList<RecipeObject> getAllRecipes() {
-    ArrayList<RecipeObject> recipes = new ArrayList<RecipeObject>();
+  public ArrayList<Recipe> getAllRecipes() {
+    ArrayList<Recipe> recipes = new ArrayList<Recipe>();
     SQLiteDatabase db = this.getReadableDatabase();
     Cursor res = db.rawQuery("select * from favourites", null);
 
     res.moveToFirst();
     while (res.isAfterLast() == false) {
-      recipes.add(new RecipeObject(res.getString(res.getColumnIndex("name")), res.getInt(res.getColumnIndex("recipe_id"))));
+      recipes.add(new Recipe(res.getString(res.getColumnIndex("name")), res.getInt(res.getColumnIndex("recipe_id"))));
       res.moveToNext();
     }
     return recipes;

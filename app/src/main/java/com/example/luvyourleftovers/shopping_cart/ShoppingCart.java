@@ -117,7 +117,7 @@ public class ShoppingCart extends AppCompatActivity {
             textViewQuantity
                 .setText("Quantity: " + Integer.toString(dataSet.get(listPosition).getQuantity()));
 
-            // Handler for when a recipe is to be removed from the cart. 
+            // Handler for when a recipe is to be removed from the cart.
             removeButton.setOnClickListener((View) -> {
                 DBHelper db = new DBHelper(View.getContext());
                 db.delete(dataSet.get(listPosition));

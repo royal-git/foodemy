@@ -4,17 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.luvyourleftovers.basic_classes.RecipeObject;
+import com.example.luvyourleftovers.basic_classes.Recipe;
 import java.util.ArrayList;
 
 public class RecipeList extends AppCompatActivity implements  RecyclerViewAdapter.ItemClickListener{
 
     RecyclerViewAdapter rvaAdapter;
-    ArrayList<RecipeObject> recipeHeaders;
+    ArrayList<Recipe> recipeHeaders;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +23,7 @@ public class RecipeList extends AppCompatActivity implements  RecyclerViewAdapte
         Bundle message = intent.getExtras();
 //        Bundle myExtras = getIntent().getExtras();
 
-        recipeHeaders = (ArrayList<RecipeObject>) intent.getSerializableExtra("recipeHeaders");
+        recipeHeaders = (ArrayList<Recipe>) intent.getSerializableExtra("recipeHeaders");
 //        for(String recipe: recipeHeaders){
 //            Log.d("recipe", recipe);
 //        }
@@ -52,7 +51,7 @@ public class RecipeList extends AppCompatActivity implements  RecyclerViewAdapte
     @Override
     public void onItemClick(View view, int position) {
 
-        RecipeObject recipe = recipeHeaders.get(position);
+        Recipe recipe = recipeHeaders.get(position);
         int recipeId = recipeHeaders.get(position).getRecipeId();
 
 

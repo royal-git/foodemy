@@ -29,7 +29,7 @@ public class APICaller {
   }
 
   public interface OnReturnRecipeList {
-    void onSuccess(ArrayList<RecipeObject> value);
+    void onSuccess(ArrayList<Recipe> value);
   }
 
   public interface OnFetchRecipeDetails {
@@ -37,7 +37,7 @@ public class APICaller {
   }
 
 
-  public void getRecipeInformation(RecipeObject recipe, OnFetchRecipeDetails callback) {
+  public void getRecipeInformation(Recipe recipe, OnFetchRecipeDetails callback) {
     int id = recipe.getRecipeId();
     new Thread(new Runnable() {
       @Override
@@ -87,7 +87,7 @@ public class APICaller {
 
   public void fetchRecipes(String ingredients, int limit, int ranking,
       OnReturnRecipeList callback) {
-    ArrayList<RecipeObject> recipes = new ArrayList<>();
+    ArrayList<Recipe> recipes = new ArrayList<>();
 
     new Thread(new Runnable() {
       @Override
@@ -135,7 +135,7 @@ public class APICaller {
   }
 
 
-  private RecipeObject buildRecipe(JsonObject element) {
+  private Recipe buildRecipe(JsonObject element) {
     JsonObject returnObject = element.getAsJsonObject();
     String name = returnObject.get("title").getAsString();
     Integer id = Integer.parseInt(returnObject.get("id").toString());
@@ -143,25 +143,25 @@ public class APICaller {
 
     // Fetch the ingredients that user didn't specify they had.
     JsonArray missingIngredientsArray = returnObject.get("missedIngredients").getAsJsonArray();
-    ArrayList<IngredientObject> missingIngredients = new ArrayList<>();
+    ArrayList<Ingredient> missingIngredients = new ArrayList<>();
     for (JsonElement ingredient : missingIngredientsArray) {
       missingIngredients.add(
-          new IngredientObject(ingredient.getAsJsonObject().get("name").getAsString(),
+          new Ingredient(ingredient.getAsJsonObject().get("name").getAsString(),
               ingredient.getAsJsonObject().get("aisle").getAsString(),
               ingredient.getAsJsonObject().get("image").getAsString()));
     }
 
     // Fetch the ingredients that user did specify and is used in the recipe.
     JsonArray usedIngredientsArray = returnObject.get("usedIngredients").getAsJsonArray();
-    ArrayList<IngredientObject> usedIngredients = new ArrayList<>();
+    ArrayList<Ingredient> usedIngredients = new ArrayList<>();
     for (JsonElement ingredient : usedIngredientsArray) {
       usedIngredients.add(
-          new IngredientObject(ingredient.getAsJsonObject().get("name").getAsString(),
+          new Ingredient(ingredient.getAsJsonObject().get("name").getAsString(),
               ingredient.getAsJsonObject().get("aisle").getAsString(),
               ingredient.getAsJsonObject().get("image").getAsString()));
     }
 
-    RecipeObject recipe = new RecipeObject(name, id, image);
+    Recipe recipe = new Recipe(name, id, image);
     recipe.setMissedIngredients(missingIngredients);
     recipe.setUsedIngredients(usedIngredients);
     return recipe;

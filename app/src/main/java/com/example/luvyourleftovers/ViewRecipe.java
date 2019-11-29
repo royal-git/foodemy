@@ -15,8 +15,8 @@ import androidx.core.content.ContextCompat;
 import com.example.luvyourleftovers.basic_classes.APICaller;
 import com.example.luvyourleftovers.basic_classes.APICaller.OnFetchRecipeDetails;
 import com.example.luvyourleftovers.basic_classes.DBHelper;
-import com.example.luvyourleftovers.basic_classes.IngredientObject;
-import com.example.luvyourleftovers.basic_classes.RecipeObject;
+import com.example.luvyourleftovers.basic_classes.Ingredient;
+import com.example.luvyourleftovers.basic_classes.Recipe;
 import com.example.luvyourleftovers.shopping_cart.CartItem;
 import com.google.android.material.button.MaterialButton;
 import com.squareup.picasso.Picasso;
@@ -26,7 +26,7 @@ import xdroid.toaster.Toaster;
 public class ViewRecipe extends AppCompatActivity {
 
     DBHelper db;
-    RecipeObject recipe;
+    Recipe recipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class ViewRecipe extends AppCompatActivity {
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
         Bundle message = intent.getExtras();
-        recipe = (RecipeObject) intent.getSerializableExtra("recipe");
+        recipe = (Recipe) intent.getSerializableExtra("recipe");
         TextView titleView = findViewById(R.id.RecipeDisplayText);
         titleView.setText(recipe.getName());
         if (!recipe.getImageLink().isEmpty()) {
@@ -75,7 +75,7 @@ public class ViewRecipe extends AppCompatActivity {
 
     }
 
-    private void updateTextViews(RecipeObject recipe) {
+    private void updateTextViews(Recipe recipe) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -84,8 +84,8 @@ public class ViewRecipe extends AppCompatActivity {
                 TextView servings = findViewById(R.id.servings);
                 TextView vegetarian = findViewById(R.id.vegetarian);
                 TextView costMeasure = findViewById(R.id.costRating);
-                ArrayList<IngredientObject> missingIngredients = recipe.getMissedIngredients();
-                ArrayList<IngredientObject> usedIngredients = recipe.getUsedIngredients();
+                ArrayList<Ingredient> missingIngredients = recipe.getMissedIngredients();
+                ArrayList<Ingredient> usedIngredients = recipe.getUsedIngredients();
 
                 System.out.println(recipe.getMissedIngredients());
                 instructionsTextView.setText(recipe.getInstructions());
@@ -96,7 +96,7 @@ public class ViewRecipe extends AppCompatActivity {
                 costMeasure.setText(recipe.isCheap() ? "$$" : "$$$$");
 
                 LinearLayout layout = (LinearLayout)findViewById(R.id.missing_ingredients_layout);
-                for (IngredientObject ingredient : missingIngredients) {
+                for (Ingredient ingredient : missingIngredients) {
 
                     // Setup the views and add it as a child to the parent for missing ingredients.
                     View child = getLayoutInflater().inflate(R.layout.single_ingredient, null);
@@ -116,7 +116,7 @@ public class ViewRecipe extends AppCompatActivity {
                 }
 
                 layout = (LinearLayout) findViewById(R.id.used_ingredients_layout);
-                for (IngredientObject ingredient : usedIngredients) {
+                for (Ingredient ingredient : usedIngredients) {
 
                     // Setup the views and add it as a child to the parent for missing ingredients.
                     View child = getLayoutInflater().inflate(R.layout.single_ingredient, null);
