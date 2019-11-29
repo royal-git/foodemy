@@ -14,53 +14,53 @@ import java.util.ArrayList;
  * View that shows a list of recipes that is sent to it -> Primary purpose is to display search
  * results.
  */
-public class RecipeList extends AppCompatActivity implements  RecyclerViewAdapter.ItemClickListener{
+public class RecipeList extends AppCompatActivity implements RecyclerViewAdapter.ItemClickListener {
 
-    RecyclerViewAdapter rvaAdapter;
-    ArrayList<Recipe> recipeHeaders;
+  RecyclerViewAdapter rvaAdapter;
+  ArrayList<Recipe> recipeHeaders;
 
-    // Setup everything as required so that search results can be shown.
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe_list);
-        Intent intent = getIntent();
+  // Setup everything as required so that search results can be shown.
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_recipe_list);
+    Intent intent = getIntent();
 
-        Bundle message = intent.getExtras();
+    Bundle message = intent.getExtras();
 
-        recipeHeaders = (ArrayList<Recipe>) intent.getSerializableExtra("recipeHeaders");
+    recipeHeaders = (ArrayList<Recipe>) intent.getSerializableExtra("recipeHeaders");
 
-        String recipeListHeading = getIntent().getStringExtra("RecipeTypes");
-        TextView header = (TextView)findViewById(R.id.textView);
+    String recipeListHeading = getIntent().getStringExtra("RecipeTypes");
+    TextView header = findViewById(R.id.textView);
 
-        //Set the heading text of the current recipe list (favourites, search results)
-        header.setText(recipeListHeading);
-        /**
-         * @author: Lorenzo Battilocchi
-         */
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    //Set the heading text of the current recipe list (favourites, search results)
+    header.setText(recipeListHeading);
+    /**
+     * @author: Lorenzo Battilocchi
+     */
+    RecyclerView recyclerView = findViewById(R.id.recyclerView);
+    recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        rvaAdapter = new RecyclerViewAdapter(this, recipeHeaders);
-        recyclerView.setAdapter(rvaAdapter);
+    rvaAdapter = new RecyclerViewAdapter(this, recipeHeaders);
+    recyclerView.setAdapter(rvaAdapter);
 
-        rvaAdapter.setClickListener(this);
+    rvaAdapter.setClickListener(this);
 
 
-    }
+  }
 
-    // When an item inside the search results is clicked
-    // -> send to the screen where that recipe can be viewed
-    @Override
-    public void onItemClick(View view, int position) {
+  // When an item inside the search results is clicked
+  // -> send to the screen where that recipe can be viewed
+  @Override
+  public void onItemClick(View view, int position) {
 
-        Recipe recipe = recipeHeaders.get(position);
-        int recipeId = recipeHeaders.get(position).getRecipeId();
+    Recipe recipe = recipeHeaders.get(position);
+    int recipeId = recipeHeaders.get(position).getRecipeId();
 
-        Intent intent = new Intent(this, ViewRecipe.class);
-        intent.putExtra("id", recipeId);
-        intent.putExtra("recipe",recipe);
-        startActivity(intent);
+    Intent intent = new Intent(this, ViewRecipe.class);
+    intent.putExtra("id", recipeId);
+    intent.putExtra("recipe", recipe);
+    startActivity(intent);
 
-    }
+  }
 }

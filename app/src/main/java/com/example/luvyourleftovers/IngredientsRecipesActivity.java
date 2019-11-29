@@ -54,13 +54,11 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
   private static final int MY_CAMERA_PERMISSION_CODE = 100;
 
   ArrayList<String> ingredients;
-  
-  private Button searchButton;
   DBHelper db;
-  
   String formattedInput;
   //used for the Google Cloud Vision utility for classifying objects in an image.
   FirebaseVisionImageLabeler detector;
+  private Button searchButton;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +67,7 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
     db = new DBHelper(this);
 
     // data to populate the RecyclerView with
-    ArrayList<String > recipeHeaders = new ArrayList<>();
+    ArrayList<String> recipeHeaders = new ArrayList<>();
     ingredients = new ArrayList<>();
 
     // set it up to get user inputs
@@ -119,7 +117,7 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
           //send To Search Results List
           Intent intent = new Intent(context, RecipeList.class);
           intent.putExtra("recipeHeaders", value);
-          intent.putExtra("RecipeTypes","Search Results");
+          intent.putExtra("RecipeTypes", "Search Results");
           startActivity(intent);
         }
       });
@@ -149,7 +147,8 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, CAMERA_REQUEST);
       } else {
-        Toast.makeText(this, getString(R.string.camera_permission_denied), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getString(R.string.camera_permission_denied), Toast.LENGTH_LONG)
+            .show();
       }
     }
   }
@@ -177,7 +176,8 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
     searchButton.setVisibility(View.VISIBLE);
 
     // Setup new ingredient buttons to allow users to delete their inputs.
-    MaterialButton newIngredientButton = new MaterialButton(this, null, R.attr.borderlessButtonStyle);
+    MaterialButton newIngredientButton = new MaterialButton(this, null,
+        R.attr.borderlessButtonStyle);
     newIngredientButton.setText(text);
     newIngredientButton.setTypeface(null, Typeface.NORMAL);
     newIngredientButton.setIcon(
@@ -214,7 +214,8 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
                 new OnFailureListener() {
                   @Override
                   public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(IngredientsRecipesActivity.this, "Error Fetching from Vision API.",
+                    Toast.makeText(IngredientsRecipesActivity.this,
+                        "Error Fetching from Vision API.",
                         Toast.LENGTH_SHORT).show();
                   }
                 });
@@ -276,7 +277,8 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
         validIngredient = true;
       }
     } catch (Exception ex) {
-      Toaster.toast("There was an issue connecting to the server for checking if the ingredient is valid.");
+      Toaster.toast(
+          "There was an issue connecting to the server for checking if the ingredient is valid.");
       Log.d("IngredientsRecipesActivity", "Ran into issue with checking if ingredient valid");
     }
     return validIngredient;
