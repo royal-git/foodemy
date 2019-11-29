@@ -55,7 +55,7 @@ public class Home_Screen_DEV extends AppCompatActivity implements NavigationView
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
     {
-        Intent i;
+//        Intent i;
 
         switch (menuItem.getItemId())
         {
@@ -73,8 +73,8 @@ public class Home_Screen_DEV extends AppCompatActivity implements NavigationView
 
 //                3
             case R.id.nav_nearby_shops:
-                Intent shops = new Intent(this, FindShops.class);
-                startActivity(shops);
+                Intent intent = new Intent(this, FindShops.class);
+                startActivity(intent);
                 break;
 
 //                4
@@ -85,8 +85,16 @@ public class Home_Screen_DEV extends AppCompatActivity implements NavigationView
 
 //                5
             case R.id.nav_favourites:
-                Intent favourites = new Intent(this, FavouritesFragment.class);
-                startActivity(favourites);
+
+                FavouritesDB db = new FavouritesDB(this);
+
+                ArrayList<RecipeObject> data = db.getAllRecipes();
+                ArrayList<RecipeObject> recipeList = new ArrayList<>();
+
+                Intent recipeListIntent = new Intent(this, RecipeList.class);
+                recipeListIntent.putExtra("recipeHeaders", data);
+                recipeListIntent.putExtra("RecipeTypes","Favourites");
+                startActivity(recipeListIntent);
                 break;
         }
 
