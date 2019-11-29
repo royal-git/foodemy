@@ -7,6 +7,17 @@ import java.util.ArrayList;
 public class RecipeObject implements Recipe, Serializable {
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
     private ArrayList<IngredientObject> missedIngredients = new ArrayList<>();
+
+    public ArrayList<IngredientObject> getUsedIngredients() {
+        return usedIngredients;
+    }
+
+    public void setUsedIngredients(
+        ArrayList<IngredientObject> usedIngredients) {
+        this.usedIngredients = usedIngredients;
+    }
+
+    private ArrayList<IngredientObject> usedIngredients = new ArrayList<>();
     private String instructions;
     private String name;
     private String image ="";

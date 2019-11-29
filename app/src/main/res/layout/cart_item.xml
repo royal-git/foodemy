@@ -14,18 +14,26 @@
         android:padding="10dp"
         >
 
+        <ImageView
+          android:id="@+id/itemImage"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          android:layout_marginRight="20dp" />
         <TextView
             android:id="@+id/itemName"
+          android:layout_toRightOf="@id/itemImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:text="Line 1"
             android:textColor="@android:color/black" />
         <TextView
             android:id="@+id/itemQuantity"
+
+          android:layout_toRightOf="@id/itemImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:text="Line 2"
             android:layout_below="@id/itemName"
             android:textColor="@android:color/black" />

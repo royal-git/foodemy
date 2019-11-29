@@ -1,19 +1,14 @@
 package com.example.luvyourleftovers;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.luvyourleftovers.basic_classes.RecipeObject;
-
 import java.util.ArrayList;
 
 public class RecipeList extends AppCompatActivity implements  RecyclerViewAdapter.ItemClickListener{
@@ -36,6 +31,7 @@ public class RecipeList extends AppCompatActivity implements  RecyclerViewAdapte
 
         String recipeListHeading = getIntent().getStringExtra("RecipeTypes");
         TextView header = (TextView)findViewById(R.id.textView);
+
         //Set the heading text of the current recipe list (favourites, search results)
         header.setText(recipeListHeading);
         /**
@@ -44,12 +40,8 @@ public class RecipeList extends AppCompatActivity implements  RecyclerViewAdapte
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        ArrayList<String> recipeNames = new ArrayList<>();
-        for(RecipeObject recipe: recipeHeaders){
-            recipeNames.add(recipe.getName());
-        }
 
-        rvaAdapter = new RecyclerViewAdapter(this, recipeNames);
+        rvaAdapter = new RecyclerViewAdapter(this, recipeHeaders);
         recyclerView.setAdapter(rvaAdapter);
 
         rvaAdapter.setClickListener(this);

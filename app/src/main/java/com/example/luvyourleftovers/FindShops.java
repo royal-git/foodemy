@@ -219,7 +219,8 @@ public class FindShops extends AppCompatActivity implements
                             Log.d("Shop List Size:", Integer.toString(shopList.size()));
 
 
-                            rvaAdapter = new RecyclerViewAdapter(context, shopListNames);
+                            //TODO NEEDS TO BE FIXED !!!!!
+                            //rvaAdapter = new RecyclerViewAdapter(context, shopListNames);
                             recyclerView.setAdapter(rvaAdapter);
 
                             rvaAdapter.setClickListener(FindShops.this::onItemClick);

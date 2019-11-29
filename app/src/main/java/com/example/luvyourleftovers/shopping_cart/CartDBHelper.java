@@ -5,14 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import androidx.annotation.Nullable;
-
 import java.util.ArrayList;
 
 public class CartDBHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "ShoppingCart.db";
+    public static final String DATABASE_NAME = "ShoppingCartDB.db";
 
     public CartDBHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -21,7 +19,8 @@ public class CartDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table cart (id integer primary key, name text, quantity integer)");
+        sqLiteDatabase.execSQL(
+            "create table cart (id integer primary key, name text, quantity integer, imageUrl text)");
     }
 
     @Override
@@ -35,12 +34,13 @@ public class CartDBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("name", item.getName());
         values.put("quantity", item.getQuantity());
+        values.put("imageUrl", item.getImageUrl());
         db.insert("cart", null, values);
     }
 
-    public void removeItem(Integer id){
+    public void removeItem(CartItem item) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete("cart", "id = '" + id +"'", null);
+        db.delete("cart", "name = '" + item.getName() + "'", null);
     }
 
     public ArrayList<CartItem> getAllItems() {
@@ -50,7 +50,9 @@ public class CartDBHelper extends SQLiteOpenHelper {
 
         res.moveToFirst();
         while (res.isAfterLast() == false) {
-            items.add(new CartItem(res.getInt(res.getColumnIndex("id")), res.getString(res.getColumnIndex("name")), res.getInt(res.getColumnIndex("quantity"))));
+            items.add(new CartItem(res.getString(res.getColumnIndex("name")),
+                res.getInt(res.getColumnIndex("quantity")),
+                res.getString(res.getColumnIndex("imageUrl"))));
             res.moveToNext();
         }
         return items;

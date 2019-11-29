@@ -4,11 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.example.luvyourleftovers.basic_classes.RecipeObject;
+import com.squareup.picasso.Picasso;
 import java.util.List;
 
 /**
@@ -23,12 +24,12 @@ import java.util.List;
 
 class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private List<String> mData;
+    private List<RecipeObject> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    RecyclerViewAdapter(Context context, List<String> data) {
+    RecyclerViewAdapter(Context context, List<RecipeObject> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -44,8 +45,11 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String recipe = mData.get(position);
-        holder.myTextView.setText(recipe);
+        RecipeObject recipe = mData.get(position);
+        holder.recipeName.setText(recipe.getName());
+        Picasso.get().load(recipe.getImageLink()).into(holder.recipeImage);
+        holder.missingIngredients
+            .setText("Missing Ingredients: " + recipe.getMissedIngredients().size());
     }
 
     //get size of list (number of items)
@@ -57,11 +61,17 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
 
     // dynamically loads only a subset of the mData container to keep resource usage low.
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView myTextView;
+
+        TextView recipeName;
+        TextView remainingTime;
+        TextView missingIngredients;
+        ImageView recipeImage;
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.recipe_name);
+            recipeName = itemView.findViewById(R.id.recipe_name);
+            missingIngredients = itemView.findViewById(R.id.missing_ingredients);
+            recipeImage = itemView.findViewById(R.id.recipe_image);
             itemView.setOnClickListener(this);
         }
 
@@ -71,11 +81,6 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
         }
     }
 
-    //TODO: Remove this
-     // convenience method for getting data at click position
-    String getItem(int id) {
-        return mData.get(id);
-    }
 
     // allows clicks events to be caught
     void setClickListener(ItemClickListener itemClickListener) {

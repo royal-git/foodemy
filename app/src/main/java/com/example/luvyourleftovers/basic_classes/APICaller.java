@@ -136,19 +136,29 @@ public class APICaller {
     Integer id = Integer.parseInt(returnObject.get("id").toString());
     String image = returnObject.get("image").getAsString();
 
+    // Fetch the ingredients that user didn't specify they had.
     JsonArray missingIngredientsArray = returnObject.get("missedIngredients").getAsJsonArray();
-    System.out.println(missingIngredientsArray);
     ArrayList<IngredientObject> missingIngredients = new ArrayList<>();
     for (JsonElement ingredient : missingIngredientsArray) {
-      missingIngredients.add(new IngredientObject(ingredient.getAsJsonObject().get("name").getAsString(), ingredient.getAsJsonObject().get("aisle").getAsString()));
+      missingIngredients.add(
+          new IngredientObject(ingredient.getAsJsonObject().get("name").getAsString(),
+              ingredient.getAsJsonObject().get("aisle").getAsString(),
+              ingredient.getAsJsonObject().get("image").getAsString()));
     }
 
-    for (IngredientObject ingredient : missingIngredients) {
-      System.out.println(ingredient.getName() + "->" + ingredient.getType());
+    // Fetch the ingredients that user did specify and is used in the recipe.
+    JsonArray usedIngredientsArray = returnObject.get("usedIngredients").getAsJsonArray();
+    ArrayList<IngredientObject> usedIngredients = new ArrayList<>();
+    for (JsonElement ingredient : usedIngredientsArray) {
+      usedIngredients.add(
+          new IngredientObject(ingredient.getAsJsonObject().get("name").getAsString(),
+              ingredient.getAsJsonObject().get("aisle").getAsString(),
+              ingredient.getAsJsonObject().get("image").getAsString()));
     }
 
     RecipeObject recipe = new RecipeObject(name, id, image);
     recipe.setMissedIngredients(missingIngredients);
+    recipe.setUsedIngredients(usedIngredients);
     return recipe;
   }
 

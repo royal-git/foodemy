@@ -22,6 +22,7 @@ public interface Ingredient
         FRUIT,
         SALT_SUGAR,
         PROCESSED,
+        POWDER,
         OTHER,
     }
 

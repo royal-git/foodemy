@@ -1,11 +1,5 @@
 package com.example.luvyourleftovers.shopping_cart;
 
-import android.widget.Toolbar;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,12 +8,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.luvyourleftovers.R;
-
-import org.w3c.dom.Text;
-
+import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class ShoppingCart extends AppCompatActivity {
@@ -70,6 +64,7 @@ class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
             super(itemView);
             this.textViewName = (TextView) itemView.findViewById(R.id.itemName);
             this.textViewQauntity = (TextView) itemView.findViewById(R.id.itemQuantity);
+            this.imageViewIcon = (ImageView) itemView.findViewById(R.id.itemImage);
             this.removeButton = (Button) itemView.findViewById(R.id.removeItemButton);
         }
     }
@@ -77,6 +72,9 @@ class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
     public CustomAdapter(Context context, ArrayList<CartItem> data) {
         db = new CartDBHelper(context);
         this.dataSet = db.getAllItems();
+
+        dataSet.forEach((item) ->
+            System.out.println(item.getImageUrl()));
 
 
     }
@@ -97,13 +95,16 @@ class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
         TextView textViewQuantity = holder.textViewQauntity;
         Button removeButton = holder.removeButton;
         ImageView imageView = holder.imageViewIcon;
-        Integer id = dataSet.get(listPosition).getId();
+
+        String imageUrl = dataSet.get(listPosition).getImageUrl();
         textViewName.setText(dataSet.get(listPosition).getName());
+
+        Picasso.get().load(imageUrl).into(imageView);
         textViewQuantity.setText("Quantity: " + Integer.toString(dataSet.get(listPosition).getQuantity()));
 
         removeButton.setOnClickListener((View) -> {
             CartDBHelper db = new CartDBHelper(View.getContext());
-            db.removeItem(id);
+            db.removeItem(dataSet.get(listPosition));
             dataSet.remove(listPosition);
             notifyDataSetChanged();
         });

@@ -33,5 +33,8 @@
     <string name="insert">Insert</string>
     <string name="add_ingredient">Add Ingredient</string>
     <string name="error_api_message">Make sure your internet connection is working or try again later...</string>
+  <string name="used_ingredients">Used Ingredients</string>
+  <string name="missing_ingredients">Missing Ingredients</string>
+  <string name="click_to_add_to_cart">Click to add to cart</string>
 
 </resources>
