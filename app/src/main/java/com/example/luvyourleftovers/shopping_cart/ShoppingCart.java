@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.luvyourleftovers.R;
+import com.example.luvyourleftovers.basic_classes.DBHelper;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
@@ -22,20 +23,20 @@ public class ShoppingCart extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<CartItem> data;
-    private CartDBHelper db;
+    private DBHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
 
-        db = new CartDBHelper(this);
+        db = new DBHelper(this);
         recyclerView = (RecyclerView) findViewById(R.id.rv_shoppingcart);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        data = db.getAllItems();
+        data = db.getAllCartItems();
         adapter = new CustomAdapter(this, data);
         recyclerView.setAdapter(adapter);
 
@@ -44,14 +45,13 @@ public class ShoppingCart extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        System.out.println(db.getAllItems().size());
     }
 }
 
 class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
 
     private ArrayList<CartItem> dataSet;
-    CartDBHelper db;
+    DBHelper db;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -70,8 +70,8 @@ class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
     }
 
     public CustomAdapter(Context context, ArrayList<CartItem> data) {
-        db = new CartDBHelper(context);
-        this.dataSet = db.getAllItems();
+        db = new DBHelper(context);
+        this.dataSet = db.getAllCartItems();
 
         dataSet.forEach((item) ->
             System.out.println(item.getImageUrl()));
@@ -103,8 +103,8 @@ class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
         textViewQuantity.setText("Quantity: " + Integer.toString(dataSet.get(listPosition).getQuantity()));
 
         removeButton.setOnClickListener((View) -> {
-            CartDBHelper db = new CartDBHelper(View.getContext());
-            db.removeItem(dataSet.get(listPosition));
+            DBHelper db = new DBHelper(View.getContext());
+            db.delete(dataSet.get(listPosition));
             dataSet.remove(listPosition);
             notifyDataSetChanged();
         });

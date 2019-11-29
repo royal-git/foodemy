@@ -12,7 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.luvyourleftovers.basic_classes.FavouritesDB;
+import com.example.luvyourleftovers.basic_classes.DBHelper;
 import com.example.luvyourleftovers.basic_classes.RecipeObject;
 import com.example.luvyourleftovers.shopping_cart.ShoppingCart;
 import com.google.android.material.navigation.NavigationView;
@@ -145,7 +145,7 @@ public class Home_Screen_DEV extends AppCompatActivity implements NavigationView
     }
 
     public void openFavouritesActivity(View view){
-        FavouritesDB db = new FavouritesDB(this);
+        DBHelper db = new DBHelper(this);
 
         ArrayList<RecipeObject> data = db.getAllRecipes();
         ArrayList<RecipeObject> recipeList = new ArrayList<>();
