@@ -40,6 +40,13 @@ import java.util.Objects;
 import org.apmem.tools.layouts.FlowLayout;
 import xdroid.toaster.Toaster;
 
+
+/**
+ * Controller that is responsible for the home screen, it facilitates the user to input ingredients
+ * through text, image and also sends the user to the search results page after.
+ *
+ * Uses Google's Cloud Vision API to perform image classification.
+ */
 public class IngredientsRecipesActivity extends AppCompatActivity {
 
   private static final int CAMERA_REQUEST = 1888;
@@ -59,7 +66,6 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
     // data to populate the RecyclerView with
     ArrayList<String > recipeHeaders = new ArrayList<>();
     ingredients = new ArrayList<>();
-
 
     // set it up to get user inputs
     final EditText ingredientInputArea = findViewById(R.id.inputBox);
@@ -86,7 +92,9 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
     // What happens when search button is clicked.
     searchButton.setOnClickListener((view) -> {
       String formattedInput = android.text.TextUtils.join(",", ingredients);
-      Toaster.toastLong("Hold up, put on thy aprons because we're fetching some delicious recipes!");
+      Toast.makeText(this,
+          "Hold up, put on thy aprons because we're fetching some delicious recipes!",
+          Toast.LENGTH_LONG).show();
       //our Context
       Context context = this;
 
@@ -122,6 +130,8 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
     startActivity(intent);
   }
 
+  // Handles the response after when the user presses the camera button to see if the user has
+  // allowed the app to access the camera
   @Override
   public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
       @NonNull int[] grantResults) {
@@ -138,6 +148,8 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
   }
 
 
+  // This is called when the user has taken a photo, it  creates a new FireBaseVisionImage
+  // of the photo and does analysis on it by calling callDetector()
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
@@ -151,6 +163,8 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
   }
 
 
+  // Method used to add dynamically created buttons to the view, this is used to dynamically
+  // insert one button per ingredient so that the user can then press these to remove these ingredients from the list.
   public void addToContainer(String text) {
     ingredients.add(text);
     searchButton.setVisibility(View.VISIBLE);
@@ -178,6 +192,7 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
   }
 
 
+  // Method that calls cloud vision api and then fetches the labels which are then passed to the method below.
   protected void callDetector(FirebaseVisionImage image) {
     ArrayList<String> results = new ArrayList<>();
     Toast.makeText(this, "Generating Result, Hold on!", Toast.LENGTH_SHORT).show();
@@ -199,9 +214,12 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
 
   }
 
+  // This method gets the response labels list and then makes a dialog that
+  // lets users pick which of them to add to the list of ingredients.
   public void handleImageLebels(List<FirebaseVisionImageLabel> labels) {
     ArrayList<String> results = new ArrayList<>();
 
+    // Remove random labels from the list.
     for (FirebaseVisionImageLabel label : labels) {
       String text = label.getText();
       if (isRecognizedIngredient(text)) {
@@ -209,6 +227,7 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
       }
     }
 
+    // Make sure that are only parsing it if we did get some response from it.
     if (results.size() > 0) {
       AlertDialog.Builder builder = new AlertDialog.Builder(this);
       ArrayList<String> selections = new ArrayList<>();
@@ -238,6 +257,8 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
     }
   }
 
+  // Check if the response label is a valid ingredient or just a ranom object like chair.
+  // It calls this api which just compares it with a list of ingredients and checks if it is in there.
   Boolean isRecognizedIngredient(String ingredient) {
     Boolean validIngredient = false;
     Future<String> result = Ion.with(this)
@@ -247,7 +268,6 @@ public class IngredientsRecipesActivity extends AppCompatActivity {
       if (result.get().contains("True")) {
         validIngredient = true;
       }
-
     } catch (Exception ex) {
       Toaster.toast("There was an issue connecting to the server for checking if the ingredient is valid.");
       Log.d("IngredientsRecipesActivity", "Ran into issue with checking if ingredient valid");
