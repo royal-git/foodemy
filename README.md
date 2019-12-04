@@ -1,1 +1,1 @@
-# COMP41690-Android-Development
+# Foodemy - COMP41690-Android-Development
